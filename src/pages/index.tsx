@@ -6,13 +6,13 @@ import Title from "antd/lib/typography/Title";
 
 import dynamic from 'next/dynamic';
 
-// import Worker from "worker-loader!@/workers/worker.ts";
-
-const DownloadBtn = dynamic(() => import("./components/DownloadBtn/DownloadBtn"), { ssr: false });
+// const DownloadBtn = dynamic(() => import("./components/DownloadBtn/DownloadBtn"), { ssr: false });
 
 const LoadingBlock = dynamic(() => import("./components/LoadingBlock/LoadingBlock"), { ssr: false });
 
 const UploadForm = dynamic(() => import("./components/UploadForm/UploadForm"), { ssr: false });
+
+const MapPartData = dynamic(() => import("./components/MapPartData/MapPartData"), { ssr: false });
 
 export default function Home() {
 
@@ -83,7 +83,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={"main-container"}>
-        <Image preview={false} style={{ width: "50vw", maxWidth: "500px" }} src="img/svg/ak.svg"></Image>
+        <Image className={"mainImg"} preview={false} src="img/svg/ak.svg"></Image>
         <Title className={"h1"}><span className={"titleBlock"}><span>Генератор</span><span>.mooe</span></span></Title>
         <main className={"main-block"}>
 
@@ -99,7 +99,7 @@ export default function Home() {
 
           {loading && <LoadingBlock time={time} />}
 
-          <DownloadBtn href={href} />
+          {/* <DownloadBtn href={href} /> */}
 
           {
             href && <div>
@@ -112,6 +112,8 @@ export default function Home() {
               </div>
             </div>
           }
+
+          <MapPartData />
 
         </main>
       </div>
