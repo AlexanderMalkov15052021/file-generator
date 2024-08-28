@@ -12,28 +12,42 @@ import {
     ProfileTwoTone
 } from '@ant-design/icons';
 
+const newPoints: { x: number; y: number; }[] = [];
+
 type FieldType = {
-    x1?: number;
-    y1?: number;
-    z1?: number;
-    angle1?: number;
-    x2?: number;
-    y2?: number;
-    z2?: number;
-    angle2?: number;
-    numRow?: number;
-    rowsInterval?: number;
+    x1: number;
+    y1: number;
+    angle1: number;
+    x2: number;
+    y2: number;
+    angle2: number;
+    numRow: number;
+    rowsInterval: number;
 };
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-};
+const toRadians = (angle: number) => angle * (Math.PI / 180);
 
-const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
+const getRoundedNumber = (value: number, rounding: number) => Math.round(value * rounding) / rounding;
 
-const MapPartData = () => {
+const getDistancePoints = (x1: number, y1: number, x2: number, y2: number) => {
+    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+}
+
+const pointToLine = (x1: number, y1: number, x2: number, y2: number, distance: number) => {
+    const Rab = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    const k = distance / Rab;
+    const Xc = getRoundedNumber(Number(x1) + Number(x2 - x1) * k, 1000);
+    const Yc = getRoundedNumber(Number(y1) + Number(y2 - y1) * k, 1000);
+
+    return { x: Xc, y: Yc };
+}
+
+type Props = {
+    mooeData: any;
+    setDoc: any;
+}
+
+const MapPartData = ({ mooeData, setDoc }: Props) => {
     const [roadDir1, setRoadDir1] = useState(1);
     const [roadDir2, setRoadDir2] = useState(1);
     const [numColumn, setNumColumn] = useState(1);
@@ -50,6 +64,61 @@ const MapPartData = () => {
     };
     const onChangeZoneType = (evt: RadioChangeEvent) => {
         setZoneType(evt.target.value);
+    };
+
+    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+
+        const distBetweenPoints = getDistancePoints(values.x1, values.y1, values.x2, values.y2);
+
+        const dist = values.numRow <= 2
+            ? getRoundedNumber(distBetweenPoints, 1000)
+            : getRoundedNumber(distBetweenPoints / (values.numRow - 1), 1000);
+
+        if (values.numRow > 2) {
+
+            for (let i = 0; i < values.numRow - 2; i++) {
+                newPoints.push(pointToLine(values.x1, values.y1, values.x2, values.y2, dist * (i + 1)));
+            }
+
+            newPoints.push(
+                { x: Number(values.x1), y: Number(values.y1) },
+                { x: Number(values.x2), y: Number(values.y2) }
+            );
+        }
+        else {
+            newPoints.push(
+                { x: Number(values.x1), y: Number(values.y1) },
+                { x: Number(values.x2), y: Number(values.y2) }
+            );
+        }
+
+        newPoints.map((point: any, index: number) => {
+            mooeData.mLaneMarks.push(
+                {
+                    "mIsJockeyEndpoint": false,
+                    "mLaneMarkDescript": "",
+                    "mLaneMarkEnName": "",
+                    "mLaneMarkID": 653825 + 100 + index,
+                    "mLaneMarkName": "",
+                    "mLaneMarkType": 11,
+                    "mLaneMarkWidth": 0.3,
+                    "mLaneMarkXYZW": {
+                        "w": Math.cos(toRadians(values.angle1 / 2)),
+                        "x": point.x,
+                        "y": point.y,
+                        "z": Math.sin(toRadians(values.angle1 / 2))
+                    },
+                    "neighborsID": []
+                }
+            );
+        });
+
+        setDoc(mooeData);
+
+    };
+
+    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+        console.log('Failed:', errorInfo);
     };
 
     return (<>
@@ -134,15 +203,6 @@ const MapPartData = () => {
                             <Input type="number" autoComplete="on" />
                         </Form.Item>
 
-                        <Form.Item<FieldType>
-                            label="Z"
-                            name="z1"
-                            rules={[{ required: true, message: 'Пожалуйста, введите "x" координату первой точки!' }]}
-                            className={styles["input-wrapper"]}
-                        >
-                            <Input type="number" autoComplete="on" />
-                        </Form.Item>
-
                         <Title level={5}>Угол поворота:</Title>
 
                         <Form.Item<FieldType>
@@ -173,15 +233,6 @@ const MapPartData = () => {
                         <Form.Item<FieldType>
                             label="Y"
                             name="y2"
-                            rules={[{ required: true, message: 'Пожалуйста, введите "x" координату второй точки!' }]}
-                            className={styles["input-wrapper"]}
-                        >
-                            <Input type="number" autoComplete="on" />
-                        </Form.Item>
-
-                        <Form.Item<FieldType>
-                            label="Z"
-                            name="z2"
                             rules={[{ required: true, message: 'Пожалуйста, введите "x" координату второй точки!' }]}
                             className={styles["input-wrapper"]}
                         >

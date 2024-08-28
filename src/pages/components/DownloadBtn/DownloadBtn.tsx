@@ -6,7 +6,7 @@ const DownloadBtn = ({ href }: { href: string | null }) => {
     return <>
         <Button className="buttun-upload" disabled={href ? false : true} type={"primary"}>
             <Link
-                href={`${href ? href : ""}`} download={"domodedovo.building.html"}
+                href={`${href ? href : ""}`} download={"test.mooe"}
             >
                 Скачать .mooe
             </Link>

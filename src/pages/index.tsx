@@ -6,7 +6,7 @@ import Title from "antd/lib/typography/Title";
 
 import dynamic from 'next/dynamic';
 
-// const DownloadBtn = dynamic(() => import("./components/DownloadBtn/DownloadBtn"), { ssr: false });
+const DownloadBtn = dynamic(() => import("./components/DownloadBtn/DownloadBtn"), { ssr: false });
 
 const LoadingBlock = dynamic(() => import("./components/LoadingBlock/LoadingBlock"), { ssr: false });
 
@@ -18,11 +18,15 @@ export default function Home() {
 
   const [time, setTime] = useState([0, 0]);
 
-  const [href, setHref] = useState(null);
+  const [href, setHref] = useState<string | null>(null);
 
   const [loading, setLoading] = useState<boolean>(false);
 
   const [isMessageShow, setIsMessageShow] = useState<boolean>(false);
+
+  const [mooeData, setMooeData] = useState({});
+
+  const [doc, setDoc] = useState(null);
 
 
   const refInputFiles = useRef(null);
@@ -30,6 +34,17 @@ export default function Home() {
   const refTime = useRef([0, 0]);
 
   const refFileName = useRef<string | null>(null);
+
+
+  if (doc && !href) {
+
+    const newDock = JSON.stringify(doc);
+
+    const file = new Blob([newDock as unknown as string], { type: 'application/mooe' });
+    const url = URL.createObjectURL(file);
+
+    setHref(url);
+  }
 
 
   const readFile = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +66,7 @@ export default function Home() {
 
     reader.onload = async () => {
 
-      console.log(reader.result);
+      setMooeData(JSON.parse(reader.result as string));
 
       setHref(null);
 
@@ -99,7 +114,7 @@ export default function Home() {
 
           {loading && <LoadingBlock time={time} />}
 
-          {/* <DownloadBtn href={href} /> */}
+          <DownloadBtn href={href} />
 
           {
             href && <div>
@@ -113,7 +128,7 @@ export default function Home() {
             </div>
           }
 
-          <MapPartData />
+          <MapPartData mooeData={mooeData} setDoc={setDoc} />
 
         </main>
       </div>
