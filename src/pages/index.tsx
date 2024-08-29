@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { Image } from 'antd/lib';
 import Title from "antd/lib/typography/Title";
@@ -24,10 +24,7 @@ export default function Home() {
 
   const [isMessageShow, setIsMessageShow] = useState<boolean>(false);
 
-  const [mooeData, setMooeData] = useState({});
-
-  const [doc, setDoc] = useState(null);
-
+  const [mooeData, setMooeData] = useState(null);
 
   const refInputFiles = useRef(null);
 
@@ -36,15 +33,16 @@ export default function Home() {
   const refFileName = useRef<string | null>(null);
 
 
-  if (doc && !href) {
+  useEffect(() => {
+    if (mooeData) {
+      const newDock = JSON.stringify(mooeData);
 
-    const newDock = JSON.stringify(doc);
+      const file = new Blob([newDock as unknown as string], { type: 'application/mooe' });
+      const url = URL.createObjectURL(file);
 
-    const file = new Blob([newDock as unknown as string], { type: 'application/mooe' });
-    const url = URL.createObjectURL(file);
-
-    setHref(url);
-  }
+      setHref(url);
+    }
+  }, [mooeData]);
 
 
   const readFile = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +114,7 @@ export default function Home() {
 
           <DownloadBtn href={href} />
 
-          {
+          {/* {
             href && <div>
               <Title style={{ fontSize: "30px" }} className={"h2"}>Общее время генерации</Title>
               <div className={"counter"}>
@@ -126,9 +124,9 @@ export default function Home() {
                 <span> - сек.</span>
               </div>
             </div>
-          }
+          } */}
 
-          <MapPartData mooeData={mooeData} setDoc={setDoc} />
+          <MapPartData mooeData={mooeData} setDoc={setMooeData} />
 
         </main>
       </div>

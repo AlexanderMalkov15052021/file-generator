@@ -7,40 +7,11 @@ import Title from "antd/es/typography/Title";
 import styles from "./MapPartData.module.css";
 import { RadioChangeEvent } from "antd/lib";
 
-import {
-    BoxPlotTwoTone,
-    ProfileTwoTone
-} from '@ant-design/icons';
-
-const newPoints: { x: number; y: number; }[] = [];
-
-type FieldType = {
-    x1: number;
-    y1: number;
-    angle1: number;
-    x2: number;
-    y2: number;
-    angle2: number;
-    numRow: number;
-    rowsInterval: number;
-};
-
-const toRadians = (angle: number) => angle * (Math.PI / 180);
-
-const getRoundedNumber = (value: number, rounding: number) => Math.round(value * rounding) / rounding;
-
-const getDistancePoints = (x1: number, y1: number, x2: number, y2: number) => {
-    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
-}
-
-const pointToLine = (x1: number, y1: number, x2: number, y2: number, distance: number) => {
-    const Rab = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    const k = distance / Rab;
-    const Xc = getRoundedNumber(Number(x1) + Number(x2 - x1) * k, 1000);
-    const Yc = getRoundedNumber(Number(y1) + Number(y2 - y1) * k, 1000);
-
-    return { x: Xc, y: Yc };
-}
+import { BoxPlotTwoTone, ProfileTwoTone } from '@ant-design/icons';
+import { FieldType } from "@/types";
+import { setGatesColumn } from "@/modules/zoneData/setGatesColumn";
+import { setOutsideColumn } from "@/modules/zoneData/setOutsideColumn";
+import { setInnerColumn } from "@/modules/zoneData/setInnerColumn";
 
 type Props = {
     mooeData: any;
@@ -50,6 +21,7 @@ type Props = {
 const MapPartData = ({ mooeData, setDoc }: Props) => {
     const [roadDir1, setRoadDir1] = useState(1);
     const [roadDir2, setRoadDir2] = useState(1);
+    const [columnSide, setColumnSide] = useState(1);
     const [numColumn, setNumColumn] = useState(1);
     const [zoneType, setZoneType] = useState(1);
 
@@ -62,58 +34,31 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
     const onChangeNumColumn = (evt: RadioChangeEvent) => {
         setNumColumn(evt.target.value);
     };
+    const onChangeColumnSide = (evt: RadioChangeEvent) => {
+        setColumnSide(evt.target.value);
+    };
     const onChangeZoneType = (evt: RadioChangeEvent) => {
         setZoneType(evt.target.value);
     };
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
 
-        const distBetweenPoints = getDistancePoints(values.x1, values.y1, values.x2, values.y2);
-
-        const dist = values.numRow <= 2
-            ? getRoundedNumber(distBetweenPoints, 1000)
-            : getRoundedNumber(distBetweenPoints / (values.numRow - 1), 1000);
-
-        if (values.numRow > 2) {
-
-            for (let i = 0; i < values.numRow - 2; i++) {
-                newPoints.push(pointToLine(values.x1, values.y1, values.x2, values.y2, dist * (i + 1)));
-            }
-
-            newPoints.push(
-                { x: Number(values.x1), y: Number(values.y1) },
-                { x: Number(values.x2), y: Number(values.y2) }
-            );
-        }
-        else {
-            newPoints.push(
-                { x: Number(values.x1), y: Number(values.y1) },
-                { x: Number(values.x2), y: Number(values.y2) }
-            );
+        if (zoneType === 1 && numColumn === 1) {
+            setOutsideColumn(values, mooeData, mooeData.mLaneMarks.length);
         }
 
-        newPoints.map((point: any, index: number) => {
-            mooeData.mLaneMarks.push(
-                {
-                    "mIsJockeyEndpoint": false,
-                    "mLaneMarkDescript": "",
-                    "mLaneMarkEnName": "",
-                    "mLaneMarkID": 653825 + 100 + index,
-                    "mLaneMarkName": "",
-                    "mLaneMarkType": 11,
-                    "mLaneMarkWidth": 0.3,
-                    "mLaneMarkXYZW": {
-                        "w": Math.cos(toRadians(values.angle1 / 2)),
-                        "x": point.x,
-                        "y": point.y,
-                        "z": Math.sin(toRadians(values.angle1 / 2))
-                    },
-                    "neighborsID": []
-                }
-            );
-        });
+        if (zoneType === 1 && numColumn === 2) {
+            setOutsideColumn(values, mooeData, mooeData.mLaneMarks.length);
+            setInnerColumn(values, mooeData, mooeData.mLaneMarks.length + 1000);
+        }
 
-        setDoc(mooeData);
+        if (zoneType === 2) {
+            setGatesColumn(values, mooeData, mooeData.mLaneMarks.length);
+        }
+
+        const dock = JSON.parse(JSON.stringify(mooeData));
+
+        setDoc(dock);
 
     };
 
@@ -133,18 +78,9 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
         >
             <div className={styles["form-block"]}>
 
-
                 <div className={styles["form-item"]}>
                     <Title className={styles["item-title"]} level={4}>Общие данные</Title>
                     <div className={styles["form-item-block"]}>
-                        <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Количество колонн:</Title>
-
-                            <Radio.Group onChange={onChangeNumColumn} value={numColumn} className={styles["common-radio-group"]}>
-                                <Radio value={1}>Одна</Radio>
-                                <Radio value={2}>Две</Radio>
-                            </Radio.Group>
-                        </div>
 
                         <Title level={5}>Количество рядов:</Title>
 
@@ -157,28 +93,52 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
                             <Input type="number" autoComplete="on" />
                         </Form.Item>
 
-                        <Title level={5}>Расстояние между рядами:</Title>
-                        <Form.Item<FieldType>
-                            label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
-                            name="rowsInterval"
-                            rules={[{ required: true, message: 'Пожалуйста, введите расстояние между рядами!' }]}
-                            className={styles["input-wrapper"]}
-                        >
-                            <Input type="number" autoComplete="on" />
-                        </Form.Item>
-
                         <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
                             <Title level={5}>Тип зоны:</Title>
 
                             <Radio.Group onChange={onChangeZoneType} value={zoneType} className={styles["common-radio-group"]}>
-                                <Radio value={1}>Ворота</Radio>
-                                <Radio value={2}>Буквы</Radio>
+                                <Radio value={1}>Буквы</Radio>
+                                <Radio value={2}>Ворота</Radio>
                             </Radio.Group>
                         </div>
 
                     </div>
                 </div>
 
+                <div className={styles["form-item"]}>
+                    <Title className={styles["item-title"]} level={4}>Колонны</Title>
+                    <div className={styles["form-item-block"]}>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
+                            <Title level={5}>Количество колонн:</Title>
+
+                            <Radio.Group onChange={onChangeNumColumn} value={numColumn} className={styles["common-radio-group"]}>
+                                <Radio value={1}>Одна</Radio>
+                                <Radio value={2}>Две</Radio>
+                            </Radio.Group>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
+                            <Title level={5}>Сторона колонны:</Title>
+
+                            <Radio.Group onChange={onChangeColumnSide} value={columnSide} className={styles["common-radio-group"]}>
+                                <Radio value={1}>Внешняя</Radio>
+                                <Radio value={2}>Внутренняя</Radio>
+                            </Radio.Group>
+                        </div>
+
+                        <Title level={5}>Расстояние между колоннами:</Title>
+                        <Form.Item<FieldType>
+                            label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
+                            name="columnsInterval"
+                            rules={[{ required: true, message: 'Пожалуйста, введите расстояние между колоннами!' }]}
+                            className={styles["input-wrapper"]}
+                        >
+                            <Input type="number" autoComplete="on" />
+                        </Form.Item>
+
+                    </div>
+                </div>
 
                 <div className={styles["form-item"]}>
                     <Title className={styles["item-title"]} level={4}>Начальная точка</Title>
@@ -239,7 +199,7 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
                             <Input type="number" autoComplete="on" />
                         </Form.Item>
 
-                        <Title level={5}>Угол поворота:</Title>
+                        {/* <Title level={5}>Угол поворота:</Title>
 
                         <Form.Item<FieldType>
                             label="Ѳ"
@@ -248,7 +208,7 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
                             className={styles["input-wrapper"]}
                         >
                             <Input type="number" autoComplete="on" />
-                        </Form.Item>
+                        </Form.Item> */}
                     </div>
                 </div>
 
@@ -279,9 +239,8 @@ const MapPartData = ({ mooeData, setDoc }: Props) => {
 
             </div>
 
-
             <Form.Item wrapperCol={{ offset: 8, span: 16 }} className={styles["submit-btn"]}>
-                <Button type="primary" htmlType="submit">
+                <Button disabled={!mooeData ? true : false} type="primary" htmlType="submit">
                     Применить
                 </Button>
             </Form.Item>
