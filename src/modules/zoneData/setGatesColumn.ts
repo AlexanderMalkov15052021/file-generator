@@ -7,7 +7,7 @@ const fromStartToTargetPoint = 0.4;  // от начала до точки зае
 
 const fromStackToFirstCachePoint = 1.35 + distBetweenStackAndCachePoint;
 
-const fromStackToSecomdCachePoint = 2.7 + distBetweenStackAndCachePoint;
+const fromStackToSecondCachePoint = 2.7 + distBetweenStackAndCachePoint;
 
 const fromStackToTothirdCachePoint = 4.05 + distBetweenStackAndCachePoint;
 
@@ -24,7 +24,7 @@ const fromStackToEighthCachePoint = 10.8 + distBetweenStackAndCachePoint;
 const fromStackToNinthCachePoint = 12.3;
 
 
-const fromStackToSecomdStack = 1.35;
+const fromStackToSecondStack = 1.35;
 
 const fromStackTothirdStack = 2.7;
 
@@ -44,30 +44,38 @@ const fromStackToEnd = 0.16;  // от палеты до края
 
 const distRow = 14;  // длинна ряда
 
+
+
+const roadsDist = [fromStackToEnd * -1, 1.35, 2.7, 4.05, 5.4, 6.75, 8.1, 9.45, 10.8, 13.86];
+
 export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: number) => {
 
     // console.log(getDistancePoints(
-    //     -27.558,
-    //     -136.08,
-    //     -27.158,
-    //     -136.08
+    //     -26.716,
+    //     -149.95,
+    //     -26.558,
+    //     -136.09
     // ));
 
     // console.log(getDistancePoints(
-    //     -28.558,
-    //     -136.07,
-    //     -28.158,
-    //     -136.07
+    //     -27.716,
+    //     -149.94,
+    //     -27.558,
+    //     -136.08
     // ));
 
+    const pointX1 = Number(values.x1) - Math.cos(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointX2 = Number(values.x2) - Math.cos(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointY1 = Number(values.y1) - Math.sin(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointY2 = Number(values.y2) - Math.sin(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
 
     const newPoints: { x: number; y: number; }[] = [];
 
     const distBetweenPoints = getDistancePoints(
-        Number(values.x1) + Number(values.columnsInterval),
-        values.y1,
-        Number(values.x2) + Number(values.columnsInterval),
-        values.y2
+        pointX1,
+        pointY1,
+        pointX2,
+        pointY2
     );
 
     const dist = values.numRow <= 2
@@ -76,22 +84,24 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
 
     if (values.numRow > 2) {
 
-        newPoints.push({ x: Number(values.x1) + Number(values.columnsInterval), y: Number(values.y1) });
+        newPoints.push({ x: pointX1, y: pointY1 });
 
         for (let i = 0; i < values.numRow - 2; i++) {
             newPoints.push(pointToLine(
-                Number(values.x1) + Number(values.columnsInterval),
-                values.y1, Number(values.x2) + Number(values.columnsInterval),
-                values.y2, dist * (i + 1))
+                pointX1,
+                pointY1,
+                pointX2,
+                pointY2,
+                dist * (i + 1))
             );
         }
 
-        newPoints.push({ x: Number(values.x2) + Number(values.columnsInterval), y: Number(values.y2) });
+        newPoints.push({ x: pointX2, y: pointY2 });
     }
     else {
         newPoints.push(
-            { x: Number(values.x1) + Number(values.columnsInterval), y: Number(values.y1) },
-            { x: Number(values.x2) + Number(values.columnsInterval), y: Number(values.y2) }
+            { x: pointX1, y: pointY1 },
+            { x: pointX2, y: pointY2 }
         );
     }
 
@@ -102,14 +112,8 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
 
     newPoints.map((point: any, index: number) => {
 
-        const endPointX = Math.cos((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
-        const endPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
-
-        const startPointX = Math.cos((values.angle1) * Math.PI / 180) * distRow + endPointX;
-        const startPointY = Math.sin((values.angle1) * Math.PI / 180) * distRow + endPointY;
-
-        const secomdStackX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToSecomdStack + point.x;
-        const secomdStackY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToSecomdStack + point.y;
+        const secondStackX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToSecondStack + point.x;
+        const secondStackY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToSecondStack + point.y;
 
         const tothirdStackX = Math.cos((values.angle1) * Math.PI / 180) * fromStackTothirdStack + point.x;
         const tothirdStackY = Math.sin((values.angle1) * Math.PI / 180) * fromStackTothirdStack + point.y;
@@ -140,8 +144,8 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
         const firstCachePointX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToFirstCachePoint + point.x;
         const firstCachePointY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToFirstCachePoint + point.y;
 
-        const secomdCachePointX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToSecomdCachePoint + point.x;
-        const secomdCachePointY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToSecomdCachePoint + point.y;
+        const secondCachePointX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToSecondCachePoint + point.x;
+        const secondCachePointY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToSecondCachePoint + point.y;
 
         const tothirdCachePointX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToTothirdCachePoint + point.x;
         const tothirdCachePointY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToTothirdCachePoint + point.y;
@@ -164,45 +168,11 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
         const ninthCachePointX = Math.cos((values.angle1) * Math.PI / 180) * fromStackToNinthCachePoint + point.x;
         const ninthCachePointY = Math.sin((values.angle1) * Math.PI / 180) * fromStackToNinthCachePoint + point.y;
 
-        
 
-        mooeData.mLaneMarks.push(
-            {
-                "mIsJockeyEndpoint": false,
-                "mLaneMarkDescript": "",
-                "mLaneMarkEnName": "",
-                "mLaneMarkID": indexLength + 1000 + index,
-                "mLaneMarkName": "",
-                "mLaneMarkType": 0,
-                "mLaneMarkWidth": 0.3,
-                "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle1) / 2)),
-                    "x": startPointX,
-                    "y": startPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2))
-                },
-                "neighborsID": []
-            }
-        );
 
-        mooeData.mLaneMarks.push(
-            {
-                "mIsJockeyEndpoint": false,
-                "mLaneMarkDescript": "",
-                "mLaneMarkEnName": "",
-                "mLaneMarkID": indexLength + 2000 + index,
-                "mLaneMarkName": "",
-                "mLaneMarkType": 0,
-                "mLaneMarkWidth": 0.3,
-                "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle1) / 2)),
-                    "x": endPointX,
-                    "y": endPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2))
-                },
-                "neighborsID": []
-            }
-        );
+
+
+
 
 
 
@@ -241,8 +211,8 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
                     "w": Math.cos(toRadians((values.angle1) / 2)),
-                    "x": secomdCachePointX,
-                    "y": secomdCachePointY,
+                    "x": secondCachePointX,
+                    "y": secondCachePointY,
                     "z": Math.sin(toRadians((values.angle1) / 2))
                 },
                 "neighborsID": []
@@ -400,8 +370,8 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
                     "w": Math.cos(toRadians((values.angle1) / 2)),
-                    "x": secomdStackX,
-                    "y": secomdStackY,
+                    "x": secondStackX,
+                    "y": secondStackY,
                     "z": Math.sin(toRadians((values.angle1) / 2))
                 },
                 "neighborsID": []
@@ -541,14 +511,6 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
             }
         );
 
-
-
-
-
-
-
-
-
         mooeData.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
@@ -568,72 +530,104 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
             }
         );
 
+        const endPointX = Math.cos((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const endPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
 
+        const startPointX = Math.cos((values.angle1) * Math.PI / 180) * distRow + endPointX;
+        const startPointY = Math.sin((values.angle1) * Math.PI / 180) * distRow + endPointY;
 
+        roadsDist.map((dist: number, distIndex: number) => {
 
+            const newEndPointX = Math.cos((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].x;
+            const newEndPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].y;
 
+            const newStartPointX = Math.cos((values.angle1) * Math.PI / 180) * dist + newEndPointX;
+            const newStartPointY = Math.sin((values.angle1) * Math.PI / 180) * dist + newEndPointY;
 
-        mooeData.mRoads.push(
-            {
-                "mBelongJunctionID": -1,
-                "mEndPosition": {
-                    "x": endPointX,
-                    "y": endPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2))
-                },
-                "mLForbiddenLine": [],
-                "mLForbiddenLineID": -1,
-                "mLaneCount": 1,
-                "mLanes": [
+            mooeData.mLaneMarks.push(
+                {
+                    "mIsJockeyEndpoint": false,
+                    "mLaneMarkDescript": "",
+                    "mLaneMarkEnName": "",
+                    "mLaneMarkID": indexLength + 1000 + (distIndex + 1) + index * roadsDist.length,
+                    "mLaneMarkName": "",
+                    "mLaneMarkType": 0,
+                    "mLaneMarkWidth": 0.3,
+                    "mLaneMarkXYZW": {
+                        "w": Math.cos(toRadians((values.angle1) / 2)),
+                        "x": newStartPointX,
+                        "y": newStartPointY,
+                        "z": Math.sin(toRadians((values.angle1) / 2))
+                    },
+                    "neighborsID": []
+                }
+            );
+
+            if (distIndex < roadsDist.length - 1) {
+
+                mooeData.mRoads.push(
                     {
-                        "mAssistedDrawFlag": false,
-                        "mAvoidObstacle": false,
-                        "mBindMarkAreaID": -1,
-                        "mBorder": {
-                            "roadwidth_left": 0,
-                            "roadwidth_right": 0
+                        "mBelongJunctionID": -1,
+                        "mEndPosition": {
+                            "x": newEndPointX,
+                            "y": newEndPointX,
+                            "z": Math.sin(toRadians((values.angle1) / 2))
                         },
-                        "mDelta": 0.04,
-                        "mDirection": 2,
-                        "mEndPos": indexLength + 2000 + index,
-                        "mGoalAgain": false,
-                        "mLaneDescript": "",
-                        "mLaneID": indexLength + 500 + index,
-                        "mLaneName": "",
-                        "mLanePro": 0,
-                        "mLaneType": 0,
-                        "mLeftAvoidanceArea": 0.1,
+                        "mLForbiddenLine": [],
+                        "mLForbiddenLineID": -1,
+                        "mLaneCount": 2,  //
+                        "mLanes": [
+                            {
+                                "mAssistedDrawFlag": false,
+                                "mAvoidObstacle": false,
+                                "mBindMarkAreaID": -1,
+                                "mBorder": {
+                                    "roadwidth_left": 0,
+                                    "roadwidth_right": 0
+                                },
+                                "mDelta": 0.04,
+                                "mDirection": 1, // 1
+                                "mEndPos": indexLength + 1000 + (distIndex + 2) + index * roadsDist.length,
+                                "mGoalAgain": false,
+                                "mLaneDescript": "",
+                                "mLaneID": indexLength + 500 + (distIndex + 1) + index * roadsDist.length,
+                                "mLaneName": "",
+                                "mLanePro": 0,
+                                "mLaneType": 0,
+                                "mLeftAvoidanceArea": 0.1,
+                                "mLength": distRow,
+                                "mObstacleDistance": 0.1,
+                                "mObstacleWidth": 0.1,
+                                "mPlannerAgain": false,
+                                "mPointOfInterest": [],
+                                "mPosID": 0,
+                                "mRightAvoidanceArea": 0.1,
+                                "mSpeed": 0,
+                                "mStartPos": indexLength + 1000 + (distIndex + 1) + index * roadsDist.length,
+                                "mWidth": 0.3,
+                                "usesensor": {
+                                    "fall_arrest_system": true,
+                                    "use_bottom_laser": true,
+                                    "use_front_realsense": true,
+                                    "use_front_realsense_rgb": true
+                                }
+                            }
+                        ],
                         "mLength": distRow,
-                        "mObstacleDistance": 0.1,
-                        "mObstacleWidth": 0.1,
-                        "mPlannerAgain": false,
-                        "mPointOfInterest": [],
-                        "mPosID": 0,
-                        "mRightAvoidanceArea": 0.1,
-                        "mSpeed": 0,
-                        "mStartPos": indexLength + 1000 + index,
-                        "mWidth": 0.3,
-                        "usesensor": {
-                            "fall_arrest_system": true,
-                            "use_bottom_laser": true,
-                            "use_front_realsense": true,
-                            "use_front_realsense_rgb": true
+                        "mRForbiddenLine": [],
+                        "mRForbiddenLineID": -1,
+                        "mRoadID": indexLength + 5000 + (distIndex + 1) + index * roadsDist.length,
+                        "mRoadName": "",
+                        "mStartPosition": {
+                            "x": newStartPointX,
+                            "y": newStartPointY,
+                            "z": Math.sin(toRadians((values.angle1) / 2))
                         }
                     }
-                ],
-                "mLength": distRow,
-                "mRForbiddenLine": [],
-                "mRForbiddenLineID": -1,
-                "mRoadID": indexLength + 5000 + index,
-                "mRoadName": "",
-                "mStartPosition": {
-                    "x": startPointX,
-                    "y": startPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2))
-                }
+                );
             }
-        );
 
+        });
 
         if (index !== newPoints.length - 1) {
 
@@ -664,8 +658,8 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                                 "roadwidth_right": 0
                             },
                             "mDelta": 0.04,
-                            "mDirection": 2,
-                            "mEndPos": indexLength + 1000 + index + 1,
+                            "mDirection": 1, // 2
+                            "mEndPos": indexLength + 1000 + roadsDist.length + index * roadsDist.length,
                             "mGoalAgain": false,
                             "mLaneDescript": "",
                             "mLaneID": indexLength + 100 + index,
@@ -681,7 +675,7 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                             "mPosID": 0,
                             "mRightAvoidanceArea": 0.1,
                             "mSpeed": 0,
-                            "mStartPos": indexLength + 1000 + index,
+                            "mStartPos": indexLength + 1000 + (roadsDist.length + roadsDist.length) + index * roadsDist.length,
                             "mWidth": 0.3,
                             "usesensor": {
                                 "fall_arrest_system": true,
@@ -705,10 +699,16 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
             );
         }
 
+        const targetEndPointX = Math.cos((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const targetEndPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
+
+        const targetStartPointX = Math.cos((values.angle1) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointX;
+        const targetStartPointY = Math.sin((values.angle1) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointY;
+
         const leftTargetPointX = Math.cos((values.angle1) * Math.PI / 180 + Math.PI / 2)
-            * fromStartToTargetPoint + startPointX;
+            * fromStartToTargetPoint + targetStartPointX;
         const leftTargetPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI / 2)
-            * fromStartToTargetPoint + startPointY;
+            * fromStartToTargetPoint + targetStartPointY;
 
         index !== newPoints.length - 1 && mooeData.mLaneMarks.push(
             {
@@ -728,10 +728,10 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle1) / 2)),
+                    "w": Math.cos(toRadians((values.angle1) / 2) - Math.PI / 4),
                     "x": leftTargetPointX,
                     "y": leftTargetPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2))
+                    "z": Math.sin(toRadians((values.angle1) / 2) - Math.PI / 4)
                 },
                 "mMapName": "",
                 "mPrepointID": null,
@@ -739,6 +739,5 @@ export const setGatesColumn = (values: any, mooeData: MooeData, indexLength: num
                 "neighborsID": []
             }
         );
-
     });
 }

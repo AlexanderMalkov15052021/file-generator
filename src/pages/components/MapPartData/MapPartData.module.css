@@ -10,6 +10,7 @@
 
 .form-item {
     width: 100%;
+    min-width: 200px;
     border-radius: 8px;
     box-shadow: 1px 1px 3px #1766ff, -1px -1px 3px #1766ff;
     padding: 10px;
@@ -53,7 +54,7 @@
     margin-bottom: 0;
 }
 
-@media (max-width: 1124px) {
+@media (max-width: 1300px) {
 
     .form-block {
         width: 80vw;

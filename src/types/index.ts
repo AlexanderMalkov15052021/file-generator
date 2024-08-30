@@ -114,7 +114,6 @@ export type FieldType = {
     angle1: number;
     x2: number;
     y2: number;
-    angle2: number;
     numRow: number;
     columnsInterval: number;
 };

@@ -26,6 +26,16 @@ export default function Home() {
 
   const [mooeData, setMooeData] = useState(null);
 
+  const [columnSide, setColumnSide] = useState(1);
+
+  const [numColumn, setNumColumn] = useState(1);
+
+  const [zoneType, setZoneType] = useState(1);
+
+  const [numBlock, setNumBlock] = useState<number>(1);
+
+
+
   const refInputFiles = useRef(null);
 
   const refTime = useRef([0, 0]);
@@ -126,7 +136,18 @@ export default function Home() {
             </div>
           } */}
 
-          <MapPartData mooeData={mooeData} setDoc={setMooeData} />
+          <MapPartData
+            mooeData={mooeData}
+            zoneType={zoneType}
+            numColumn={numColumn}
+            columnSide={columnSide}
+            numBlock={numBlock}
+            setColumnSide={setColumnSide}
+            setNumColumn={setNumColumn}
+            setZoneType={setZoneType}
+            setDoc={setMooeData}
+            setNumBlock={setNumBlock}
+          />
 
         </main>
       </div>
