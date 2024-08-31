@@ -1,8 +1,8 @@
 import { GeneratorStor } from "@/entities";
-import { Spin } from "antd";
+import { Spin } from "antd/lib";
 import { observer } from "mobx-react-lite";
 
-const LoadingBlock = () => {
+export const LoadingBlock = observer(() => {
     const {
         store: { isLoading, loadingTime },
     } = GeneratorStor;
@@ -19,6 +19,4 @@ const LoadingBlock = () => {
             <Spin />
         </>
     );
-}
-
-export default observer(LoadingBlock);
+});

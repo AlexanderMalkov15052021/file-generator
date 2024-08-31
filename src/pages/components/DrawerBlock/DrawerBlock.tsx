@@ -1,10 +1,10 @@
-import { Button, Drawer } from 'antd';
+import { Button, Drawer } from 'antd/lib';
 import { LeftCircleTwoTone, MenuOutlined, RightCircleTwoTone } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import { GeneratorStor } from "@/entities";
 
 
-const DrawerBlock = () => {
+export const DrawerBlock = observer(() => {
 
     const {
         store: { history, historyIndex, isOpenDrawer, changeHistoryIndex, setMooeDoc, setIsOpenDrawer },
@@ -67,6 +67,4 @@ const DrawerBlock = () => {
             </Button>
         </Drawer>
     </>)
-}
-
-export default observer(DrawerBlock);
+});

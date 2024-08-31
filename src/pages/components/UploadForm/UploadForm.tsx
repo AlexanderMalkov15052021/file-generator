@@ -2,7 +2,7 @@ import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 import { ChangeEvent, FormEvent } from "react";
 
-const UploadForm = () => {
+export const UploadForm = observer(() => {
 
     const {
         store: { isLoading, refFileName, setIsMessageShow, setIsLoading, setMooeDoc, changeHistory, setLoadingTime, setRefFileName },
@@ -57,6 +57,4 @@ const UploadForm = () => {
             <input id="file-upload" type="file" onChange={isLoading ? evt => evt.preventDefault() : readFile} />
         </form>
     </>
-}
-
-export default observer(UploadForm);
+});

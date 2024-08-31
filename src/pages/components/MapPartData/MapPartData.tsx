@@ -1,6 +1,6 @@
-import type { FormProps } from 'antd';
-import { Button, Form, Input, Radio } from 'antd';
-import Title from "antd/es/typography/Title";
+import type { FormProps } from 'antd/lib';
+import { Button, Form, Input, Radio } from 'antd/lib';
+import Title from 'antd/lib/typography/Title';
 
 import styles from "./MapPartData.module.css";
 import { RadioChangeEvent } from "antd/lib";
@@ -10,8 +10,7 @@ import { FieldType } from "@/types";
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 
-
-const MapPartData = () => {
+export const MapPartData = observer(() => {
 
     const {
         store: {
@@ -205,6 +204,4 @@ const MapPartData = () => {
 
         </Form>
     </>)
-}
-
-export default observer(MapPartData);
+});

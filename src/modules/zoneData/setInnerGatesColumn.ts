@@ -1,5 +1,5 @@
 import { getDistancePoints, getRoundedNumber, pointToLine, toRadians } from "@/helpers/math";
-import { MooeData } from "@/types";
+import { MooeDoc } from "@/types";
 
 const distBetweenStackAndCachePoint = 0.15;
 
@@ -48,7 +48,7 @@ const distRow = 14;  // длинна ряда
 
 const roadsDist = [fromStackToEnd * -1, 1.35, 2.7, 4.05, 5.4, 6.75, 8.1, 9.45, 10.8, 13.86];
 
-export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength: number) => {
+export const setInnerGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: number) => {
 
     // console.log(getDistancePoints(
     //     -26.716,
@@ -181,7 +181,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
 
 
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -200,7 +200,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -219,7 +219,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -238,7 +238,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -257,7 +257,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -276,7 +276,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -295,7 +295,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -314,7 +314,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -333,7 +333,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -359,7 +359,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
 
 
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -378,7 +378,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -397,7 +397,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -416,7 +416,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -435,7 +435,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -454,7 +454,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -473,7 +473,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -492,7 +492,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -511,7 +511,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -544,7 +544,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             const newStartPointX = Math.cos((values.angle1) * Math.PI / 180) * dist + newEndPointX;
             const newStartPointY = Math.sin((values.angle1) * Math.PI / 180) * dist + newEndPointY;
 
-            mooeData.mLaneMarks.push(
+            mooeDoc?.mLaneMarks.push(
                 {
                     "mIsJockeyEndpoint": false,
                     "mLaneMarkDescript": "",
@@ -565,7 +565,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
 
             if (distIndex < roadsDist.length - 1) {
 
-                mooeData.mRoads.push(
+                mooeDoc?.mRoads.push(
                     {
                         "mBelongJunctionID": -1,
                         "mEndPosition": {
@@ -637,7 +637,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
             const nextStartPointX = Math.cos((values.angle1) * Math.PI / 180) * distRow + nextEndPointX;
             const nextStartPointY = Math.sin((values.angle1) * Math.PI / 180) * distRow + nextEndPointY;
 
-            mooeData.mRoads.push(
+            mooeDoc?.mRoads.push(
                 {
                     "mBelongJunctionID": -1,
                     "mEndPosition": {
@@ -710,7 +710,7 @@ export const setInnerGatesColumn = (values: any, mooeData: MooeData, indexLength
         const leftTargetPointY = Math.sin((values.angle1) * Math.PI / 180 + Math.PI / 2)
             * fromStartToTargetPoint + targetStartPointY;
 
-        index !== newPoints.length - 1 && mooeData.mLaneMarks.push(
+        index !== newPoints.length - 1 && mooeDoc?.mLaneMarks.push(
             {
                 "mAvoidPointID": null,
                 "mBindRoadGroups": [],

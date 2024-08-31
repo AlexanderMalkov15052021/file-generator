@@ -3,22 +3,13 @@ import Head from "next/head";
 import { Image } from 'antd/lib';
 import Title from "antd/lib/typography/Title";
 
-import dynamic from 'next/dynamic';
-
-const DownloadBtn = dynamic(() => import("./components/DownloadBtn/DownloadBtn"), { ssr: false });
-
-const LoadingBlock = dynamic(() => import("./components/LoadingBlock/LoadingBlock"), { ssr: false });
-
-const UploadForm = dynamic(() => import("./components/UploadForm/UploadForm"), { ssr: false });
-
-const MapPartData = dynamic(() => import("./components/MapPartData/MapPartData"), { ssr: false });
-
-const ModelBlock = dynamic(() => import("./components/ModelBlock/ModelBlock"), { ssr: false });
-
-const DrawerBlock = dynamic(() => import("./components/DrawerBlock/DrawerBlock"), { ssr: false });
-
-const TypeErrorMessage = dynamic(() => import("./components/TypeErrorMessage/TypeErrorMessage"), { ssr: false });
-
+import { DrawerBlock } from "./components/DrawerBlock/DrawerBlock";
+import { TypeErrorMessage } from "./components/TypeErrorMessage/TypeErrorMessage";
+import { UploadForm } from "./components/UploadForm/UploadForm";
+import { LoadingBlock } from "./components/LoadingBlock/LoadingBlock";
+import { DownloadBtn } from "./components/DownloadBtn/DownloadBtn";
+import { MapPartData } from "./components/MapPartData/MapPartData";
+import { ModelBlock } from "./components/ModelBlock/ModelBlock";
 
 export default function Home() {
 

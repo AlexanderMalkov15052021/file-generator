@@ -24,7 +24,7 @@ class GeneratorStor {
 
     history: MooeDoc[] = [];
 
-    mooeDoc?: MooeDoc;
+    mooeDoc: MooeDoc = null;
 
     formValues: FieldType | null = null;
 

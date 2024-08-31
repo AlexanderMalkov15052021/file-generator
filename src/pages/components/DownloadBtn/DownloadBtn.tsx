@@ -1,9 +1,9 @@
 import { GeneratorStor } from "@/entities";
-import { Button } from "antd";
+import { Button } from "antd/lib";
 import Link from "antd/lib/typography/Link";
 import { observer } from "mobx-react-lite";
 
-const DownloadBtn = () => {
+export const DownloadBtn = observer(() => {
     const {
         store: { href },
     } = GeneratorStor;
@@ -17,6 +17,4 @@ const DownloadBtn = () => {
             </Link>
         </Button>
     </>
-}
-
-export default observer(DownloadBtn);
+});

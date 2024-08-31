@@ -55,7 +55,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
         const cachePointX = Math.cos(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.x;
         const cachePointY = Math.sin(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.y;
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mAvoidPointID": null,
                 "mBindRoadGroups": [],
@@ -85,7 +85,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -109,7 +109,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -128,7 +128,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -147,7 +147,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -166,7 +166,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             }
         );
 
-        mooeData.mRoads.push(
+        mooeData?.mRoads.push(
             {
                 "mBelongJunctionID": -1,
                 "mEndPosition": {
@@ -236,7 +236,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
             const nextStartPointX = Math.cos(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointX;
             const nextStartPointY = Math.sin(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointY;
 
-            mooeData.mRoads.push(
+            mooeData?.mRoads.push(
                 {
                     "mBelongJunctionID": -1,
                     "mEndPosition": {
@@ -303,7 +303,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
         const leftTargetPointY = Math.sin(Math.PI / 2)
             * fromStartPointSmallRoadToTargetPoint + startPointY;
 
-        mooeData.mLaneMarks.push(
+        mooeData?.mLaneMarks.push(
             {
                 "mAvoidPointID": null,
                 "mBindRoadGroups": [],
@@ -351,7 +351,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
     const newEndPointX = Math.cos(values.angle1 * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + newPoints[newPoints.length - 1].x;
     const newEndPointY = Math.sin(values.angle1 * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + newPoints[newPoints.length - 1].y;
 
-    mooeData.mLaneMarks.push(
+    mooeData?.mLaneMarks.push(
         {
             "mIsJockeyEndpoint": false,
             "mLaneMarkDescript": "",
@@ -370,7 +370,7 @@ export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: nu
         }
     );
 
-    mooeData.mRoads.push(
+    mooeData?.mRoads.push(
         {
             "mBelongJunctionID": -1,
             "mEndPosition": {

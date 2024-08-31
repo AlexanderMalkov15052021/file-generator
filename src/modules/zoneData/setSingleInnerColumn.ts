@@ -1,5 +1,5 @@
 import { getDistancePoints, getRoundedNumber, pointToLine, toRadians } from "@/helpers/math";
-import { MooeData } from "@/types";
+import { MooeDoc } from "@/types";
 
 const fromStartPointSmallRoadToTargetPoint = 0.5;  // от палеты до cache point
 
@@ -11,7 +11,7 @@ const fromStackToEnd = 0.16;  // от палеты до края
 
 const distSmallRoad = 2.16;  // длинна маленткой дороги
 
-export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLength: number) => {
+export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: number) => {
 
     const newPoints: { x: number; y: number; }[] = [];
 
@@ -66,7 +66,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
         const cachePointX = Math.cos(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.x;
         const cachePointY = Math.sin(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.y;
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mAvoidPointID": null,
                 "mBindRoadGroups": [],
@@ -96,7 +96,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -120,7 +120,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -139,7 +139,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -158,7 +158,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             }
         );
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mIsJockeyEndpoint": false,
                 "mLaneMarkDescript": "",
@@ -177,7 +177,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             }
         );
 
-        mooeData.mRoads.push(
+        mooeDoc?.mRoads.push(
             {
                 "mBelongJunctionID": -1,
                 "mEndPosition": {
@@ -247,7 +247,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
             const nextStartPointX = Math.cos(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointX;
             const nextStartPointY = Math.sin(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointY;
 
-            mooeData.mRoads.push(
+            mooeDoc?.mRoads.push(
                 {
                     "mBelongJunctionID": -1,
                     "mEndPosition": {
@@ -314,7 +314,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
         const leftTargetPointY = Math.sin(-Math.PI / 2)
             * fromStartPointSmallRoadToTargetPoint + startPointY;
 
-        mooeData.mLaneMarks.push(
+        mooeDoc?.mLaneMarks.push(
             {
                 "mAvoidPointID": null,
                 "mBindRoadGroups": [],
@@ -354,7 +354,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
     const newEndPointX = Math.cos(values.angle1 * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].x;
     const newEndPointY = Math.sin(values.angle1 * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].y;
 
-    mooeData.mLaneMarks.push(
+    mooeDoc?.mLaneMarks.push(
         {
             "mIsJockeyEndpoint": false,
             "mLaneMarkDescript": "",
@@ -373,7 +373,7 @@ export const setSingleInnerColumn = (values: any, mooeData: MooeData, indexLengt
         }
     );
 
-    mooeData.mRoads.push(
+    mooeDoc?.mRoads.push(
         {
             "mBelongJunctionID": -1,
             "mEndPosition": {
