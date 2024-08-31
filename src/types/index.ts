@@ -1,4 +1,4 @@
-export type MooeData = {
+export type MooeDoc = {
     mLaneMarks: {
         mAvoidPointID?: null;
         mBindRoadGroups?: never[];

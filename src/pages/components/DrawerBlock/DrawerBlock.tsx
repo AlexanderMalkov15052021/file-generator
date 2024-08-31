@@ -1,25 +1,21 @@
-import { memo, useState } from "react";
 import { Button, Drawer } from 'antd';
 import { LeftCircleTwoTone, MenuOutlined, RightCircleTwoTone } from "@ant-design/icons";
+import { observer } from "mobx-react-lite";
+import { GeneratorStor } from "@/entities";
 
-type Props = {
-    history: any[];
-    historyIndex: number;
-    setHistoryIndex: any;
-    setMooeData: any;
-    setHref: any;
-}
 
-const DrawerBlock = ({ history, historyIndex, setHistoryIndex, setMooeData }: Props) => {
+const DrawerBlock = () => {
 
-    const [open, setOpen] = useState(false);
+    const {
+        store: { history, historyIndex, isOpenDrawer, changeHistoryIndex, setMooeDoc, setIsOpenDrawer },
+    } = GeneratorStor;
 
     const showDrawer = () => {
-        setOpen(true);
+        setIsOpenDrawer(true);
     };
 
     const onClose = () => {
-        setOpen(false);
+        setIsOpenDrawer(false);
     };
 
     const onLeftClick = () => {
@@ -29,9 +25,9 @@ const DrawerBlock = ({ history, historyIndex, setHistoryIndex, setMooeData }: Pr
 
             const dock = JSON.parse(JSON.stringify(history[historyIndex - 1]));
 
-            setMooeData(dock);
+            setMooeDoc(dock);
 
-            setHistoryIndex(historyIndex - 1);
+            changeHistoryIndex(historyIndex - 1);
 
             console.log("Back history!");
 
@@ -45,9 +41,9 @@ const DrawerBlock = ({ history, historyIndex, setHistoryIndex, setMooeData }: Pr
 
             const dock = JSON.parse(JSON.stringify(history[historyIndex + 1]));
 
-            setMooeData(dock);
+            setMooeDoc(dock);
 
-            setHistoryIndex(historyIndex + 1);
+            changeHistoryIndex(historyIndex + 1);
 
             console.log("forward history!");
 
@@ -61,7 +57,7 @@ const DrawerBlock = ({ history, historyIndex, setHistoryIndex, setMooeData }: Pr
             <MenuOutlined style={{ fontSize: "20px" }} />
         </Button>
 
-        <Drawer title="Меню" onClose={onClose} open={open}>
+        <Drawer title="Меню" onClose={onClose} open={isOpenDrawer}>
             <p>История</p>
             <Button onClick={onLeftClick} style={{ height: "50px" }}>
                 <LeftCircleTwoTone style={{ fontSize: "40px" }} />
@@ -73,4 +69,4 @@ const DrawerBlock = ({ history, historyIndex, setHistoryIndex, setMooeData }: Pr
     </>)
 }
 
-export default memo(DrawerBlock);
+export default observer(DrawerBlock);

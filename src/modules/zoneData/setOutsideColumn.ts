@@ -1,5 +1,5 @@
 import { getDistancePoints, getRoundedNumber, pointToLine, toRadians } from "@/helpers/math";
-import { MooeData } from "@/types";
+import { MooeDoc } from "@/types";
 
 const fromStartPointSmallRoadToTargetPoint = 0.5;  // от палеты до cache point
 
@@ -11,7 +11,7 @@ const fromStackToEnd = 0.16;  // от палеты до края
 
 const distSmallRoad = 2.16;  // длинна маленткой дороги
 
-export const setOutsideColumn = (values: any, mooeData: MooeData, indexLength: number, numBlock: number) => {
+export const setOutsideColumn = (values: any, mooeData: MooeDoc, indexLength: number, numBlock: number) => {
 
     const newPoints: { x: number; y: number; }[] = [];
 

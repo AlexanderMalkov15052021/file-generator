@@ -1,8 +1,13 @@
+import { GeneratorStor } from "@/entities";
 import { Button } from "antd";
 import Link from "antd/lib/typography/Link";
-import { memo } from "react";
+import { observer } from "mobx-react-lite";
 
-const DownloadBtn = ({ href }: { href: string | null }) => {
+const DownloadBtn = () => {
+    const {
+        store: { href },
+    } = GeneratorStor;
+
     return <>
         <Button className="buttun-upload" disabled={href ? false : true} type={"primary"}>
             <Link
@@ -14,4 +19,4 @@ const DownloadBtn = ({ href }: { href: string | null }) => {
     </>
 }
 
-export default memo(DownloadBtn);
+export default observer(DownloadBtn);

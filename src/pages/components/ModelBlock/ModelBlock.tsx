@@ -1,13 +1,21 @@
+import { GeneratorStor } from "@/entities";
 import { Modal } from "antd";
-import { memo } from "react";
+import { observer } from "mobx-react-lite";
 
-type Props = {
-    handleOk: any;
-    handleCancel: any
-    isModalOpen: any
-}
+const ModelBlock = () => {
 
-const ModelBlock = ({ handleOk, handleCancel, isModalOpen }: Props) => {
+    const {
+        store: { isModalOpen, setIsModalOpen, changeDoc },
+    } = GeneratorStor;
+
+    const handleOk = () => {
+        changeDoc();
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => setIsModalOpen(false);
+
+
     return (<>
         <Modal
             cancelText={"Отменить"}
@@ -22,4 +30,4 @@ const ModelBlock = ({ handleOk, handleCancel, isModalOpen }: Props) => {
     </>)
 }
 
-export default memo(ModelBlock);
+export default observer(ModelBlock);

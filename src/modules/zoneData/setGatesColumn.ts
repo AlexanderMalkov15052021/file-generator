@@ -3,7 +3,7 @@ import { MooeData } from "@/types";
 
 const distBetweenStackAndCachePoint = 0.15;
 
-const fromStartToTargetPoint = 0.4;  // от начала до точки заезда
+const fromStartToTargetPoint = 0.4;
 
 const fromStackToFirstCachePoint = 1.35 + distBetweenStackAndCachePoint;
 

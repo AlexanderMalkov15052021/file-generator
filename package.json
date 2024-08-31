@@ -12,6 +12,8 @@
     "@ant-design/icons": "^5.4.0",
     "@ant-design/nextjs-registry": "^1.0.0",
     "antd": "^5.19.3",
+    "mobx": "^6.13.1",
+    "mobx-react-lite": "^4.0.7",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"

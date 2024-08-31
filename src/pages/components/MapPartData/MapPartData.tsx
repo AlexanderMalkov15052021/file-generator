@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Radio } from 'antd';
 import Title from "antd/es/typography/Title";
@@ -9,43 +7,21 @@ import { RadioChangeEvent } from "antd/lib";
 
 import { BoxPlotTwoTone, ProfileTwoTone } from '@ant-design/icons';
 import { FieldType } from "@/types";
-
-type Props = {
-    mooeData: any;
-    zoneType: any;
-    numColumn: any;
-    columnSide: any;
-    setColumnSide: any;
-    setNumColumn: any;
-    setZoneType: any;
-    setFormValues: any;
-    showModal: any;
-}
-
-const MapPartData = ({
-    mooeData, zoneType, numColumn, columnSide, setColumnSide,
-    setNumColumn, setZoneType, setFormValues, showModal
-}: Props) => {
+import { GeneratorStor } from "@/entities";
+import { observer } from "mobx-react-lite";
 
 
+const MapPartData = () => {
 
+    const {
+        store: {
+            mooeDoc, numColumn, zoneType, columnSide, setNumColumn, setFormValues,
+            setZoneType, setColumnSide, setIsModalOpen
+        },
+    } = GeneratorStor;
 
+    const onChangeNumColumn = (evt: RadioChangeEvent) => setNumColumn(evt.target.value);
 
-
-
-    // const [roadDir1, setRoadDir1] = useState(1); 
-    // const [roadDir2, setRoadDir2] = useState(1);
-
-
-    // const onChangeRoadDir1 = (evt: RadioChangeEvent) => {
-    //     setRoadDir1(evt.target.value);
-    // };
-    // const onChangeRoadDir2 = (evt: RadioChangeEvent) => {
-    //     setRoadDir2(evt.target.value);
-    // };
-    const onChangeNumColumn = (evt: RadioChangeEvent) => {
-        setNumColumn(evt.target.value);
-    };
     const onChangeColumnSide = (evt: RadioChangeEvent) => {
         setColumnSide(evt.target.value);
     };
@@ -55,7 +31,7 @@ const MapPartData = ({
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         setFormValues(values);
-        showModal();
+        setIsModalOpen(true);
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -187,89 +163,48 @@ const MapPartData = ({
                             <Input type="number" autoComplete="on" />
                         </Form.Item>
 
-                        {/* <Title level={5}>Угол поворота:</Title>
-
-                        <Form.Item<FieldType>
-                            label="Ѳ"
-                            name="angle2"
-                            rules={[{ required: true, message: 'Пожалуйста, введите угол поворота второй точки!' }]}
-                            className={styles["input-wrapper"]}
-                        >
-                            <Input type="number" autoComplete="on" />
-                        </Form.Item> */}
                     </div>
                 </div>
 
                 <div className={styles["form-item"]}>
                     <Title className={styles["item-title"]} level={4}>Характеристики</Title>
-
-                    <Title level={5}>Угол поворота:</Title>
-
-                    <Form.Item<FieldType>
-                        label="Ѳ"
-                        name="angle1"
-                        rules={[{ required: true, message: 'Пожалуйста, введите угол поворота!' }]}
-                        className={styles["input-wrapper"]}
-                    >
-                        <Input max={180} min={-180} type="number" autoComplete="on" />
-                    </Form.Item>
-
-                    {zoneType === 1 && numColumn === 2 && <div>
-                        <Title level={5}>Расстояние между колоннами:</Title>
+                    <div className={styles["form-item-block"]}>
+                        <Title level={5}>Угол поворота:</Title>
 
                         <Form.Item<FieldType>
-                            label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
-                            name="columnsInterval"
-                            rules={[{ required: true, message: 'Пожалуйста, введите расстояние между колоннами!' }]}
+                            label="Ѳ"
+                            name="angle1"
+                            rules={[{ required: true, message: 'Пожалуйста, введите угол поворота!' }]}
                             className={styles["input-wrapper"]}
                         >
-                            <Input type="number" autoComplete="on" />
+                            <Input max={180} min={-180} step={0.1} type="number" autoComplete="on" />
                         </Form.Item>
-                    </div>}
 
-                    {/* <div className={styles["form-item-block"]}>
-                        <Title level={5}>Главная дорога 1:</Title>
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Расстояние между колоннами:</Title>
 
-                        <Radio.Group onChange={onChangeRoadDir1} value={roadDir1} className={styles["radio-group"]}>
-                            <Radio value={1}>Прямое</Radio>
-                            <Radio value={2}>Обратное</Radio>
-                            <Radio value={3}>Двунаправленное</Radio>
-                        </Radio.Group>
+                            <Form.Item<FieldType>
+                                label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
+                                name="columnsInterval"
+                                rules={[{ required: true, message: 'Пожалуйста, введите расстояние между колоннами!' }]}
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
                     </div>
-
-                    <div className={styles["form-item-block"]}>
-                        <Title level={5}>Главная дорога 2:</Title>
-
-                        <Radio.Group onChange={onChangeRoadDir2} value={roadDir2} className={styles["radio-group"]}>
-                            <Radio value={1}>Прямое</Radio>
-                            <Radio value={2}>Обратное</Radio>
-                            <Radio value={3}>Двунаправленное</Radio>
-                        </Radio.Group>
-                    </div> */}
-
                 </div>
-
             </div>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }} className={styles["submit-btn"]}>
-                <Button disabled={!mooeData ? true : false} type="primary" htmlType="submit">
+                <Button disabled={!mooeDoc ? true : false} type="primary" htmlType="submit">
                     Применить
                 </Button>
             </Form.Item>
-
-
-
-
-
-
-
-
-
-
-            
 
         </Form>
     </>)
 }
 
-export default memo(MapPartData);
+export default observer(MapPartData);
