@@ -9,28 +9,30 @@ import { RadioChangeEvent } from "antd/lib";
 
 import { BoxPlotTwoTone, ProfileTwoTone } from '@ant-design/icons';
 import { FieldType } from "@/types";
-import { setGatesColumn } from "@/modules/zoneData/setGatesColumn";
-import { setOutsideColumn } from "@/modules/zoneData/setOutsideColumn";
-// import { setInnerColumn } from "@/modules/zoneData/setInnerColumn";
-import { setInnerColumnTmp } from "@/modules/zoneData/setInnerColumnTmp";
-import { setSingleInnerColumn } from "@/modules/zoneData/setSingleInnerColumn";
 
 type Props = {
     mooeData: any;
-    setDoc: any;
     zoneType: any;
     numColumn: any;
     columnSide: any;
-    numBlock: any;
     setColumnSide: any;
     setNumColumn: any;
     setZoneType: any;
-    setNumBlock: any;
+    setFormValues: any;
+    showModal: any;
 }
 
 const MapPartData = ({
-    mooeData, setDoc, zoneType, numColumn, columnSide, numBlock, setColumnSide, setNumColumn, setZoneType, setNumBlock
+    mooeData, zoneType, numColumn, columnSide, setColumnSide,
+    setNumColumn, setZoneType, setFormValues, showModal
 }: Props) => {
+
+
+
+
+
+
+
     // const [roadDir1, setRoadDir1] = useState(1); 
     // const [roadDir2, setRoadDir2] = useState(1);
 
@@ -52,34 +54,13 @@ const MapPartData = ({
     };
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-
-        if (zoneType === 1 && numColumn === 1 && columnSide === 1) {
-            setOutsideColumn(values, mooeData, mooeData.mLaneMarks.length, numBlock);
-        }
-
-        if (zoneType === 1 && numColumn === 1 && columnSide === 2) {
-            setSingleInnerColumn(values, mooeData, mooeData.mLaneMarks.length);
-        }
-
-        if (zoneType === 1 && numColumn === 2) {
-            setOutsideColumn(values, mooeData, mooeData.mLaneMarks.length, numBlock);
-            setInnerColumnTmp(values, mooeData, mooeData.mLaneMarks.length + 1000);
-        }
-
-        if (zoneType === 2) {
-            setGatesColumn(values, mooeData, mooeData.mLaneMarks.length);
-        }
-
-        const dock = JSON.parse(JSON.stringify(mooeData));
-
-        setDoc(dock);
-
-        setNumBlock((num: number) => ++num);
-
+        setFormValues(values);
+        showModal();
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        setFormValues(null);
     };
 
     return (<>
@@ -275,6 +256,18 @@ const MapPartData = ({
                     Применить
                 </Button>
             </Form.Item>
+
+
+
+
+
+
+
+
+
+
+            
+
         </Form>
     </>)
 }
