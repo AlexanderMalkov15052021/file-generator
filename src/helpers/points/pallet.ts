@@ -1,5 +1,3 @@
-import { toRadians } from "../math"
-
 export const pallet = (
     lastNum: number, lastId: number, colNum: number, pointX: number, pointY: number, angle: number, index: number
 ) => {
@@ -12,10 +10,10 @@ export const pallet = (
         "mLaneMarkType": 11,
         "mLaneMarkWidth": 0.3,
         "mLaneMarkXYZW": {
-            "w": Math.cos(toRadians(angle / 2)),
+            "w": Math.cos(angle / 2),
             "x": pointX,
             "y": pointY,
-            "z": Math.sin(toRadians(angle / 2))
+            "z": Math.sin(angle / 2)
         },
         "neighborsID": []
     }

@@ -1,16 +1,11 @@
 import { fromStackToCachePoint } from "@/constants";
 import { getAtan2 } from "@/helpers/math";
 import { Coords, MooeDoc } from "@/types";
-import { GeneratorStor } from "@/entities";
 import { cachePoint } from "@/helpers/points/cachePoint";
 
 export const addCachePoints = (
-    mooeDoc: MooeDoc, newPoints: Coords[], lastPointId: number, lastNum: number, sideAngle: number
+    mooeDoc: MooeDoc, newPoints: Coords[], lastPointId: number, lastNum: number, sideAngle: number, isInnerColumn?: boolean
 ) => {
-
-    const {
-        store: { formValues },
-    } = GeneratorStor;
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
 
@@ -20,8 +15,10 @@ export const addCachePoints = (
         const targetPointY = Math.sin(angle + sideAngle) * fromStackToCachePoint + points.y;
 
         mooeDoc?.mLaneMarks.push(
-            cachePoint(lastPointId + index, targetPointX, targetPointY, formValues?.angle ?? 0, lastNum, 1, index + 1, "C")
-        );
+            cachePoint(
+                lastPointId + index, targetPointX, targetPointY, angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
+                lastNum, 1, index + 1, "C"
+            ));
     });
 
 }

@@ -12,15 +12,15 @@ import { addRowTargetPoints } from "../modifyDoc/addRowTargetPoints";
 import { addTargetPoints } from "../modifyDoc/addTargetPoints";
 import { addCachePoints } from "../modifyDoc/addCachePoints";
 
-export const addInnerStream = (mooeDoc: MooeDoc) => {
+export const addInnerStream = (mooeDoc: MooeDoc, isInnerColumn?: boolean) => {
 
     const lastStreamNum = getLastStreamNum(mooeDoc);
 
     const lastPointId = getLastPointId(mooeDoc);
 
-    const firstRowPoints = getFirstRowPoints();
+    const firstRowPoints = getFirstRowPoints(isInnerColumn);
 
-    addPoints(mooeDoc, firstRowPoints, lastPointId + 1, lastStreamNum + 1);
+    addPoints(mooeDoc, firstRowPoints, lastPointId + 1, lastStreamNum + 1, true);
 
     const startRoadPoints = addStartRoadPoints(mooeDoc, firstRowPoints, lastPointId + 1 + firstRowPoints.length, Math.PI / 2);
 
@@ -38,9 +38,9 @@ export const addInnerStream = (mooeDoc: MooeDoc) => {
         mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 5), lastStreamNum + 1, Math.PI * 3 / 2, -1, Math.PI / 2
     );
 
-    addTargetPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 6), lastStreamNum + 1, Math.PI * 3 / 2);
+    addTargetPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 6), lastStreamNum + 1, Math.PI * 3 / 2, true);
 
-    addCachePoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 7), lastStreamNum + 1, Math.PI * 3 / 2);
+    addCachePoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 7), lastStreamNum + 1, Math.PI * 3 / 2, true);
 
     return mooeDoc;
 }
