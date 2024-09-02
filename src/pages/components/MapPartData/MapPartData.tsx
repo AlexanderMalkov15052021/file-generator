@@ -10,7 +10,7 @@ import { FieldType } from "@/types";
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 
-export const MapPartData = observer(() => {
+const MapPartData = observer(() => {
 
     const {
         store: {
@@ -219,3 +219,5 @@ export const MapPartData = observer(() => {
         </Form>
     </>)
 });
+
+export default MapPartData;

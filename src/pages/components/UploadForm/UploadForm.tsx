@@ -2,7 +2,7 @@ import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 import { ChangeEvent, FormEvent } from "react";
 
-export const UploadForm = observer(() => {
+const UploadForm = observer(() => {
 
     const {
         store: { isLoading, refFileName, setIsMessageShow, setIsLoading, setMooeDoc, changeHistory, setLoadingTime, setRefFileName },
@@ -58,3 +58,5 @@ export const UploadForm = observer(() => {
         </form>
     </>
 });
+
+export default UploadForm;

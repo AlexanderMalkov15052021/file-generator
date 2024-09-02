@@ -3,13 +3,13 @@ import Head from "next/head";
 import { Image } from 'antd/lib';
 import Title from "antd/lib/typography/Title";
 
-import { DrawerBlock } from "./components/DrawerBlock/DrawerBlock";
-import { TypeErrorMessage } from "./components/TypeErrorMessage/TypeErrorMessage";
-import { UploadForm } from "./components/UploadForm/UploadForm";
-import { LoadingBlock } from "./components/LoadingBlock/LoadingBlock";
-import { DownloadBtn } from "./components/DownloadBtn/DownloadBtn";
-import { MapPartData } from "./components/MapPartData/MapPartData";
-import { ModelBlock } from "./components/ModelBlock/ModelBlock";
+import DrawerBlock from "./components/DrawerBlock/DrawerBlock";
+import TypeErrorMessage from "./components/TypeErrorMessage/TypeErrorMessage";
+import UploadForm from "./components/UploadForm/UploadForm";
+import LoadingBlock from "./components/LoadingBlock/LoadingBlock";
+import DownloadBtn from "./components/DownloadBtn/DownloadBtn";
+import MapPartData from "./components/MapPartData/MapPartData";
+import ModelBlock from "./components/ModelBlock/ModelBlock";
 
 export default function Home() {
 

@@ -2,7 +2,7 @@ import { GeneratorStor } from "@/entities";
 import { Modal } from "antd/lib";
 import { observer } from "mobx-react-lite";
 
-export const ModelBlock = observer(() => {
+const ModelBlock = observer(() => {
 
     const {
         store: { isModalOpen, setIsModalOpen, changeDoc },
@@ -29,3 +29,5 @@ export const ModelBlock = observer(() => {
         </Modal>
     </>)
 });
+
+export default ModelBlock;

@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { GeneratorStor } from "@/entities";
 
 
-export const DrawerBlock = observer(() => {
+const DrawerBlock = observer(() => {
 
     const {
         store: { history, historyIndex, isOpenDrawer, changeHistoryIndex, setMooeDoc, setIsOpenDrawer },
@@ -68,3 +68,5 @@ export const DrawerBlock = observer(() => {
         </Drawer>
     </>)
 });
+
+export default DrawerBlock;

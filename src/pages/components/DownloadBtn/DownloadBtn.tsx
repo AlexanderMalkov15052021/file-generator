@@ -3,7 +3,7 @@ import { Button } from "antd/lib";
 import Link from "antd/lib/typography/Link";
 import { observer } from "mobx-react-lite";
 
-export const DownloadBtn = observer(() => {
+const DownloadBtn = observer(() => {
     const {
         store: { href },
     } = GeneratorStor;
@@ -18,3 +18,5 @@ export const DownloadBtn = observer(() => {
         </Button>
     </>
 });
+
+export default DownloadBtn;

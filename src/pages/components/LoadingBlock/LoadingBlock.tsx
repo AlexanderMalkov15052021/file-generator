@@ -2,7 +2,7 @@ import { GeneratorStor } from "@/entities";
 import { Spin } from "antd/lib";
 import { observer } from "mobx-react-lite";
 
-export const LoadingBlock = observer(() => {
+const LoadingBlock = observer(() => {
     const {
         store: { isLoading, loadingTime },
     } = GeneratorStor;
@@ -20,3 +20,5 @@ export const LoadingBlock = observer(() => {
         </>
     );
 });
+
+export default LoadingBlock;

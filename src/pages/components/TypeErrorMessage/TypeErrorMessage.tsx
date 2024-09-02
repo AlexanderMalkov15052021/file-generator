@@ -1,7 +1,7 @@
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 
-export const TypeErrorMessage = observer(() => {
+const TypeErrorMessage = observer(() => {
 
     const {
         store: { isMessageShow },
@@ -9,3 +9,5 @@ export const TypeErrorMessage = observer(() => {
 
     return isMessageShow && <p className={"message"}>Необходим файл с расширением .mooe!</p>
 });
+
+export default TypeErrorMessage;
