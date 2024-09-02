@@ -1,10 +1,11 @@
-import { setGatesColumn } from "@/modules/zoneData/setGatesColumn";
-import { setInnerColumnTmp } from "@/modules/zoneData/setInnerColumnTmp";
-import { setInnerGatesColumn } from "@/modules/zoneData/setInnerGatesColumn";
-import { setOutsideColumn } from "@/modules/zoneData/setOutsideColumn";
-import { setSingleInnerColumn } from "@/modules/zoneData/setSingleInnerColumn";
+// import { setGatesColumn } from "@/modules/zoneData/setGatesColumn";
+// import { setInnerColumnTmp } from "@/modules/zoneData/setInnerColumnTmp";
+// import { setInnerGatesColumn } from "@/modules/zoneData/setInnerGatesColumn";
+// import { setOutsideColumn } from "@/modules/zoneData/setOutsideColumn";
+// import { setSingleInnerColumn } from "@/modules/zoneData/setSingleInnerColumn";
 import { FieldType, MooeDoc } from "@/types";
 import { makeAutoObservable } from "mobx";
+import { modifyDoc } from "../../modules/changeDoc";
 
 class GeneratorStor {
 
@@ -38,8 +39,8 @@ class GeneratorStor {
         this.historyIndex = val;
     }
 
-    changeHistory = (dock: MooeDoc) => {
-        this.history.push(dock);
+    changeHistory = (doc: MooeDoc) => {
+        this.history.push(doc);
         this.changeHistoryIndex(this.history.length);
     }
 
@@ -92,34 +93,40 @@ class GeneratorStor {
 
 
     changeDoc = () => {
-        if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 1 && this.mooeDoc) {
-            setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
-        }
 
-        if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 2 && this.mooeDoc) {
-            setSingleInnerColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        }
+        const doc = modifyDoc(this.mooeDoc);
 
-        if (this.zoneType === 1 && this.numColumn === 2 && this.mooeDoc) {
-            setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
-            setInnerColumnTmp(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length + 1000);
-        }
+        this.setMooeDoc(doc);
 
-        if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 1) {
-            setGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        }
 
-        if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 2) {
-            setInnerGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        }
+        // if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 1 && this.mooeDoc) {
+        //     setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
+        // }
 
-        const dock = JSON.parse(JSON.stringify(this.mooeDoc));
+        // if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 2 && this.mooeDoc) {
+        //     setSingleInnerColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
+        // }
 
-        this.setMooeDoc(dock);
+        // if (this.zoneType === 1 && this.numColumn === 2 && this.mooeDoc) {
+        //     setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
+        //     setInnerColumnTmp(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length + 1000);
+        // }
 
-        this.changeHistory(dock);
+        // if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 1) {
+        //     setGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
+        // }
 
-        this.increaseNumBlock();
+        // if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 2) {
+        //     setInnerGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
+        // }
+
+        // const doc = JSON.parse(JSON.stringify(modifiedDoc));
+
+        // this.setMooeDoc(doc);
+
+        // this.changeHistory(doc);
+
+        // this.increaseNumBlock();
     }
 
 }

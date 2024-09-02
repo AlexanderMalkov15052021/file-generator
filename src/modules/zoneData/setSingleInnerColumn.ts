@@ -15,10 +15,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
 
     const newPoints: { x: number; y: number; }[] = [];
 
-    const pointX1 = Number(values.x1) - Math.cos(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointX2 = Number(values.x2) - Math.cos(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointY1 = Number(values.y1) - Math.sin(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointY2 = Number(values.y2) - Math.sin(values.angle1 * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointX1 = Number(values.x1) - Math.cos(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointX2 = Number(values.x2) - Math.cos(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointY1 = Number(values.y1) - Math.sin(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const pointY2 = Number(values.y2) - Math.sin(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
 
     const distBetweenPoints = getDistancePoints(pointX1, pointY1, pointX2, pointY2);
 
@@ -54,17 +54,17 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
 
     newPoints.map((point: any, index: number) => {
 
-        const endPointX = Math.cos(values.angle1 * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
-        const endPointY = Math.sin(values.angle1 * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
+        const endPointX = Math.cos(values.angle * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const endPointY = Math.sin(values.angle * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
 
-        const startPointX = Math.cos(values.angle1 * Math.PI / 180) * distSmallRoad + endPointX;
-        const startPointY = Math.sin(values.angle1 * Math.PI / 180) * distSmallRoad + endPointY;
+        const startPointX = Math.cos(values.angle * Math.PI / 180) * distSmallRoad + endPointX;
+        const startPointY = Math.sin(values.angle * Math.PI / 180) * distSmallRoad + endPointY;
 
-        const targetPointX = Math.cos(values.angle1 * Math.PI / 180) * fromStackToTargetPoint + point.x;
-        const targetPointY = Math.sin(values.angle1 * Math.PI / 180) * fromStackToTargetPoint + point.y;
+        const targetPointX = Math.cos(values.angle * Math.PI / 180) * fromStackToTargetPoint + point.x;
+        const targetPointY = Math.sin(values.angle * Math.PI / 180) * fromStackToTargetPoint + point.y;
 
-        const cachePointX = Math.cos(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.x;
-        const cachePointY = Math.sin(values.angle1 * Math.PI / 180) * fromStackToCachePoint + point.y;
+        const cachePointX = Math.cos(values.angle * Math.PI / 180) * fromStackToCachePoint + point.x;
+        const cachePointY = Math.sin(values.angle * Math.PI / 180) * fromStackToCachePoint + point.y;
 
         mooeDoc?.mLaneMarks.push(
             {
@@ -84,10 +84,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians(values.angle1 / 2)),
+                    "w": Math.cos(toRadians(values.angle / 2)),
                     "x": targetPointX,
                     "y": targetPointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "mMapName": "",
                 "mPrepointID": null,
@@ -111,10 +111,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians(values.angle1 / 2)),
+                    "w": Math.cos(toRadians(values.angle / 2)),
                     "x": cachePointX,
                     "y": cachePointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "neighborsID": []
             }
@@ -130,10 +130,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 0,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians(values.angle1 / 2)),
+                    "w": Math.cos(toRadians(values.angle / 2)),
                     "x": startPointX,
                     "y": startPointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "neighborsID": []
             }
@@ -149,10 +149,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 0,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians(values.angle1 / 2)),
+                    "w": Math.cos(toRadians(values.angle / 2)),
                     "x": endPointX,
                     "y": endPointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "neighborsID": []
             }
@@ -168,10 +168,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians(values.angle1 / 2)),
+                    "w": Math.cos(toRadians(values.angle / 2)),
                     "x": point.x,
                     "y": point.y,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "neighborsID": []
             }
@@ -183,7 +183,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mEndPosition": {
                     "x": endPointX,
                     "y": endPointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 },
                 "mLForbiddenLine": [],
                 "mLForbiddenLineID": -1,
@@ -233,7 +233,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mStartPosition": {
                     "x": startPointX,
                     "y": startPointY,
-                    "z": Math.sin(toRadians(values.angle1 / 2))
+                    "z": Math.sin(toRadians(values.angle / 2))
                 }
             }
         );
@@ -241,11 +241,11 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
 
         if (index !== newPoints.length - 1) {
 
-            const nextEndPointX = Math.cos(values.angle1 * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
-            const nextEndPointY = Math.sin(values.angle1 * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
+            const nextEndPointX = Math.cos(values.angle * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
+            const nextEndPointY = Math.sin(values.angle * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
 
-            const nextStartPointX = Math.cos(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointX;
-            const nextStartPointY = Math.sin(values.angle1 * Math.PI / 180) * distSmallRoad + nextEndPointY;
+            const nextStartPointX = Math.cos(values.angle * Math.PI / 180) * distSmallRoad + nextEndPointX;
+            const nextStartPointY = Math.sin(values.angle * Math.PI / 180) * distSmallRoad + nextEndPointY;
 
             mooeDoc?.mRoads.push(
                 {
@@ -253,7 +253,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                     "mEndPosition": {
                         "x": nextStartPointX,
                         "y": nextStartPointY,
-                        "z": Math.sin(toRadians(values.angle1 / 2))
+                        "z": Math.sin(toRadians(values.angle / 2))
                     },
                     "mLForbiddenLine": [],
                     "mLForbiddenLineID": -1,
@@ -303,7 +303,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                     "mStartPosition": {
                         "x": startPointX,
                         "y": startPointY,
-                        "z": Math.sin(toRadians(values.angle1 / 2))
+                        "z": Math.sin(toRadians(values.angle / 2))
                     }
                 }
             );
@@ -332,10 +332,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle1) / 2) + Math.PI / 4),
+                    "w": Math.cos(toRadians((values.angle) / 2) + Math.PI / 4),
                     "x": leftTargetPointX,
                     "y": leftTargetPointY,
-                    "z": Math.sin(toRadians((values.angle1) / 2) + Math.PI / 4)
+                    "z": Math.sin(toRadians((values.angle) / 2) + Math.PI / 4)
                 },
                 "mMapName": "",
                 "mPrepointID": null,
@@ -348,11 +348,11 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
 
     const coordsPoint = pointToLine(pointX1, pointY1, pointX2, pointY2, -dist);
 
-    const coordsPointX = Math.cos(values.angle1 * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + coordsPoint.x;
-    const coordsPointY = Math.sin(values.angle1 * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + coordsPoint.y;
+    const coordsPointX = Math.cos(values.angle * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + coordsPoint.x;
+    const coordsPointY = Math.sin(values.angle * Math.PI / 180) * (distSmallRoad - fromStackToEnd) + coordsPoint.y;
 
-    const newEndPointX = Math.cos(values.angle1 * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].x;
-    const newEndPointY = Math.sin(values.angle1 * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].y;
+    const newEndPointX = Math.cos(values.angle * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].x;
+    const newEndPointY = Math.sin(values.angle * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + newPoints[0].y;
 
     mooeDoc?.mLaneMarks.push(
         {
@@ -364,10 +364,10 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
             "mLaneMarkType": 0,
             "mLaneMarkWidth": 0.3,
             "mLaneMarkXYZW": {
-                "w": Math.cos(toRadians(values.angle1 / 2)),
+                "w": Math.cos(toRadians(values.angle / 2)),
                 "x": coordsPointX,
                 "y": coordsPointY,
-                "z": Math.sin(toRadians(values.angle1 / 2))
+                "z": Math.sin(toRadians(values.angle / 2))
             },
             "neighborsID": []
         }
@@ -379,7 +379,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
             "mEndPosition": {
                 "x": newEndPointX,
                 "y": newEndPointY,
-                "z": Math.sin(toRadians(values.angle1 / 2))
+                "z": Math.sin(toRadians(values.angle / 2))
             },
             "mLForbiddenLine": [],
             "mLForbiddenLineID": -1,
@@ -429,7 +429,7 @@ export const setSingleInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength:
             "mStartPosition": {
                 "x": coordsPointX,
                 "y": coordsPointY,
-                "z": Math.sin(toRadians(values.angle1 / 2))
+                "z": Math.sin(toRadians(values.angle / 2))
             }
         }
     );

@@ -52,17 +52,17 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
 
     newPoints.map((point: any, index: number) => {
 
-        const endPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
-        const endPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
+        const endPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const endPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
 
-        const startPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180) * distSmallRoad + endPointX;
-        const startPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180) * distSmallRoad + endPointY;
+        const startPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180) * distSmallRoad + endPointX;
+        const startPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180) * distSmallRoad + endPointY;
 
-        const targetPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180) * fromStackToTargetPoint + point.x;
-        const targetPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180) * fromStackToTargetPoint + point.y;
+        const targetPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180) * fromStackToTargetPoint + point.x;
+        const targetPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180) * fromStackToTargetPoint + point.y;
 
-        const cachePointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180) * fromStackToCachePoint + point.x;
-        const cachePointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180) * fromStackToCachePoint + point.y;
+        const cachePointX = Math.cos((Math.PI + values.angle) * Math.PI / 180) * fromStackToCachePoint + point.x;
+        const cachePointY = Math.sin((Math.PI + values.angle) * Math.PI / 180) * fromStackToCachePoint + point.y;
 
         mooeDoc?.mLaneMarks.push(
             {
@@ -82,10 +82,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": targetPointX,
                     "y": targetPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "mMapName": "",
                 "mPrepointID": null,
@@ -109,10 +109,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": cachePointX,
                     "y": cachePointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -128,10 +128,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 0,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": startPointX,
                     "y": startPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -147,10 +147,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 0,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": endPointX,
                     "y": endPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -166,10 +166,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": point.x,
                     "y": point.y,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -181,7 +181,7 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mEndPosition": {
                     "x": endPointX,
                     "y": endPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "mLForbiddenLine": [],
                 "mLForbiddenLineID": -1,
@@ -231,7 +231,7 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mStartPosition": {
                     "x": startPointX,
                     "y": startPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 }
             }
         );
@@ -239,11 +239,11 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
 
         if (index !== newPoints.length - 1) {
 
-            const nextEndPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
-            const nextEndPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
+            const nextEndPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
+            const nextEndPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
 
-            const nextStartPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180) * distSmallRoad + nextEndPointX;
-            const nextStartPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180) * distSmallRoad + nextEndPointY;
+            const nextStartPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180) * distSmallRoad + nextEndPointX;
+            const nextStartPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180) * distSmallRoad + nextEndPointY;
 
             mooeDoc?.mRoads.push(
                 {
@@ -251,7 +251,7 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                     "mEndPosition": {
                         "x": nextStartPointX,
                         "y": nextStartPointY,
-                        "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                        "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                     },
                     "mLForbiddenLine": [],
                     "mLForbiddenLineID": -1,
@@ -301,15 +301,15 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                     "mStartPosition": {
                         "x": startPointX,
                         "y": startPointY,
-                        "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                        "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                     }
                 }
             );
         }
 
-        const leftTargetPointX = Math.cos((Math.PI + values.angle1) * Math.PI / 180 + Math.PI / 2)
+        const leftTargetPointX = Math.cos((Math.PI + values.angle) * Math.PI / 180 + Math.PI / 2)
             * fromStartPointSmallRoadToTargetPoint + startPointX;
-        const leftTargetPointY = Math.sin((Math.PI + values.angle1) * Math.PI / 180 + Math.PI / 2)
+        const leftTargetPointY = Math.sin((Math.PI + values.angle) * Math.PI / 180 + Math.PI / 2)
             * fromStartPointSmallRoadToTargetPoint + startPointY;
 
         index !== newPoints.length - 1 && mooeDoc?.mLaneMarks.push(
@@ -330,10 +330,10 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((Math.PI + values.angle1) / 2)),
+                    "w": Math.cos(toRadians((Math.PI + values.angle) / 2)),
                     "x": leftTargetPointX,
                     "y": leftTargetPointY,
-                    "z": Math.sin(toRadians((Math.PI + values.angle1) / 2))
+                    "z": Math.sin(toRadians((Math.PI + values.angle) / 2))
                 },
                 "mMapName": "",
                 "mPrepointID": null,

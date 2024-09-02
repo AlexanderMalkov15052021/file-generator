@@ -111,9 +111,13 @@ export type MooeDoc = {
 export type FieldType = {
     x1: number;
     y1: number;
-    angle1: number;
+    angle: number;
     x2: number;
     y2: number;
     numRow: number;
     columnsInterval: number;
+};
+
+export type Coords = {
+    id: number; x: number; y: number 
 };

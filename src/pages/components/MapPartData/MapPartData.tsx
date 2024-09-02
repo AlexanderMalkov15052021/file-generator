@@ -172,7 +172,7 @@ export const MapPartData = observer(() => {
 
                         <Form.Item<FieldType>
                             label="Ѳ"
-                            name="angle1"
+                            name="angle"
                             rules={[{ required: true, message: 'Пожалуйста, введите угол поворота!' }]}
                             className={styles["input-wrapper"]}
                         >

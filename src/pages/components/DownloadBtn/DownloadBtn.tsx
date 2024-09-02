@@ -11,7 +11,7 @@ export const DownloadBtn = observer(() => {
     return <>
         <Button className="buttun-upload" disabled={href ? false : true} type={"primary"}>
             <Link
-                href={`${href ? href : ""}`} download={"test.mooe"}
+                href={`${href ? href : ""}`} download={"domodedovo.mooe"}
             >
                 Скачать .mooe
             </Link>
