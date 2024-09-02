@@ -17,7 +17,7 @@ export const addCachePoints = (
         mooeDoc?.mLaneMarks.push(
             cachePoint(
                 lastPointId + index, targetPointX, targetPointY, angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
-                lastNum, 1, index + 1, "C"
+                lastNum, 1, index + 1, "C", "A"
             ));
     });
 

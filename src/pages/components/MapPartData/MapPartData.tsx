@@ -69,8 +69,8 @@ export const MapPartData = observer(() => {
                             <Title level={5}>Тип зоны:</Title>
 
                             <Radio.Group onChange={onChangeZoneType} value={zoneType} className={styles["common-radio-group"]}>
-                                <Radio value={1}>Буквы</Radio>
-                                <Radio value={2}>Ворота</Radio>
+                                <Radio value={1}>Аллеи</Radio>
+                                <Radio value={2}>Ручьи</Radio>
                             </Radio.Group>
                         </div>
 
@@ -78,11 +78,11 @@ export const MapPartData = observer(() => {
                 </div>
 
                 <div className={styles["form-item"]}>
-                    <Title className={styles["item-title"]} level={4}>{zoneType === 1 ? "Колонны" : "Ряды:"}</Title>
+                    <Title className={styles["item-title"]} level={4}>{zoneType === 1 ? "Аллеи" : "Ряды:"}</Title>
                     <div className={styles["form-item-block"]}>
 
                         {zoneType === 1 && <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Количество колонн:</Title>
+                            <Title level={5}>Количество аллей:</Title>
 
                             <Radio.Group onChange={onChangeNumColumn} value={numColumn} className={styles["common-radio-group"]}>
                                 <Radio value={1}>Одна</Radio>
@@ -108,6 +108,19 @@ export const MapPartData = observer(() => {
                                 <Radio value={1}>Внешняя</Radio>
                                 <Radio value={2}>Внутренняя</Radio>
                             </Radio.Group>
+                        </div>}
+
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Расстояние между аллеями:</Title>
+
+                            <Form.Item<FieldType>
+                                label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
+                                name="columnsInterval"
+                                rules={[{ required: true, message: 'Пожалуйста, введите расстояние между аллеями!' }]}
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input type="number" autoComplete="on" />
+                            </Form.Item>
                         </div>}
 
                     </div>
@@ -165,7 +178,7 @@ export const MapPartData = observer(() => {
                     </div>
                 </div>
 
-                <div className={styles["form-item"]}>
+                {/* {zoneType === 1 && numColumn === 2 && <div className={styles["form-item"]}>
                     <Title className={styles["item-title"]} level={4}>Характеристики</Title>
                     <div className={styles["form-item-block"]}>
                         <Title level={5}>Угол поворота:</Title>
@@ -179,7 +192,7 @@ export const MapPartData = observer(() => {
                             <Input max={180} min={-180} step={0.1} type="number" autoComplete="on" />
                         </Form.Item>
 
-                        {zoneType === 1 && numColumn === 2 && <div>
+                        <div>
                             <Title level={5}>Расстояние между колоннами:</Title>
 
                             <Form.Item<FieldType>
@@ -190,10 +203,11 @@ export const MapPartData = observer(() => {
                             >
                                 <Input type="number" autoComplete="on" />
                             </Form.Item>
-                        </div>}
+                        </div>
 
                     </div>
-                </div>
+                </div>} */}
+
             </div>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }} className={styles["submit-btn"]}>

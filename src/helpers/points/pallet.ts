@@ -1,12 +1,12 @@
 export const pallet = (
-    lastNum: number, lastId: number, colNum: number, pointX: number, pointY: number, angle: number, index: number
+    lastNum: number, lastId: number, colNum: number, pointX: number, pointY: number, angle: number, index: number, zoneName: string
 ) => {
     return {
         "mIsJockeyEndpoint": false,
         "mLaneMarkDescript": "",
-        "mLaneMarkEnName": `A${lastNum}col${colNum}row${index + 1}`,  // A603col01row21
+        "mLaneMarkEnName": `${zoneName}${lastNum}col${colNum}row${index + 1}`,  // A603col01row21
         "mLaneMarkID": lastId + index,
-        "mLaneMarkName": `A${lastNum}col${colNum}row${index + 1}`,  // GT97col01row01
+        "mLaneMarkName": `${zoneName}${lastNum}col${colNum}row${index + 1}`,  // GT97col01row01
         "mLaneMarkType": 11,
         "mLaneMarkWidth": 0.3,
         "mLaneMarkXYZW": {

@@ -1,5 +1,5 @@
-import { getDistancePoints, getRoundedNumber, pointToLine, toRadians } from "@/helpers/math";
-import { MooeDoc } from "@/types";
+import { getAtan2, getDistancePoints, getRoundedNumber, pointToLine, toRadians } from "@/helpers/math";
+import { Coords, MooeDoc } from "@/types";
 
 const distBetweenStackAndCachePoint = 0.15;
 
@@ -64,12 +64,15 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
     //     -136.08
     // ));
 
-    const pointX1 = Number(values.x1) - Math.cos(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointX2 = Number(values.x2) - Math.cos(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointY1 = Number(values.y1) - Math.sin(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
-    const pointY2 = Number(values.y2) - Math.sin(values.angle * Math.PI / 180) * (values.columnsInterval ?? 0);
+    const angle = getAtan2(Number(values?.x1), Number(values?.y1), Number(values?.x2), Number(values?.y2));
 
-    const newPoints: { x: number; y: number; }[] = [];
+
+    const pointX1 = Number(values.x1) - Math.cos(angle) * (values.columnsInterval ?? 0);
+    const pointX2 = Number(values.x2) - Math.cos(angle) * (values.columnsInterval ?? 0);
+    const pointY1 = Number(values.y1) - Math.sin(angle) * (values.columnsInterval ?? 0);
+    const pointY2 = Number(values.y2) - Math.sin(angle) * (values.columnsInterval ?? 0);
+
+    const newPoints: Coords[] = [];
 
     const distBetweenPoints = getDistancePoints(
         pointX1,
@@ -84,7 +87,7 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
 
     if (values.numRow > 2) {
 
-        newPoints.push({ x: pointX1, y: pointY1 });
+        newPoints.push({ x: pointX1, y: pointY1, id: 1 });
 
         for (let i = 0; i < values.numRow - 2; i++) {
             newPoints.push(pointToLine(
@@ -92,16 +95,17 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 pointY1,
                 pointX2,
                 pointY2,
-                dist * (i + 1))
-            );
+                dist * (i + 1),
+                i + 1
+            ));
         }
 
-        newPoints.push({ x: pointX2, y: pointY2 });
+        newPoints.push({ x: pointX2, y: pointY2, id: newPoints.length });
     }
     else {
         newPoints.push(
-            { x: pointX1, y: pointY1 },
-            { x: pointX2, y: pointY2 }
+            { x: pointX1, y: pointY1, id: 1 },
+            { x: pointX2, y: pointY2, id: 2 }
         );
     }
 
@@ -112,61 +116,61 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
 
     newPoints.map((point: any, index: number) => {
 
-        const secondStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackToSecondStack + point.x;
-        const secondStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackToSecondStack + point.y;
+        const secondStackX = Math.cos((angle) * Math.PI / 180) * fromStackToSecondStack + point.x;
+        const secondStackY = Math.sin((angle) * Math.PI / 180) * fromStackToSecondStack + point.y;
 
-        const tothirdStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackTothirdStack + point.x;
-        const tothirdStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackTothirdStack + point.y;
+        const tothirdStackX = Math.cos((angle) * Math.PI / 180) * fromStackTothirdStack + point.x;
+        const tothirdStackY = Math.sin((angle) * Math.PI / 180) * fromStackTothirdStack + point.y;
 
-        const fourthStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackFourthStack + point.x;
-        const fourthStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackFourthStack + point.y;
+        const fourthStackX = Math.cos((angle) * Math.PI / 180) * fromStackFourthStack + point.x;
+        const fourthStackY = Math.sin((angle) * Math.PI / 180) * fromStackFourthStack + point.y;
 
-        const fifthStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackFifthStack + point.x;
-        const fifthStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackFifthStack + point.y;
+        const fifthStackX = Math.cos((angle) * Math.PI / 180) * fromStackFifthStack + point.x;
+        const fifthStackY = Math.sin((angle) * Math.PI / 180) * fromStackFifthStack + point.y;
 
-        const sixthStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackSixthStack + point.x;
-        const sixthStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackSixthStack + point.y;
+        const sixthStackX = Math.cos((angle) * Math.PI / 180) * fromStackSixthStack + point.x;
+        const sixthStackY = Math.sin((angle) * Math.PI / 180) * fromStackSixthStack + point.y;
 
-        const seventhStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackSeventhStack + point.x;
-        const seventhStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackSeventhStack + point.y;
+        const seventhStackX = Math.cos((angle) * Math.PI / 180) * fromStackSeventhStack + point.x;
+        const seventhStackY = Math.sin((angle) * Math.PI / 180) * fromStackSeventhStack + point.y;
 
-        const eighthStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackEighthStack + point.x;
-        const eighthStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackEighthStack + point.y;
+        const eighthStackX = Math.cos((angle) * Math.PI / 180) * fromStackEighthStack + point.x;
+        const eighthStackY = Math.sin((angle) * Math.PI / 180) * fromStackEighthStack + point.y;
 
-        const ninthStackX = Math.cos((values.angle) * Math.PI / 180) * fromStackNinthStack + point.x;
-        const ninthStackY = Math.sin((values.angle) * Math.PI / 180) * fromStackNinthStack + point.y;
-
-
+        const ninthStackX = Math.cos((angle) * Math.PI / 180) * fromStackNinthStack + point.x;
+        const ninthStackY = Math.sin((angle) * Math.PI / 180) * fromStackNinthStack + point.y;
 
 
 
 
-        const firstCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToFirstCachePoint + point.x;
-        const firstCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToFirstCachePoint + point.y;
 
-        const secondCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToSecondCachePoint + point.x;
-        const secondCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToSecondCachePoint + point.y;
 
-        const tothirdCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToTothirdCachePoint + point.x;
-        const tothirdCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToTothirdCachePoint + point.y;
+        const firstCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToFirstCachePoint + point.x;
+        const firstCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToFirstCachePoint + point.y;
 
-        const fourthCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToFourthCachePoint + point.x;
-        const fourthCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToFourthCachePoint + point.y;
+        const secondCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToSecondCachePoint + point.x;
+        const secondCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToSecondCachePoint + point.y;
 
-        const fifthCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToFifthCachePoint + point.x;
-        const fifthCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToFifthCachePoint + point.y;
+        const tothirdCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToTothirdCachePoint + point.x;
+        const tothirdCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToTothirdCachePoint + point.y;
 
-        const sixthCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToSixthCachePoint + point.x;
-        const sixthCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToSixthCachePoint + point.y;
+        const fourthCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToFourthCachePoint + point.x;
+        const fourthCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToFourthCachePoint + point.y;
 
-        const seventhCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToSeventhCachePoint + point.x;
-        const seventhCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToSeventhCachePoint + point.y;
+        const fifthCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToFifthCachePoint + point.x;
+        const fifthCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToFifthCachePoint + point.y;
 
-        const eighthCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToEighthCachePoint + point.x;
-        const eighthCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToEighthCachePoint + point.y;
+        const sixthCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToSixthCachePoint + point.x;
+        const sixthCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToSixthCachePoint + point.y;
 
-        const ninthCachePointX = Math.cos((values.angle) * Math.PI / 180) * fromStackToNinthCachePoint + point.x;
-        const ninthCachePointY = Math.sin((values.angle) * Math.PI / 180) * fromStackToNinthCachePoint + point.y;
+        const seventhCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToSeventhCachePoint + point.x;
+        const seventhCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToSeventhCachePoint + point.y;
+
+        const eighthCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToEighthCachePoint + point.x;
+        const eighthCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToEighthCachePoint + point.y;
+
+        const ninthCachePointX = Math.cos((angle) * Math.PI / 180) * fromStackToNinthCachePoint + point.x;
+        const ninthCachePointY = Math.sin((angle) * Math.PI / 180) * fromStackToNinthCachePoint + point.y;
 
 
 
@@ -191,10 +195,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": firstCachePointX,
                     "y": firstCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -210,10 +214,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": secondCachePointX,
                     "y": secondCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -229,10 +233,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": tothirdCachePointX,
                     "y": tothirdCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -248,10 +252,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": fourthCachePointX,
                     "y": fourthCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -267,10 +271,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": fifthCachePointX,
                     "y": fifthCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -286,10 +290,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": sixthCachePointX,
                     "y": sixthCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -305,10 +309,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": seventhCachePointX,
                     "y": seventhCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -324,10 +328,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": eighthCachePointX,
                     "y": eighthCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -343,10 +347,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 9,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": ninthCachePointX,
                     "y": ninthCachePointY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -369,10 +373,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": secondStackX,
                     "y": secondStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -388,10 +392,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": tothirdStackX,
                     "y": tothirdStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -407,10 +411,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": fourthStackX,
                     "y": fourthStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -426,10 +430,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": fifthStackX,
                     "y": fifthStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -445,10 +449,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": sixthStackX,
                     "y": sixthStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -464,10 +468,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": seventhStackX,
                     "y": seventhStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -483,10 +487,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": eighthStackX,
                     "y": eighthStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -502,10 +506,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": ninthStackX,
                     "y": ninthStackY,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
@@ -521,28 +525,28 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 11,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2)),
+                    "w": Math.cos(toRadians((angle) / 2)),
                     "x": point.x,
                     "y": point.y,
-                    "z": Math.sin(toRadians((values.angle) / 2))
+                    "z": Math.sin(toRadians((angle) / 2))
                 },
                 "neighborsID": []
             }
         );
 
-        const endPointX = Math.cos((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
-        const endPointY = Math.sin((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
+        const endPointX = Math.cos((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const endPointY = Math.sin((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
 
-        const startPointX = Math.cos((values.angle) * Math.PI / 180) * distRow + endPointX;
-        const startPointY = Math.sin((values.angle) * Math.PI / 180) * distRow + endPointY;
+        const startPointX = Math.cos((angle) * Math.PI / 180) * distRow + endPointX;
+        const startPointY = Math.sin((angle) * Math.PI / 180) * distRow + endPointY;
 
         roadsDist.map((dist: number, distIndex: number) => {
 
-            const newEndPointX = Math.cos((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].x;
-            const newEndPointY = Math.sin((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].y;
+            const newEndPointX = Math.cos((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].x;
+            const newEndPointY = Math.sin((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index].y;
 
-            const newStartPointX = Math.cos((values.angle) * Math.PI / 180) * dist + newEndPointX;
-            const newStartPointY = Math.sin((values.angle) * Math.PI / 180) * dist + newEndPointY;
+            const newStartPointX = Math.cos((angle) * Math.PI / 180) * dist + newEndPointX;
+            const newStartPointY = Math.sin((angle) * Math.PI / 180) * dist + newEndPointY;
 
             mooeDoc?.mLaneMarks.push(
                 {
@@ -554,10 +558,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                     "mLaneMarkType": 0,
                     "mLaneMarkWidth": 0.3,
                     "mLaneMarkXYZW": {
-                        "w": Math.cos(toRadians((values.angle) / 2)),
+                        "w": Math.cos(toRadians((angle) / 2)),
                         "x": newStartPointX,
                         "y": newStartPointY,
-                        "z": Math.sin(toRadians((values.angle) / 2))
+                        "z": Math.sin(toRadians((angle) / 2))
                     },
                     "neighborsID": []
                 }
@@ -571,7 +575,7 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                         "mEndPosition": {
                             "x": newEndPointX,
                             "y": newEndPointX,
-                            "z": Math.sin(toRadians((values.angle) / 2))
+                            "z": Math.sin(toRadians((angle) / 2))
                         },
                         "mLForbiddenLine": [],
                         "mLForbiddenLineID": -1,
@@ -621,7 +625,7 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                         "mStartPosition": {
                             "x": newStartPointX,
                             "y": newStartPointY,
-                            "z": Math.sin(toRadians((values.angle) / 2))
+                            "z": Math.sin(toRadians((angle) / 2))
                         }
                     }
                 );
@@ -631,11 +635,11 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
 
         if (index !== newPoints.length - 1) {
 
-            const nextEndPointX = Math.cos((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
-            const nextEndPointY = Math.sin((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
+            const nextEndPointX = Math.cos((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].x;
+            const nextEndPointY = Math.sin((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + newPoints[index + 1].y;
 
-            const nextStartPointX = Math.cos((values.angle) * Math.PI / 180) * distRow + nextEndPointX;
-            const nextStartPointY = Math.sin((values.angle) * Math.PI / 180) * distRow + nextEndPointY;
+            const nextStartPointX = Math.cos((angle) * Math.PI / 180) * distRow + nextEndPointX;
+            const nextStartPointY = Math.sin((angle) * Math.PI / 180) * distRow + nextEndPointY;
 
             mooeDoc?.mRoads.push(
                 {
@@ -643,7 +647,7 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                     "mEndPosition": {
                         "x": nextStartPointX,
                         "y": nextStartPointY,
-                        "z": Math.sin(toRadians((values.angle) / 2))
+                        "z": Math.sin(toRadians((angle) / 2))
                     },
                     "mLForbiddenLine": [],
                     "mLForbiddenLineID": -1,
@@ -693,21 +697,21 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                     "mStartPosition": {
                         "x": startPointX,
                         "y": startPointY,
-                        "z": Math.sin(toRadians((values.angle) / 2))
+                        "z": Math.sin(toRadians((angle) / 2))
                     }
                 }
             );
         }
 
-        const targetEndPointX = Math.cos((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
-        const targetEndPointY = Math.sin((values.angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
+        const targetEndPointX = Math.cos((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.x;
+        const targetEndPointY = Math.sin((angle) * Math.PI / 180 + Math.PI) * fromStackToEnd + point.y;
 
-        const targetStartPointX = Math.cos((values.angle) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointX;
-        const targetStartPointY = Math.sin((values.angle) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointY;
+        const targetStartPointX = Math.cos((angle) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointX;
+        const targetStartPointY = Math.sin((angle) * Math.PI / 180) * roadsDist[roadsDist.length - 1] + targetEndPointY;
 
-        const leftTargetPointX = Math.cos((values.angle) * Math.PI / 180 + Math.PI / 2)
+        const leftTargetPointX = Math.cos((angle) * Math.PI / 180 + Math.PI / 2)
             * fromStartToTargetPoint + targetStartPointX;
-        const leftTargetPointY = Math.sin((values.angle) * Math.PI / 180 + Math.PI / 2)
+        const leftTargetPointY = Math.sin((angle) * Math.PI / 180 + Math.PI / 2)
             * fromStartToTargetPoint + targetStartPointY;
 
         index !== newPoints.length - 1 && mooeDoc?.mLaneMarks.push(
@@ -728,10 +732,10 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
                 "mLaneMarkType": 2,
                 "mLaneMarkWidth": 0.3,
                 "mLaneMarkXYZW": {
-                    "w": Math.cos(toRadians((values.angle) / 2) - Math.PI / 4),
+                    "w": Math.cos(toRadians((angle) / 2) - Math.PI / 4),
                     "x": leftTargetPointX,
                     "y": leftTargetPointY,
-                    "z": Math.sin(toRadians((values.angle) / 2) - Math.PI / 4)
+                    "z": Math.sin(toRadians((angle) / 2) - Math.PI / 4)
                 },
                 "mMapName": "",
                 "mPrepointID": null,
@@ -740,4 +744,6 @@ export const setGatesColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
             }
         );
     });
+
+    return mooeDoc;
 }

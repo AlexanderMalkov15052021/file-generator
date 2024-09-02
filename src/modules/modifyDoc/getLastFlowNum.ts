@@ -1,8 +1,8 @@
 import { MooeDoc } from "@/types";
 
-export const getLastGTNum = (MooeDoc: MooeDoc) => {
+export const getLastFlowNum = (MooeDoc: MooeDoc) => {
 
-    const GTNum = MooeDoc?.mLaneMarks.reduce((accum: number, point: any) => {
+    const flowNum = MooeDoc?.mLaneMarks.reduce((accum: number, point: any) => {
 
         if (point.mLaneMarkName.slice(0, 2) === "GT") {
             const tail = point.mLaneMarkName.slice(2);
@@ -15,5 +15,5 @@ export const getLastGTNum = (MooeDoc: MooeDoc) => {
         return accum;
     }, 0);
 
-    return GTNum ?? 0;
+    return flowNum ?? 0;
 }

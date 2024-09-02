@@ -1,5 +1,4 @@
 import { Coords } from "@/types"
-import { toRadians } from "../math"
 import { distSmallRoad } from "@/constants";
 
 export const road = (
@@ -10,7 +9,7 @@ export const road = (
         "mEndPosition": {
             "x": endPoint.x,
             "y": endPoint.y,
-            "z": Math.sin(toRadians(angle / 2))
+            "z": Math.sin(angle / 2)
         },
         "mLForbiddenLine": [],
         "mLForbiddenLineID": -1,
@@ -60,7 +59,7 @@ export const road = (
         "mStartPosition": {
             "x": startPoint.x,
             "y": startPoint.y,
-            "z": Math.sin(toRadians(angle / 2))
+            "z": Math.sin(angle / 2)
         }
     }
 }

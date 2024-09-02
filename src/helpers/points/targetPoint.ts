@@ -1,6 +1,6 @@
 export const targetPoint = (
     lastId: number, pointX: number, pointY: number, angle: number, lastNum: number,
-    colNum: number, roeNum: number, postName: string, dir: number
+    colNum: number, rowNum: number, postName: string, dir: number
 ) => {
 
     return {
@@ -9,9 +9,9 @@ export const targetPoint = (
         "mID": null,
         "mIsJockeyEndpoint": false,
         "mLaneMarkDescript": "",
-        "mLaneMarkEnName": `A${lastNum}col${colNum}row${roeNum}${postName}`,  // A603col01row21
+        "mLaneMarkEnName": `A${lastNum}col${colNum}row${rowNum}${postName}`,  // A603col01row21
         "mLaneMarkID": lastId,
-        "mLaneMarkName": `A${lastNum}col${colNum}row${roeNum}${postName}`,  // A603col01row21
+        "mLaneMarkName": `A${lastNum}col${colNum}row${rowNum}${postName}`,  // A603col01row21
         "mLaneMarkSize": {
             "height": 0,
             "length": 0,

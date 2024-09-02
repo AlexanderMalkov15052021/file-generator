@@ -3,11 +3,14 @@ import { addInnerStream } from "../addZone/addInnerStream";
 
 import { addOuterStream } from "../addZone/addOuterStream";
 import { GeneratorStor } from "@/entities";
+import { addOuterFlow } from "../addZone/addOuterFlow";
+// import { setGatesColumn } from "../zoneData/setGatesColumn";
+import { setInnerGatesColumn } from "../zoneData/setInnerGatesColumn";
 
 export const modifyDoc = (mooeDoc: MooeDoc) => {
 
     const {
-        store: { zoneType, numColumn, columnSide },
+        store: { zoneType, numColumn, columnSide, formValues },
     } = GeneratorStor;
 
 
@@ -29,15 +32,17 @@ export const modifyDoc = (mooeDoc: MooeDoc) => {
             return getTwoColumn();
         }
 
+        if (zoneType === 2 && mooeDoc && columnSide === 1) {
+            // return setGatesColumn(formValues, mooeDoc, (mooeDoc as any).mLaneMarks.length);
+            return addOuterFlow(mooeDoc);
+        }
+
+        if (zoneType === 2 && mooeDoc && columnSide === 2) {
+            return setInnerGatesColumn(formValues, mooeDoc, (mooeDoc as any).mLaneMarks.length);
+        }
+
         return addOuterStream(mooeDoc);
 
-        // if (zoneType === 2 && mooeDoc && columnSide === 1) {
-        //     setGatesColumn(formValues, mooeDoc, (mooeDoc as any).mLaneMarks.length);
-        // }
-
-        // if (zoneType === 2 && mooeDoc && columnSide === 2) {
-        //     setInnerGatesColumn(formValues, mooeDoc, (mooeDoc as any).mLaneMarks.length);
-        // }
     }
 
 
