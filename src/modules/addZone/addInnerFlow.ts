@@ -12,7 +12,7 @@ import { addFlowCachePoints } from "../modifyDoc/addFlowCachePoints";
 import { addFlowTargetPoints } from "../modifyDoc/addFlowTargetPoints";
 import { addEntranceRoadFlow } from "../modifyDoc/addEntranceRoadFlow";
 
-export const addOuterFlow = (mooeDoc: MooeDoc) => {
+export const addInnerFlow = (mooeDoc: MooeDoc) => {
 
     const lastFlowNum = getLastFlowNum(mooeDoc);
 

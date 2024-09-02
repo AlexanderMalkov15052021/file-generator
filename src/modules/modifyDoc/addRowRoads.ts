@@ -14,7 +14,7 @@ export const addRowRoads = (mooeDoc: MooeDoc, endPoints: Coords[], lastPointId: 
         const endId = endPoints[i].id;
 
         mooeDoc?.mRoads.push(
-            road(startId, endId, endPoints[i - 1], endPoints[i], lastPointId + i + endPoints.length, formValues?.angle ?? 0, 2)
+            road(startId, endId, endPoints[i - 1], endPoints[i], lastPointId + i + endPoints.length, formValues?.angle ?? 0, 1)
         );
     }
 

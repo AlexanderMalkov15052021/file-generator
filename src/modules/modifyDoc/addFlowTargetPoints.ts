@@ -1,4 +1,4 @@
-import { distCenterToTargetPoint } from "@/constants";
+import { distCenterToTargetPoint, roadsDist } from "@/constants";
 import { getAtan2 } from "@/helpers/math";
 import { Coords, MooeDoc } from "@/types";
 import { targetPoint } from "@/helpers/points/targetPoint";
@@ -19,8 +19,9 @@ export const addFlowTargetPoints = (
             pointX,
             pointY,
             angle + Math.PI,
-            lastNum, 1,
+            lastNum,
             index + 1,
+            roadsDist.length,
             "A",
             dirRot
         ));

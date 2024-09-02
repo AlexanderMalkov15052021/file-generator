@@ -8,7 +8,7 @@ export const addFlowPalletPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastI
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
 
-    palletDist.reduce((accum: number, dist: number) => {
+    palletDist.reduce((accum: number, dist: number, distIndex: number) => {
 
         newPoints.map((coords: Coords, index: number) => {
 
@@ -18,11 +18,11 @@ export const addFlowPalletPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastI
             mooeDoc?.mLaneMarks.push(pallet(
                 lastNum,
                 lastId + accum,
-                1,
+                index + 1,
+                distIndex + 2,
                 pointX,
                 pointY,
                 angle + (isInnerColumn ? Math.PI / 2 : -Math.PI / 2),
-                index + newPoints.length + accum,
                 "GT"
             ));
 

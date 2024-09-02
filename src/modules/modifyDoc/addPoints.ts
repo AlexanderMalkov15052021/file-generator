@@ -16,12 +16,12 @@ export const addPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number,
         mooeDoc?.mLaneMarks.push(
             pallet(
                 lastNum,
-                lastId,
+                lastId + index,
+                index + 1,
                 1,
                 coords.x,
                 coords.y,
-                angle + (isInnerColumn ? Math.PI / 2 : -Math.PI / 2),
-                index,
+                angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
                 zoneType === 1 ? "A" : "GT"
             ));
 

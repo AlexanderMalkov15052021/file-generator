@@ -8,9 +8,9 @@ export const addFlowCachePoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
 
-    cachePointDist.reduce((accum: number, dist: number) => {
+    cachePointDist.reduce((accum: number, dist: number, distIndex: number) => {
 
-        newPoints.map((coords: Coords) => {
+        newPoints.map((coords: Coords, index: number) => {
 
             const pointX = Math.cos(angle + sideAngle) * dist + coords.x;
             const pointY = Math.sin(angle + sideAngle) * dist + coords.y;
@@ -21,8 +21,8 @@ export const addFlowCachePoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId
                 pointY,
                 angle + (isInnerColumn ? Math.PI / 2 : -Math.PI / 2),
                 lastNum,
-                1,
-                accum,
+                index + 1,
+                distIndex + 2,
                 "C",
                 "GT"
             ));
