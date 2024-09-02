@@ -35,7 +35,7 @@ export const setInnerColumnTmp = (values: any, mooeDoc: MooeDoc, indexLength: nu
         newPoints.push({ x: pointX1, y: pointY1 });
 
         for (let i = 0; i < values.numRow - 2; i++) {
-            newPoints.push(pointToLine(pointX1, pointY1, pointX2, pointY2, dist * (i + 1)));
+            newPoints.push(pointToLine(pointX1, pointY1, pointX2, pointY2, dist * (i + 1), 123));
         }
 
         newPoints.push({ x: pointX2, y: pointY2 });
@@ -350,7 +350,7 @@ export const setInnerColumnTmp = (values: any, mooeDoc: MooeDoc, indexLength: nu
 
     });
 
-    const coordsPoint = pointToLine(pointX1, pointY1, pointX2, pointY2, -dist);
+    const coordsPoint = pointToLine(pointX1, pointY1, pointX2, pointY2, -dist, 123);
 
     const coordsPointX = Math.cos(values.angle * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + coordsPoint.x;
     const coordsPointY = Math.sin(values.angle * Math.PI / 180) * (-distSmallRoad + fromStackToEnd) + coordsPoint.y;

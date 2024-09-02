@@ -34,7 +34,7 @@ export const setInnerColumn = (values: any, mooeDoc: MooeDoc, indexLength: numbe
             newPoints.push(pointToLine(
                 Number(values.x1) + Number(values.columnsInterval),
                 values.y1, Number(values.x2) + Number(values.columnsInterval),
-                values.y2, dist * (i + 1))
+                values.y2, dist * (i + 1), 123)
             );
         }
 
