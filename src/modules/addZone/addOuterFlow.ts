@@ -20,7 +20,7 @@ export const addOuterFlow = (mooeDoc: MooeDoc) => {
 
     const firstRowPoints = getFirstRowPoints();
 
-    addPoints(mooeDoc, firstRowPoints, lastPointId + 1, lastFlowNum + 1);
+    addPoints(mooeDoc, firstRowPoints, lastPointId + 1);
 
     const flowRoadsPoints = addFlowRoadsPoints(mooeDoc, firstRowPoints, lastPointId + 1 + firstRowPoints.length, Math.PI * 3 / 2);
 

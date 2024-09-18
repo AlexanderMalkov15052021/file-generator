@@ -2,10 +2,15 @@ import { distCenterToTargetPoint, roadsDist } from "@/constants";
 import { getAtan2 } from "@/helpers/math";
 import { Coords, MooeDoc } from "@/types";
 import { targetPoint } from "@/helpers/points/targetPoint";
+import { GeneratorStor } from "@/entities";
 
 export const addFlowTargetPoints = (
     mooeDoc: MooeDoc, newPoints: Coords[], lastPointId: number, lastNum: number, dirPoint: number, dirRot: number
 ) => {
+
+    const {
+        store: { formValues, zoneType },
+    } = GeneratorStor;
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
 
@@ -23,7 +28,8 @@ export const addFlowTargetPoints = (
             index + 1,
             roadsDist.length,
             "前置点",
-            dirRot
+            dirRot,
+            zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT"
         ));
     });
 
