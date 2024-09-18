@@ -25,8 +25,8 @@ export const addFlowTargetPoints = (
             pointY,
             angle + Math.PI,
             lastNum,
-            index + 1,
-            roadsDist.length,
+            String(index + 1),
+            String(roadsDist.length),
             "前置点",
             dirRot,
             zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT"

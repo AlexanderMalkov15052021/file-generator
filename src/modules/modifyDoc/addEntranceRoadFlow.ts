@@ -21,7 +21,7 @@ export const addEntranceRoadFlow = (
     const newPointX = Math.cos(angle + dirEndPoint) * fromStackToCachePoint + pointX;
     const newPointY = Math.sin(angle + dirEndPoint) * fromStackToCachePoint + pointY;
 
-    mooeDoc?.mLaneMarks.push(roadPoint(lastPointId, newPointX, newPointY, angle));
+    mooeDoc?.mLaneMarks.push(roadPoint("", lastPointId, newPointX, newPointY, angle));
 
     const endId = endPoints[0].id;
 
@@ -31,6 +31,7 @@ export const addEntranceRoadFlow = (
             endId,
             { x: newPointX, y: newPointY, id: lastPointId },
             endPoints[0],
+            300,
             300,
             formValues?.angle ?? 0,
             2

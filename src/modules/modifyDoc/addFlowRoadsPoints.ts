@@ -19,7 +19,7 @@ export const addFlowRoadsPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId
             const pointX = Math.cos(angle + sideAngle) * dist + coords.x;
             const pointY = Math.sin(angle + sideAngle) * dist + coords.y;
 
-            mooeDoc?.mLaneMarks.push(roadPoint(lastId + (index + (distIndex * roadsDist.length)), pointX, pointY, formValues?.angle ?? 0));
+            mooeDoc?.mLaneMarks.push(roadPoint("", lastId + (index + (distIndex * roadsDist.length)), pointX, pointY, formValues?.angle ?? 0));
 
             return { x: pointX, y: pointY, id: lastId + (index + (distIndex * roadsDist.length)) }
         });

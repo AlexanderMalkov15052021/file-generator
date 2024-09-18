@@ -18,8 +18,8 @@ export const addFlowPalletPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastI
             mooeDoc?.mLaneMarks.push(pallet(
                 lastNum,
                 lastId + accum,
-                index + 1,
-                distIndex + 2,
+                String(index + 1),
+                String(distIndex + 2),
                 pointX,
                 pointY,
                 angle + (isInnerColumn ? Math.PI / 2 : -Math.PI / 2),

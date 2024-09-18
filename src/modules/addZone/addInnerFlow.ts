@@ -2,7 +2,7 @@ import { MooeDoc } from "@/types";
 import { getLastFlowNum } from "../modifyDoc/getLastFlowNum";
 import { getLastPointId } from "../modifyDoc/getLastPointId";
 import { getFirstRowPoints } from "../modifyDoc/getFirstRowPoints";
-import { addPoints } from "../modifyDoc/addPallets";
+import { addPallets } from "../modifyDoc/addPallets";
 import { addFlowRoadsPoints } from "../modifyDoc/addFlowRoadsPoints";
 import { addRowRoadsFlow } from "../modifyDoc/addRowRoadsFlow";
 import { roadsDist } from "@/constants";
@@ -20,7 +20,7 @@ export const addInnerFlow = (mooeDoc: MooeDoc) => {
 
     const firstRowPoints = getFirstRowPoints();
 
-    addPoints(mooeDoc, firstRowPoints, lastPointId + 1);
+    addPallets(mooeDoc, firstRowPoints);
 
     const flowRoadsPoints = addFlowRoadsPoints(mooeDoc, firstRowPoints, lastPointId + 1 + firstRowPoints.length, Math.PI * 3 / 2);
 
@@ -29,7 +29,7 @@ export const addInnerFlow = (mooeDoc: MooeDoc) => {
     addRowRoadsFlow(mooeDoc, flowRoadsPoints, lastPointId + 1 + (firstRowPoints.length * 2) + additionalIndexes);
 
     addRowRoads(
-        mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], lastPointId + 1 + (firstRowPoints.length * 2) + additionalIndexes * 2
+        mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1]
     );
 
     addFlowPalletPoints(

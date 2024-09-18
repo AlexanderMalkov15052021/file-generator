@@ -16,7 +16,7 @@ export const addRowRoadsFlow = (mooeDoc: MooeDoc, rowPoints: Coords[][], lastPoi
 
             mooeDoc?.mRoads.push(
                 road(startId, endId, rowPoints[a - 1][i], rowPoints[a][i],
-                    lastPointId + 1 + i + (rowPoints.length * a), formValues?.angle ?? 0, 1
+                    lastPointId + 1 + i + (rowPoints.length * a), 100, formValues?.angle ?? 0, 1
                 )
             );
         }

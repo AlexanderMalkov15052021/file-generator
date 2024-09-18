@@ -21,8 +21,8 @@ export const addFlowCachePoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId
                 pointY,
                 angle + (isInnerColumn ? Math.PI / 2 : -Math.PI / 2),
                 lastNum,
-                index + 1,
-                distIndex + 2,
+                String(index + 1),
+                String(distIndex + 2),
                 "C",
                 "GT"
             ));
