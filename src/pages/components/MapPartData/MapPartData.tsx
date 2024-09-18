@@ -9,15 +9,20 @@ import { BoxPlotTwoTone, EditTwoTone, ProfileTwoTone } from '@ant-design/icons';
 import { FieldType } from "@/types";
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
+import { useEffect } from 'react';
 
 const MapPartData = observer(() => {
 
     const {
         store: {
             mooeDoc, numColumn, zoneType, columnSide, dirRoad, lastStreamNum, setNumColumn, setFormValues,
-            setZoneType, setColumnSide, setIsModalOpen, setDirRoad
+            setZoneType, setColumnSide, setIsModalOpen, setDirRoad, setLastStreamNum
         },
     } = GeneratorStor;
+
+    const [form] = Form.useForm();
+
+    useEffect(() => form.setFieldsValue({ alleyNum: lastStreamNum }), [lastStreamNum]);
 
     const onChangeNumColumn = (evt: RadioChangeEvent) => setNumColumn(evt.target.value);
 
@@ -41,13 +46,18 @@ const MapPartData = observer(() => {
         setFormValues(null);
     };
 
+    const onChangeAlleyNum = (evt: any) => {
+        setLastStreamNum(evt.target.value);
+    }
+
     return (<>
-        <div style={{fontSize: "20px"}}><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
+        <div style={{ fontSize: "20px" }}><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
         <Form
+            form={form}
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            initialValues={{ alleyNum: lastStreamNum }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             className={styles["form"]}
@@ -77,15 +87,6 @@ const MapPartData = observer(() => {
                                 <Radio value={2}>Ручьи</Radio>
                             </Radio.Group>
                         </div>
-
-                        {zoneType === 1 && <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Направление колонны:</Title>
-
-                            <Radio.Group onChange={onChangeDirRoad} value={dirRoad} className={styles["common-radio-group"]}>
-                                <Radio value={1}>Прямое</Radio>
-                                <Radio value={2}>Обратное</Radio>
-                            </Radio.Group>
-                        </div>}
 
                     </div>
                 </div>
@@ -137,23 +138,15 @@ const MapPartData = observer(() => {
                         </div>}
 
                         {zoneType === 1 && <div>
-                            <Title level={5}>Начальная буква аллеи:</Title>
+                            <Title level={5}>Крайний номер аллеи:</Title>
 
                             <Form.Item<FieldType>
                                 label={<EditTwoTone style={{ fontSize: '32px' }} />}
-                                name="alleySymbol"
-                                rules={[
-                                    {
-                                        required: true,
-                                        pattern: new RegExp(
-                                            /[a-zA-Z]/g
-                                        ),
-                                        message: 'Пожалуйста, введите начальную букву аллеи!'
-                                    }
-                                ]}
+                                name="alleyNum"
+                                rules={[{ required: true, message: 'Пожалуйста, введите крайний номер аллеи!' }]}
                                 className={styles["input-wrapper"]}
                             >
-                                <Input autoComplete="on" />
+                                <Input onChange={onChangeAlleyNum} type="number" autoComplete="on" />
                             </Form.Item>
                         </div>}
 
@@ -211,6 +204,43 @@ const MapPartData = observer(() => {
 
                     </div>
                 </div>
+
+                {zoneType === 1 && <div className={styles["form-item"]}>
+                    <Title className={styles["item-title"]} level={4}>Настройки аллеи</Title>
+                    <div className={styles["form-item-block"]}>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
+                            <Title level={5}>Направление колонны:</Title>
+
+                            <Radio.Group onChange={onChangeDirRoad} value={dirRoad} className={styles["common-radio-group"]}>
+                                <Radio value={1}>Прямое</Radio>
+                                <Radio value={2}>Обратное</Radio>
+                            </Radio.Group>
+                        </div>
+
+                        {zoneType === 1 && <div>
+                            <Title level={5}>Начальная буква аллеи:</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="alleySymbol"
+                                rules={[
+                                    {
+                                        required: true,
+                                        pattern: new RegExp(
+                                            /[a-zA-Z]/g
+                                        ),
+                                        message: 'Пожалуйста, введите начальную букву аллеи!'
+                                    }
+                                ]}
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+                    </div>
+                </div>}
 
             </div>
 

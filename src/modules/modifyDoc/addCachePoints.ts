@@ -5,11 +5,11 @@ import { cachePoint } from "@/helpers/points/cachePoint";
 import { GeneratorStor } from "@/entities";
 
 export const addCachePoints = (
-    mooeDoc: MooeDoc, newPoints: Coords[], lastPointId: number, lastNum: number, sideAngle: number, isInnerColumn?: boolean
+    mooeDoc: MooeDoc, newPoints: Coords[], lastPointId: number, sideAngle: number, isInnerColumn?: boolean
 ) => {
 
     const {
-        store: { formValues, zoneType },
+        store: { formValues, zoneType, lastStreamNum },
     } = GeneratorStor;
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
@@ -22,7 +22,8 @@ export const addCachePoints = (
         mooeDoc?.mLaneMarks.push(
             cachePoint(
                 lastPointId + index, targetPointX, targetPointY, angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
-                lastNum, isInnerColumn ? 2 : 1, newPoints.length - index, "识别", zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT"
+                lastStreamNum, isInnerColumn ? 2 : 1, newPoints.length - index, "识别",
+                zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT"
             ));
     });
 

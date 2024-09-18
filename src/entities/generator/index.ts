@@ -52,7 +52,11 @@ class GeneratorStor {
     setMooeDoc = (doc: MooeDoc) => {
         this.mooeDoc = doc;
         this.setHref(doc);
-        this.lastStreamNum = getLastStreamNum(doc);
+        this.setLastStreamNum(getLastStreamNum(doc));
+    }
+
+    setLastStreamNum = (val: number) => {
+        this.lastStreamNum = val;
     }
 
     setNumColumn = (val: number) => {

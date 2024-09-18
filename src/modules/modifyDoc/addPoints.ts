@@ -3,10 +3,10 @@ import { getAtan2 } from "@/helpers/math";
 import { pallet } from "@/helpers/points/pallet";
 import { Coords, MooeDoc } from "@/types";
 
-export const addPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number, lastNum: number, isInnerColumn?: boolean) => {
+export const addPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number, isInnerColumn?: boolean) => {
 
     const {
-        store: { formValues, zoneType },
+        store: { formValues, zoneType, lastStreamNum },
     } = GeneratorStor;
 
     const angle = getAtan2(Number(formValues?.x1), Number(formValues?.y1), Number(formValues?.x2), Number(formValues?.y2));
@@ -15,7 +15,7 @@ export const addPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number,
 
         mooeDoc?.mLaneMarks.push(
             pallet(
-                lastNum,
+                lastStreamNum,
                 lastId + index,
                 isInnerColumn ? 2 : 1,
                 newPoints.length - index,
