@@ -27,11 +27,15 @@ const UploadForm = observer(() => {
 
         reader.onload = async () => {
 
+            console.time("Upload file");
+
             setMooeDoc(JSON.parse(reader.result as string));
 
             changeHistory(JSON.parse(reader.result as string));
 
             setIsLoading(false);
+
+            console.timeEnd("Upload file");
 
         };
 

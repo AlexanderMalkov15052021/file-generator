@@ -17,6 +17,7 @@ class GeneratorStor {
     loadingTime: number[] = [0, 0];
 
     isModalOpen: boolean = false;
+    isLoadingDocChange: boolean = false;
     isShownFirstPointMessage: boolean = false;
     isShownSecondPointMessage: boolean = false;
     isLoading: boolean = false;
@@ -90,6 +91,10 @@ class GeneratorStor {
 
     setIsModalOpen = (val: boolean) => {
         this.isModalOpen = val;
+    }
+
+    setIsLoadingDocChangen = (val: boolean) => {
+        this.isLoadingDocChange = val;
     }
 
     setHref = (doc: MooeDoc) => {

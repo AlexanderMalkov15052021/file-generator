@@ -1,20 +1,27 @@
 import { GeneratorStor } from "@/entities";
-import { Modal } from "antd/lib";
+import { Modal, Spin } from "antd/lib";
 import { observer } from "mobx-react-lite";
 
 const ModelBlock = observer(() => {
 
     const {
-        store: { isModalOpen, setIsModalOpen, changeDoc },
+        store: { isModalOpen, isLoadingDocChange, setIsModalOpen, changeDoc, setIsLoadingDocChangen },
     } = GeneratorStor;
 
     const handleOk = () => {
-        changeDoc();
+        setIsLoadingDocChangen(true)
+        setTimeout(() => setChangeDoc(), 250);
+    };
+
+    const setChangeDoc = () => {
+        setIsLoadingDocChangen(false);
         setIsModalOpen(false);
+        console.time("Generate alley");
+        changeDoc();
+        console.timeEnd("Generate alley");
     };
 
     const handleCancel = () => setIsModalOpen(false);
-
 
     return (<>
         <Modal
@@ -25,7 +32,8 @@ const ModelBlock = observer(() => {
             onOk={handleOk}
             onCancel={handleCancel}
         >
-            <p>Принять изменения?</p>
+            <span style={{ fontSize: 20, margin: "20px" }}>Принять изменения?</span>
+            {isLoadingDocChange && <Spin />}
         </Modal>
     </>)
 });
