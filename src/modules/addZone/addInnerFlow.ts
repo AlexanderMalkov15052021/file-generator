@@ -2,7 +2,7 @@ import { MooeDoc } from "@/types";
 import { getLastFlowNum } from "../modifyDoc/getLastFlowNum";
 import { getLastPointId } from "../modifyDoc/getLastPointId";
 import { getFirstRowPoints } from "../modifyDoc/getFirstRowPoints";
-import { addPoints } from "../modifyDoc/addPoints";
+import { addPoints } from "../modifyDoc/addPallets";
 import { addFlowRoadsPoints } from "../modifyDoc/addFlowRoadsPoints";
 import { addRowRoadsFlow } from "../modifyDoc/addRowRoadsFlow";
 import { roadsDist } from "@/constants";

@@ -4,15 +4,22 @@ import { getAtan2 } from "@/helpers/math";
 import { road } from "@/helpers/points/road";
 import { roadPoint } from "@/helpers/points/roadPoint";
 import { Coords, MooeDoc } from "@/types";
+import { getRoadIdsBuffer } from "./getRoadIdsBuffer";
+import { getLaneIdsBuffer } from "./getLaneIdsBuffer";
+import { getPointIdsBuffer } from "./getPointIdsBuffer";
 
 export const addEntranceRoad = (
-    mooeDoc: MooeDoc, endPoints: Coords[], newPoints: Coords[], lastPointId: number, sideAngle: number,
+    mooeDoc: MooeDoc, endPoints: Coords[], newPoints: Coords[], sideAngle: number,
     newPointsCount: number, endPointsCount: number, dirEndPoint: number, isInnerColumn?: boolean
 ) => {
 
     const {
         store: { formValues, dirRoad },
     } = GeneratorStor;
+
+    const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
+    const roadIdsBuffer = getRoadIdsBuffer(mooeDoc);
+    const laneIdsBuffer = getLaneIdsBuffer(mooeDoc);
 
     const newPointsCountDown = dirRoad === 1 ? 0 : newPointsCount;
     const newPointsCountUp = dirRoad === 1 ? newPointsCount : 0;
@@ -32,17 +39,18 @@ export const addEntranceRoad = (
     const newPointX = Math.cos(angle + oppositeDirEndPoint) * fromStackToCachePoint + pointX;
     const newPointY = Math.sin(angle + oppositeDirEndPoint) * fromStackToCachePoint + pointY;
 
-    mooeDoc?.mLaneMarks.push(roadPoint(lastPointId, newPointX, newPointY, formValues?.angle ?? 0));
+    mooeDoc?.mLaneMarks.push(roadPoint("", pointIdsBuffer[0], newPointX, newPointY, formValues?.angle ?? 0));
 
     const endId = endPoints[isInnerColumn ? endPointsCountDown : endPointsCountUp].id;
 
     mooeDoc?.mRoads.push(
         road(
-            lastPointId,
+            pointIdsBuffer[0],
             endId,
-            { x: newPointX, y: newPointY, id: lastPointId },
+            { x: newPointX, y: newPointY, id: pointIdsBuffer[0] },
             endPoints[isInnerColumn ? 0 : endPointsCount],
-            lastPointId + 10,
+            roadIdsBuffer[0],
+            laneIdsBuffer[0],
             formValues?.angle ?? 0,
             2
         )

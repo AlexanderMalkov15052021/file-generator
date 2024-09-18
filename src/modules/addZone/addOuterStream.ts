@@ -1,7 +1,6 @@
 import { MooeDoc } from "@/types";
-import { getLastPointId } from "../modifyDoc/getLastPointId";
 import { getFirstRowPoints } from "../modifyDoc/getFirstRowPoints";
-import { addPoints } from "../modifyDoc/addPoints";
+import { addPallets } from "../modifyDoc/addPallets";
 import { addStartRoadPoints } from "../modifyDoc/addStartRoadPoints";
 import { addEndRoadPoints } from "../modifyDoc/addEndRoadPoints";
 import { addStartToEndRoad } from "../modifyDoc/addStartToEndRoad";
@@ -13,30 +12,28 @@ import { addCachePoints } from "../modifyDoc/addCachePoints";
 
 export const addOuterStream = (mooeDoc: MooeDoc) => {
 
-    const lastPointId = getLastPointId(mooeDoc);
-
     const firstRowPoints = getFirstRowPoints();
 
-    addPoints(mooeDoc, firstRowPoints, lastPointId + 1);
+    const palletsNames = addPallets(mooeDoc, firstRowPoints);
 
-    const startRoadPoints = addStartRoadPoints(mooeDoc, firstRowPoints, lastPointId + 1 + firstRowPoints.length, Math.PI * 3 / 2);
+    const startRoadPoints = addStartRoadPoints(palletsNames, mooeDoc, firstRowPoints, Math.PI * 3 / 2);
 
-    const endRoadPoints = addEndRoadPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 2), Math.PI / 2);
+    const endRoadPoints = addEndRoadPoints(palletsNames, mooeDoc, firstRowPoints, Math.PI / 2);
 
-    addStartToEndRoad(mooeDoc, startRoadPoints, endRoadPoints, lastPointId + 1 + (firstRowPoints.length * 3));
+    addStartToEndRoad(mooeDoc, startRoadPoints, endRoadPoints);
 
-    addRowRoads(mooeDoc, endRoadPoints, lastPointId + 1 + (firstRowPoints.length * 3));
+    addRowRoads(mooeDoc, endRoadPoints);
 
     addEntranceRoad(
-        mooeDoc, endRoadPoints, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 4), Math.PI / 2,
+        mooeDoc, endRoadPoints, firstRowPoints, Math.PI / 2,
         firstRowPoints.length - 1, firstRowPoints.length - 1, 0
     );
 
-    addRowTargetPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 5), Math.PI / 2, 1, 0);
+    addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2, 1, 0);
 
-    addTargetPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 6), Math.PI / 2);
+    addTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2);
 
-    addCachePoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 7), Math.PI / 2);
+    addCachePoints(mooeDoc, firstRowPoints, Math.PI / 2);
 
     return mooeDoc;
 }

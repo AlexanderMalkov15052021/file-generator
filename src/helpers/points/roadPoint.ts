@@ -1,12 +1,12 @@
 import { toRadians } from "../math"
 
-export const roadPoint = (lastId: number, pointX: number, pointY: number, angle: number) => {
+export const roadPoint = (name: string, id: number, pointX: number, pointY: number, angle: number) => {
     return {
         "mIsJockeyEndpoint": false,
         "mLaneMarkDescript": "",
-        "mLaneMarkEnName": "",
-        "mLaneMarkID": lastId,
-        "mLaneMarkName": "",
+        "mLaneMarkEnName": name,
+        "mLaneMarkID": id,
+        "mLaneMarkName": name,
         "mLaneMarkType": 0,
         "mLaneMarkWidth": 0.3,
         "mLaneMarkXYZW": {

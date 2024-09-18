@@ -3,12 +3,15 @@ import { GeneratorStor } from "@/entities";
 import { getAtan2 } from "@/helpers/math";
 import { roadPoint } from "@/helpers/points/roadPoint";
 import { Coords, MooeDoc } from "@/types";
+import { getPointIdsBuffer } from "./getPointIdsBuffer";
 
-export const addStartRoadPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number, sideAngle: number) => {
+export const addStartRoadPoints = (palletsNames: string[], mooeDoc: MooeDoc, newPoints: Coords[], sideAngle: number) => {
 
     const {
         store: { formValues },
     } = GeneratorStor;
+
+    const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
 
     const startRoadPoints = newPoints.map((coords: Coords, index: number) => {
 
@@ -17,9 +20,12 @@ export const addStartRoadPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId
         const pointX = Math.cos(angle + sideAngle) * fromStackToEnd + coords.x;
         const pointY = Math.sin(angle + sideAngle) * fromStackToEnd + coords.y;
 
-        mooeDoc?.mLaneMarks.push(roadPoint(lastId + index, pointX, pointY, formValues?.angle ?? 0));
+        const nameParts = palletsNames[index].split("row");
+        const name = nameParts[1].length === 1 ? `${nameParts[0]}row200${nameParts[1]}` : `${nameParts[0]}row20${nameParts[1]}`;
 
-        return { x: pointX, y: pointY, id: lastId + index }
+        mooeDoc?.mLaneMarks.push(roadPoint(name, pointIdsBuffer[index], pointX, pointY, formValues?.angle ?? 0));
+
+        return { x: pointX, y: pointY, id: pointIdsBuffer[index] }
 
     });
 
