@@ -25,8 +25,8 @@ export const addOuterStream = (mooeDoc: MooeDoc) => {
     addRowRoads(mooeDoc, endRoadPoints);
 
     addEntranceRoad(
-        mooeDoc, endRoadPoints, firstRowPoints, Math.PI / 2,
-        firstRowPoints.length - 1, firstRowPoints.length - 1, 0
+        mooeDoc, endRoadPoints, firstRowPoints, Math.PI / 2, firstRowPoints.length - 1,
+        firstRowPoints.length - 1, 0
     );
 
     addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2, 1, 0);
