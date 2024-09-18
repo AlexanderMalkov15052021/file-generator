@@ -116,6 +116,7 @@ export type FieldType = {
     y2: number;
     numRow: number;
     columnsInterval: number;
+    alleySymbol: string;
 };
 
 export type Coords = {

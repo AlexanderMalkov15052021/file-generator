@@ -22,7 +22,7 @@ export const addFlowTargetPoints = (
             lastNum,
             index + 1,
             roadsDist.length,
-            "A",
+            "前置点",
             dirRot
         ));
     });

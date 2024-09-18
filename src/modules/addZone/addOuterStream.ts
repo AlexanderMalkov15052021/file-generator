@@ -16,6 +16,8 @@ export const addOuterStream = (mooeDoc: MooeDoc) => {
 
     const lastStreamNum = getLastStreamNum(mooeDoc);
 
+    console.log("Last alley num: ", lastStreamNum);
+
     const lastPointId = getLastPointId(mooeDoc);
 
     const firstRowPoints = getFirstRowPoints();

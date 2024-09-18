@@ -17,12 +17,12 @@ export const addPoints = (mooeDoc: MooeDoc, newPoints: Coords[], lastId: number,
             pallet(
                 lastNum,
                 lastId + index,
-                index + 1,
-                1,
+                isInnerColumn ? 2 : 1,
+                newPoints.length - index,
                 coords.x,
                 coords.y,
                 angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
-                zoneType === 1 ? "A" : "GT"
+                zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT"
             ));
 
     });

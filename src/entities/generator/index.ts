@@ -6,6 +6,7 @@
 import { FieldType, MooeDoc } from "@/types";
 import { makeAutoObservable } from "mobx";
 import { modifyDoc } from "../../modules/changeDoc";
+import { getLastStreamNum } from "@/modules/modifyDoc/getLastStreamNum";
 
 class GeneratorStor {
 
@@ -13,6 +14,7 @@ class GeneratorStor {
     numBlock: number = 0;
     numColumn: number = 1;
     zoneType: number = 1;
+    dirRoad: number = 1;
     columnSide: number = 1;
     href: string = "";
     refFileName: string | null = null;
@@ -29,6 +31,7 @@ class GeneratorStor {
 
     formValues: FieldType | null = null;
 
+    lastStreamNum: number = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -49,6 +52,7 @@ class GeneratorStor {
     setMooeDoc = (doc: MooeDoc) => {
         this.mooeDoc = doc;
         this.setHref(doc);
+        this.lastStreamNum = getLastStreamNum(doc);
     }
 
     setNumColumn = (val: number) => {
@@ -61,6 +65,10 @@ class GeneratorStor {
 
     setZoneType = (val: number) => {
         this.zoneType = val;
+    }
+
+    setDirRoad = (val: number) => {
+        this.dirRoad = val;
     }
 
     setColumnSide = (val: number) => {

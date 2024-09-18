@@ -28,14 +28,14 @@ export const addInnerStream = (mooeDoc: MooeDoc, isInnerColumn?: boolean) => {
 
     addStartToEndRoad(mooeDoc, startRoadPoints, endRoadPoints, lastPointId + 1 + (firstRowPoints.length * 3));
 
-    addRowRoads(mooeDoc, endRoadPoints, lastPointId + 1 + (firstRowPoints.length * 3));
+    addRowRoads(mooeDoc, endRoadPoints, lastPointId + 1 + (firstRowPoints.length * 3), isInnerColumn);
 
     addEntranceRoad(
         mooeDoc, endRoadPoints, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 4), Math.PI * 3 / 2, 0, 0, Math.PI
     );
 
     addRowTargetPoints(
-        mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 5), lastStreamNum + 1, Math.PI * 3 / 2, -1, Math.PI / 2
+        mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 5), lastStreamNum + 1, Math.PI * 3 / 2, -1, Math.PI / 2, isInnerColumn
     );
 
     addTargetPoints(mooeDoc, firstRowPoints, lastPointId + 1 + (firstRowPoints.length * 6), lastStreamNum + 1, Math.PI * 3 / 2, true);
