@@ -10,7 +10,7 @@ export const addTargetPoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum },
+        store: { formValues, zoneType, lastStreamNum, rowOrder },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -22,9 +22,12 @@ export const addTargetPoints = (
         const targetPointX = Math.cos(angle + sideAngle) * fromStackToTargetPoint + points.x;
         const targetPointY = Math.sin(angle + sideAngle) * fromStackToTargetPoint + points.y;
 
-        const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
+        const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
         const columnName = isInnerColumn ? "02" : "01";
-        const rowName = String(newPoints.length - index);
+        const targetColumnName = formValues?.columnNum ? columnNum : columnName;
+
+        const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
+        const rowName = rowOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
 
         mooeDoc?.mLaneMarks.push(
@@ -34,7 +37,7 @@ export const addTargetPoints = (
                 targetPointY,
                 angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
                 lastStreamNum,
-                columnName,
+                targetColumnName,
                 targetRowName,
                 "检",
                 0,

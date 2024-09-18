@@ -11,7 +11,7 @@ export const addRowTargetPoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, dirRoad },
+        store: { formValues, zoneType, lastStreamNum, dirRoad, rowOrder },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -26,9 +26,12 @@ export const addRowTargetPoints = (
         const pointX = Math.cos(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointX;
         const pointY = Math.sin(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointY;
 
-        const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
+        const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
         const columnName = isInnerColumn ? "02" : "01";
-        const rowName = String(newPoints.length - index);
+        const targetColumnName = formValues?.columnNum ? columnNum : columnName;
+
+        const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
+        const rowName = rowOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
 
         mooeDoc?.mLaneMarks.push(
@@ -38,7 +41,7 @@ export const addRowTargetPoints = (
                 pointY,
                 angle + (dirRoad === 1 ? 0 : Math.PI),
                 lastStreamNum,
-                columnName,
+                targetColumnName,
                 targetRowName,
                 "前置点",
                 dirRot,

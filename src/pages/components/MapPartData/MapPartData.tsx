@@ -1,5 +1,5 @@
 import type { FormProps } from 'antd/lib';
-import { Button, Form, Input, Radio } from 'antd/lib';
+import { Button, Form, Input, Radio, Tooltip } from 'antd/lib';
 import Title from 'antd/lib/typography/Title';
 
 import styles from "./MapPartData.module.css";
@@ -9,14 +9,15 @@ import { BoxPlotTwoTone, EditTwoTone, ProfileTwoTone } from '@ant-design/icons';
 import { FieldType } from "@/types";
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 
 const MapPartData = observer(() => {
 
     const {
         store: {
-            mooeDoc, numColumn, zoneType, columnSide, dirRoad, lastStreamNum, setNumColumn, setFormValues,
-            setZoneType, setColumnSide, setIsModalOpen, setDirRoad, setLastStreamNum
+            mooeDoc, numColumn, zoneType, columnSide, dirRoad, lastStreamNum, rowOrder, setNumColumn, setFormValues,
+            setZoneType, setColumnSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
+            changeShowSecondPointMessage, setRowOrder
         },
     } = GeneratorStor;
 
@@ -31,6 +32,9 @@ const MapPartData = observer(() => {
     };
     const onChangeZoneType = (evt: RadioChangeEvent) => {
         setZoneType(evt.target.value);
+    };
+    const onChangeRowOrder = (evt: RadioChangeEvent) => {
+        setRowOrder(evt.target.value);
     };
     const onChangeDirRoad = (evt: RadioChangeEvent) => {
         setDirRoad(evt.target.value);
@@ -49,6 +53,19 @@ const MapPartData = observer(() => {
     const onChangeAlleyNum = (evt: any) => {
         setLastStreamNum(evt.target.value);
     }
+
+    const showFirstPointMessage = () => {
+        changeShowFirstPointMessage(true);
+    }
+
+    const showSecondPointMessage = () => {
+        changeShowSecondPointMessage(true);
+    }
+    const onChangeX1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x1', evt.currentTarget.value)
+    const onChangeY1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y1', evt.currentTarget.value)
+    const onChangeX2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x2', evt.currentTarget.value)
+    const onChangeY2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y2', evt.currentTarget.value)
+
 
     return (<>
         <div style={{ fontSize: "20px" }}><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
@@ -85,6 +102,15 @@ const MapPartData = observer(() => {
                             <Radio.Group onChange={onChangeZoneType} value={zoneType} className={styles["common-radio-group"]}>
                                 <Radio value={1}>Аллеи</Radio>
                                 <Radio value={2}>Ручьи</Radio>
+                            </Radio.Group>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
+                            <Title level={5}>Наименование рядов:</Title>
+
+                            <Radio.Group onChange={onChangeRowOrder} value={rowOrder} className={styles["common-radio-group"]}>
+                                <Radio value={1}>Прямое</Radio>
+                                <Radio value={2}>Обратное</Radio>
                             </Radio.Group>
                         </div>
 
@@ -164,7 +190,19 @@ const MapPartData = observer(() => {
                             rules={[{ required: true, message: 'Пожалуйста, введите "x" координату первой точки!' }]}
                             className={styles["input-wrapper"]}
                         >
-                            <Input type="number" autoComplete="on" />
+                            <Tooltip
+                                zIndex={0}
+                                trigger={['click']}
+                                title={
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <div>Левая нижняя точка, относительно конечной точки, на координатной плоскости!</div>
+                                        <Button onClick={showFirstPointMessage} style={{ margin: "10px" }}>Подсказка</Button>
+                                    </div>
+                                }
+                                placement="top"
+                            >
+                                <Input onChange={onChangeX1} type="number" autoComplete="on" />
+                            </Tooltip>
                         </Form.Item>
 
                         <Form.Item<FieldType>
@@ -173,8 +211,42 @@ const MapPartData = observer(() => {
                             rules={[{ required: true, message: 'Пожалуйста, введите "y" координату первой точки!' }]}
                             className={styles["input-wrapper"]}
                         >
-                            <Input type="number" autoComplete="on" />
+                            <Tooltip
+                                zIndex={0}
+                                trigger={['click']}
+                                title={
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <div>Левая нижняя точка, относительно конечной точки, на координатной плоскости!</div>
+                                        <Button onClick={showFirstPointMessage} style={{ margin: "10px" }}>Подсказка</Button>
+                                    </div>
+                                }
+                                placement="top"
+                            >
+                                <Input onChange={onChangeY1} type="number" autoComplete="on" />
+                            </Tooltip>
                         </Form.Item>
+
+                        <div>
+                            <Title level={5}>Название файла:</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="fileName"
+                                initialValue={"example"}
+                                rules={[
+                                    {
+                                        required: true,
+                                        pattern: new RegExp(
+                                            /[a-zA-Z]/g
+                                        ),
+                                        message: 'Пожалуйста, введите название файла!'
+                                    }
+                                ]}
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input autoComplete="on" />
+                            </Form.Item>
+                        </div>
 
                     </div>
                 </div>
@@ -190,7 +262,19 @@ const MapPartData = observer(() => {
                             rules={[{ required: true, message: 'Пожалуйста, введите "x" координату второй точки!' }]}
                             className={styles["input-wrapper"]}
                         >
-                            <Input type="number" autoComplete="on" />
+                            <Tooltip
+                                zIndex={0}
+                                trigger={['click']}
+                                title={
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <div>Левая верхняя точка, относительно начальной точки, на координатной плоскости!</div>
+                                        <Button onClick={showSecondPointMessage} style={{ margin: "10px" }}>Подсказка</Button>
+                                    </div>
+                                }
+                                placement="top"
+                            >
+                                <Input onChange={onChangeX2} type="number" autoComplete="on" />
+                            </Tooltip>
                         </Form.Item>
 
                         <Form.Item<FieldType>
@@ -199,7 +283,19 @@ const MapPartData = observer(() => {
                             rules={[{ required: true, message: 'Пожалуйста, введите "y" координату второй точки!' }]}
                             className={styles["input-wrapper"]}
                         >
-                            <Input type="number" autoComplete="on" />
+                            <Tooltip
+                                zIndex={0}
+                                trigger={['click']}
+                                title={
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <div>Левая верхняя точка, относительно начальной точки, на координатной плоскости!</div>
+                                        <Button onClick={showSecondPointMessage} style={{ margin: "10px" }}>Подсказка</Button>
+                                    </div>
+                                }
+                                placement="top"
+                            >
+                                <Input onChange={onChangeY2} type="number" autoComplete="on" />
+                            </Tooltip>
                         </Form.Item>
 
                     </div>
@@ -236,6 +332,20 @@ const MapPartData = observer(() => {
                                 className={styles["input-wrapper"]}
                             >
                                 <Input autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+                        {numColumn === 1 && <div>
+                            <Title level={5}>Номер колонны:</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="columnNum"
+                                rules={[{ required: true, message: 'Пожалуйста, введите номер колонны!' }]}
+                                className={styles["input-wrapper"]}
+                                initialValue={1}
+                            >
+                                <Input min={1} type="number" autoComplete="on" />
                             </Form.Item>
                         </div>}
 

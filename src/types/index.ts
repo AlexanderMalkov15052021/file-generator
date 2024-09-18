@@ -118,6 +118,8 @@ export type FieldType = {
     columnsInterval: number;
     alleySymbol: string;
     alleyNum: number;
+    columnNum: number;
+    fileName: string;
 };
 
 export type Coords = {

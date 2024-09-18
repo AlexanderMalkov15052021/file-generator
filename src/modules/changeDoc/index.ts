@@ -22,7 +22,7 @@ export const modifyDoc = (mooeDoc: MooeDoc) => {
         }
 
         if (zoneType === 1 && numColumn === 1 && columnSide === 2 && mooeDoc) {
-            return addInnerStream(mooeDoc);
+            return addInnerStream(mooeDoc, true);
         }
 
         if (zoneType === 1 && numColumn === 2 && mooeDoc) {

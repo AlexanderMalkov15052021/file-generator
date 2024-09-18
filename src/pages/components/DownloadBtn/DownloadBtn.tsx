@@ -5,13 +5,13 @@ import { observer } from "mobx-react-lite";
 
 const DownloadBtn = observer(() => {
     const {
-        store: { href },
+        store: { formValues, href },
     } = GeneratorStor;
 
     return <>
         <Button className="buttun-upload" disabled={href ? false : true} type={"primary"}>
             <Link
-                href={`${href ? href : ""}`} download={"example.mooe"}
+                href={`${href ? href : ""}`} download={formValues?.fileName ? `${formValues?.fileName}.mooe` : "example.mooe"}
             >
                 Скачать .mooe
             </Link>

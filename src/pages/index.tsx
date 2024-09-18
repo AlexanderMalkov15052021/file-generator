@@ -10,6 +10,8 @@ import LoadingBlock from "./components/LoadingBlock/LoadingBlock";
 import DownloadBtn from "./components/DownloadBtn/DownloadBtn";
 import MapPartData from "./components/MapPartData/MapPartData";
 import ModelBlock from "./components/ModelBlock/ModelBlock";
+import FirstPointMessageBlock from "./components/FirstPointMessageBlock/FirstPointMessageBlock";
+import SecondPointMessageBlock from "./components/SecondPointMessageBlock/SecondPointMessageBlock";
 
 export default function Home() {
 
@@ -42,6 +44,10 @@ export default function Home() {
           <ModelBlock />
 
           <DrawerBlock />
+
+          <FirstPointMessageBlock />
+
+          <SecondPointMessageBlock />
 
         </main>
       </div>

@@ -1,8 +1,3 @@
-// import { setGatesColumn } from "@/modules/zoneData/setGatesColumn";
-// import { setInnerColumnTmp } from "@/modules/zoneData/setInnerColumnTmp";
-// import { setInnerGatesColumn } from "@/modules/zoneData/setInnerGatesColumn";
-// import { setOutsideColumn } from "@/modules/zoneData/setOutsideColumn";
-// import { setSingleInnerColumn } from "@/modules/zoneData/setSingleInnerColumn";
 import { FieldType, MooeDoc } from "@/types";
 import { makeAutoObservable } from "mobx";
 import { modifyDoc } from "../../modules/changeDoc";
@@ -14,6 +9,7 @@ class GeneratorStor {
     numBlock: number = 0;
     numColumn: number = 1;
     zoneType: number = 1;
+    rowOrder: number = 1;
     dirRoad: number = 1;
     columnSide: number = 1;
     href: string = "";
@@ -21,6 +17,8 @@ class GeneratorStor {
     loadingTime: number[] = [0, 0];
 
     isModalOpen: boolean = false;
+    isShownFirstPointMessage: boolean = false;
+    isShownSecondPointMessage: boolean = false;
     isLoading: boolean = false;
     isMessageShow: boolean = false;
     isOpenDrawer: boolean = false;
@@ -37,6 +35,13 @@ class GeneratorStor {
         makeAutoObservable(this);
     }
 
+    changeShowFirstPointMessage = (val: boolean) => {
+        this.isShownFirstPointMessage = val;
+    }
+
+    changeShowSecondPointMessage = (val: boolean) => {
+        this.isShownSecondPointMessage = val;
+    }
 
     changeHistoryIndex = (val: number) => {
         this.historyIndex = val;
@@ -71,6 +76,10 @@ class GeneratorStor {
         this.zoneType = val;
     }
 
+    setRowOrder = (val: number) => {
+        this.rowOrder = val;
+    }
+
     setDirRoad = (val: number) => {
         this.dirRoad = val;
     }
@@ -102,43 +111,12 @@ class GeneratorStor {
 
     setIsOpenDrawer = (val: boolean) => this.isOpenDrawer = val;
 
-
-
     changeDoc = () => {
 
         const doc = modifyDoc(this.mooeDoc);
 
         this.setMooeDoc(doc);
-
-
-        // if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 1 && this.mooeDoc) {
-        //     setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
-        // }
-
-        // if (this.zoneType === 1 && this.numColumn === 1 && this.columnSide === 2 && this.mooeDoc) {
-        //     setSingleInnerColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        // }
-
-        // if (this.zoneType === 1 && this.numColumn === 2 && this.mooeDoc) {
-        //     setOutsideColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length, this.numBlock);
-        //     setInnerColumnTmp(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length + 1000);
-        // }
-
-        // if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 1) {
-        //     setGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        // }
-
-        // if (this.zoneType === 2 && this.mooeDoc && this.columnSide === 2) {
-        //     setInnerGatesColumn(this.formValues, this.mooeDoc, (this.mooeDoc as any).mLaneMarks.length);
-        // }
-
-        // const doc = JSON.parse(JSON.stringify(modifiedDoc));
-
-        // this.setMooeDoc(doc);
-
-        // this.changeHistory(doc);
-
-        // this.increaseNumBlock();
+        
     }
 
 }
