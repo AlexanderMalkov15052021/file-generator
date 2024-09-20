@@ -7,7 +7,7 @@ import { getLaneIdsBuffer } from "./getLaneIdsBuffer";
 export const addRowRoads = (mooeDoc: MooeDoc, endPoints: Coords[], isInnerColumn?: boolean) => {
 
     const {
-        store: { formValues, dirRoad },
+        store: { dirRoad },
     } = GeneratorStor;
 
     const reverseDir = dirRoad == 1 ? 2 : 1;
@@ -28,7 +28,7 @@ export const addRowRoads = (mooeDoc: MooeDoc, endPoints: Coords[], isInnerColumn
                 endPoints[i],
                 roadIdsBuffer[i],
                 laneIdsBuffer[i],
-                formValues?.angle ?? 0,
+                0,
                 isInnerColumn ? reverseDir : dirRoad
             )
         );

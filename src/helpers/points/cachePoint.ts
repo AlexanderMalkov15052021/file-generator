@@ -1,5 +1,5 @@
 export const cachePoint = (
-    lastId: number, pointX: number, pointY: number, angle: number,
+    id: number, pointX: number, pointY: number, angle: number,
     lastNum: number, colName: string, rowNuame: string, postName: string, zoneName: string
 ) => {
 
@@ -7,7 +7,7 @@ export const cachePoint = (
         "mIsJockeyEndpoint": false,
         "mLaneMarkDescript": "",
         "mLaneMarkEnName": `${zoneName}${lastNum}col${colName}row${rowNuame}${postName}`,  // A603col01row21
-        "mLaneMarkID": lastId,
+        "mLaneMarkID": id,
         "mLaneMarkName": `${zoneName}${lastNum}col${colName}row${rowNuame}${postName}`,  // A603col01row21
         "mLaneMarkSize": {
             "height": 0,

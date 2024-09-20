@@ -2,6 +2,7 @@ import { FieldType, MooeDoc } from "@/types";
 import { makeAutoObservable } from "mobx";
 import { modifyDoc } from "../../modules/changeDoc";
 import { getLastStreamNum } from "@/modules/modifyDoc/getLastStreamNum";
+import { getLastFlowNum } from "@/modules/modifyDoc/getLastFlowNum";
 
 class GeneratorStor {
 
@@ -9,9 +10,9 @@ class GeneratorStor {
     numBlock: number = 0;
     numColumn: number = 1;
     zoneType: number = 1;
-    rowOrder: number = 1;
+    namingOrder: number = 1;
     dirRoad: number = 1;
-    columnSide: number = 1;
+    cellSide: number = 1;
     href: string = "";
     refFileName: string | null = null;
     loadingTime: number[] = [0, 0];
@@ -31,6 +32,7 @@ class GeneratorStor {
     formValues: FieldType | null = null;
 
     lastStreamNum: number = 0;
+    lastFlowNum: number = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -59,11 +61,16 @@ class GeneratorStor {
         this.mooeDoc = doc;
         this.setHref(doc);
         this.setLastStreamNum(getLastStreamNum(doc));
+        this.setLastFlowNum(getLastFlowNum(doc));
     }
 
     setLastStreamNum = (val: number) => {
         this.lastStreamNum = val;
     }
+
+    setLastFlowNum = (val: number) => {
+        this.lastFlowNum = val;
+    }   
 
     setNumColumn = (val: number) => {
         this.numColumn = val;
@@ -77,16 +84,16 @@ class GeneratorStor {
         this.zoneType = val;
     }
 
-    setRowOrder = (val: number) => {
-        this.rowOrder = val;
+    setNamingOrder = (val: number) => {
+        this.namingOrder = val;
     }
 
     setDirRoad = (val: number) => {
         this.dirRoad = val;
     }
 
-    setColumnSide = (val: number) => {
-        this.columnSide = val;
+    setCellSide = (val: number) => {
+        this.cellSide = val;
     }
 
     setIsModalOpen = (val: boolean) => {

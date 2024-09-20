@@ -10,7 +10,7 @@ export const addCachePoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, rowOrder },
+        store: { formValues, zoneType, lastStreamNum, namingOrder },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -27,7 +27,7 @@ export const addCachePoints = (
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
-        const rowName = rowOrder === 1 ? String(newPoints.length - index) : String(index + 1);
+        const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
 
         mooeDoc?.mLaneMarks.push(

@@ -3,12 +3,11 @@ import { GeneratorStor } from "@/entities";
 import { addInnerStream } from "../addZone/addInnerStream";
 import { addOuterStream } from "../addZone/addOuterStream";
 import { addOuterFlow } from "../addZone/addOuterFlow";
-import { addInnerFlow } from "../addZone/addInnerFlow";
 
 export const modifyDoc = (mooeDoc: MooeDoc) => {
 
     const {
-        store: { zoneType, numColumn, columnSide },
+        store: { zoneType, numColumn, cellSide },
     } = GeneratorStor;
 
     const getTwoColumn = () => {
@@ -17,11 +16,11 @@ export const modifyDoc = (mooeDoc: MooeDoc) => {
     }
 
     const getDoc = () => {
-        if (zoneType === 1 && numColumn === 1 && columnSide === 1 && mooeDoc) {
+        if (zoneType === 1 && numColumn === 1 && cellSide === 1 && mooeDoc) {
             return addOuterStream(mooeDoc);
         }
 
-        if (zoneType === 1 && numColumn === 1 && columnSide === 2 && mooeDoc) {
+        if (zoneType === 1 && numColumn === 1 && cellSide === 2 && mooeDoc) {
             return addInnerStream(mooeDoc, true);
         }
 
@@ -29,12 +28,12 @@ export const modifyDoc = (mooeDoc: MooeDoc) => {
             return getTwoColumn();
         }
 
-        if (zoneType === 2 && mooeDoc && columnSide === 1) {
+        if (zoneType === 2 && mooeDoc && cellSide === 1) {
             return addOuterFlow(mooeDoc);
         }
 
-        if (zoneType === 2 && mooeDoc && columnSide === 2) {
-            return addInnerFlow(mooeDoc);
+        if (zoneType === 2 && mooeDoc && cellSide === 2) {
+            return addOuterFlow(mooeDoc, true);
         }
 
         return addOuterStream(mooeDoc);

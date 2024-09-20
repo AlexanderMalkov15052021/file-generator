@@ -15,26 +15,29 @@ const MapPartData = observer(() => {
 
     const {
         store: {
-            mooeDoc, numColumn, zoneType, columnSide, dirRoad, lastStreamNum, rowOrder, setNumColumn, setFormValues,
-            setZoneType, setColumnSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
-            changeShowSecondPointMessage, setRowOrder
+            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder, setNumColumn, setFormValues,
+            setZoneType, setCellSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
+            changeShowSecondPointMessage, setNamingOrder, setLastFlowNum
         },
     } = GeneratorStor;
 
     const [form] = Form.useForm();
 
-    useEffect(() => form.setFieldsValue({ alleyNum: lastStreamNum }), [lastStreamNum]);
+    useEffect(() => {
+        zoneType === 1 && form.setFieldsValue({ cellNum: lastStreamNum });
+        zoneType === 2 && form.setFieldsValue({ cellNum: lastFlowNum });
+    }, [lastStreamNum, lastFlowNum]);
 
     const onChangeNumColumn = (evt: RadioChangeEvent) => setNumColumn(evt.target.value);
 
-    const onChangeColumnSide = (evt: RadioChangeEvent) => {
-        setColumnSide(evt.target.value);
+    const onChangeCellSide = (evt: RadioChangeEvent) => {
+        setCellSide(evt.target.value);
     };
     const onChangeZoneType = (evt: RadioChangeEvent) => {
         setZoneType(evt.target.value);
     };
-    const onChangeRowOrder = (evt: RadioChangeEvent) => {
-        setRowOrder(evt.target.value);
+    const onChangeNamingOrder = (evt: RadioChangeEvent) => {
+        setNamingOrder(evt.target.value);
     };
     const onChangeDirRoad = (evt: RadioChangeEvent) => {
         setDirRoad(evt.target.value);
@@ -50,8 +53,9 @@ const MapPartData = observer(() => {
         setFormValues(null);
     };
 
-    const onChangeAlleyNum = (evt: any) => {
-        setLastStreamNum(evt.target.value);
+    const onChangeCellNum = (evt: any) => {
+        zoneType === 1 && setLastStreamNum(evt.target.value);
+        zoneType === 2 && setLastFlowNum(evt.target.value);
     }
 
     const showFirstPointMessage = () => {
@@ -68,13 +72,17 @@ const MapPartData = observer(() => {
 
 
     return (<>
-        <div style={{ fontSize: "20px" }}><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
+        <div style={{ fontSize: "20px" }}>
+            {zoneType === 1
+                ? <div><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
+                : <div><span>Крайний номер ручья: </span><span>{lastFlowNum}</span></div>}
+        </div>
         <Form
             form={form}
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ alleyNum: lastStreamNum }}
+            initialValues={{ cellNum: lastStreamNum }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             className={styles["form"]}
@@ -106,9 +114,9 @@ const MapPartData = observer(() => {
                         </div>
 
                         <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Наименование рядов:</Title>
+                            <Title level={5}>{zoneType === 1 ? "Наименование рядов:" : "Наименование колон:"}</Title>
 
-                            <Radio.Group onChange={onChangeRowOrder} value={rowOrder} className={styles["common-radio-group"]}>
+                            <Radio.Group onChange={onChangeNamingOrder} value={namingOrder} className={styles["common-radio-group"]}>
                                 <Radio value={1}>Прямое</Radio>
                                 <Radio value={2}>Обратное</Radio>
                             </Radio.Group>
@@ -134,7 +142,7 @@ const MapPartData = observer(() => {
                             <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
                                 <Title level={5}>Сторона колонны:</Title>
 
-                                <Radio.Group onChange={onChangeColumnSide} value={columnSide} className={styles["common-radio-group"]}>
+                                <Radio.Group onChange={onChangeCellSide} value={cellSide} className={styles["common-radio-group"]}>
                                     <Radio value={1}>Внешняя</Radio>
                                     <Radio value={2}>Внутренняя</Radio>
                                 </Radio.Group>
@@ -142,9 +150,9 @@ const MapPartData = observer(() => {
                         }
 
                         {zoneType === 2 && <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Сторона ряда:</Title>
+                            <Title level={5}>Сторона ручья:</Title>
 
-                            <Radio.Group onChange={onChangeColumnSide} value={columnSide} className={styles["common-radio-group"]}>
+                            <Radio.Group onChange={onChangeCellSide} value={cellSide} className={styles["common-radio-group"]}>
                                 <Radio value={1}>Внешняя</Radio>
                                 <Radio value={2}>Внутренняя</Radio>
                             </Radio.Group>
@@ -163,18 +171,23 @@ const MapPartData = observer(() => {
                             </Form.Item>
                         </div>}
 
-                        {zoneType === 1 && <div>
-                            <Title level={5}>Крайний номер аллеи:</Title>
+                        <div>
+                            <Title level={5}>{zoneType === 1 ? "Крайний номер аллеи:" : "Крайний номер ручья"}</Title>
 
                             <Form.Item<FieldType>
                                 label={<EditTwoTone style={{ fontSize: '32px' }} />}
-                                name="alleyNum"
-                                rules={[{ required: true, message: 'Пожалуйста, введите крайний номер аллеи!' }]}
+                                name="cellNum"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите крайний номер ${zoneType === 1 ? "аллеи" : "ручья"}!`
+                                    }]
+                                }
                                 className={styles["input-wrapper"]}
                             >
-                                <Input onChange={onChangeAlleyNum} type="number" autoComplete="on" />
+                                <Input onChange={onChangeCellNum} type="number" autoComplete="on" />
                             </Form.Item>
-                        </div>}
+                        </div>
 
                     </div>
                 </div>
@@ -301,12 +314,12 @@ const MapPartData = observer(() => {
                     </div>
                 </div>
 
-                {zoneType === 1 && <div className={styles["form-item"]}>
-                    <Title className={styles["item-title"]} level={4}>Настройки аллеи</Title>
+                <div className={styles["form-item"]}>
+                    <Title className={styles["item-title"]} level={4}>{zoneType === 1 ? "Настройки аллеи" : "Настройки ручья"}</Title>
                     <div className={styles["form-item-block"]}>
 
                         <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}>
-                            <Title level={5}>Направление колонны:</Title>
+                            <Title level={5}>{zoneType === 1 ? "Направление колонны:" : "Направление ряда:"}</Title>
 
                             <Radio.Group onChange={onChangeDirRoad} value={dirRoad} className={styles["common-radio-group"]}>
                                 <Radio value={1}>Прямое</Radio>
@@ -335,7 +348,7 @@ const MapPartData = observer(() => {
                             </Form.Item>
                         </div>}
 
-                        {numColumn === 1 && <div>
+                        {zoneType === 1 && numColumn === 1 && <div>
                             <Title level={5}>Номер колонны:</Title>
 
                             <Form.Item<FieldType>
@@ -350,7 +363,7 @@ const MapPartData = observer(() => {
                         </div>}
 
                     </div>
-                </div>}
+                </div>
 
             </div>
 

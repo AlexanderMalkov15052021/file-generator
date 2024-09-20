@@ -16,9 +16,9 @@ const ModelBlock = observer(() => {
     const setChangeDoc = () => {
         setIsLoadingDocChangen(false);
         setIsModalOpen(false);
-        console.time("Generate alley");
+        console.time("Generate cell");
         changeDoc();
-        console.timeEnd("Generate alley");
+        console.timeEnd("Generate cell");
     };
 
     const handleCancel = () => setIsModalOpen(false);

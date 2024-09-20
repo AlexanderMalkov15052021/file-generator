@@ -11,7 +11,7 @@ export const addRowTargetPoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, dirRoad, rowOrder },
+        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -31,7 +31,7 @@ export const addRowTargetPoints = (
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
-        const rowName = rowOrder === 1 ? String(newPoints.length - index) : String(index + 1);
+        const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
 
         mooeDoc?.mLaneMarks.push(

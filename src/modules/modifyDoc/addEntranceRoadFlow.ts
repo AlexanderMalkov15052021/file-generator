@@ -1,39 +1,52 @@
 import { fromStackToCachePoint } from "@/constants";
-import { GeneratorStor } from "@/entities";
 import { getAtan2 } from "@/helpers/math";
 import { road } from "@/helpers/points/road";
 import { roadPoint } from "@/helpers/points/roadPoint";
 import { Coords, MooeDoc } from "@/types";
+import { getPointIdsBuffer } from "./getPointIdsBuffer";
+import { getRoadIdsBuffer } from "./getRoadIdsBuffer";
+import { getLaneIdsBuffer } from "./getLaneIdsBuffer";
+import { GeneratorStor } from "@/entities";
 
 export const addEntranceRoadFlow = (
-    mooeDoc: MooeDoc, endPoints: Coords[], newPoints: Coords[], lastPointId: number, dirEndPoint: number
+    mooeDoc: MooeDoc, endPoints: Coords[], newPoints: Coords[]
 ) => {
 
     const {
-        store: { formValues },
+        store: { dirRoad },
     } = GeneratorStor;
+
+    const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
+    const roadIdsBuffer = getRoadIdsBuffer(mooeDoc);
+    const laneIdsBuffer = getLaneIdsBuffer(mooeDoc);
 
     const angle = getAtan2(newPoints[0].x, newPoints[0].y, newPoints[newPoints.length - 1].x, newPoints[newPoints.length - 1].y);
 
-    const pointX = endPoints[0].x;
-    const pointY = endPoints[0].y;
 
-    const newPointX = Math.cos(angle + dirEndPoint) * fromStackToCachePoint + pointX;
-    const newPointY = Math.sin(angle + dirEndPoint) * fromStackToCachePoint + pointY;
+    const endPointIndex = dirRoad === 1 ? endPoints.length - 1 : 0;
 
-    mooeDoc?.mLaneMarks.push(roadPoint("", lastPointId, newPointX, newPointY, angle));
+    const endPointDir = dirRoad === 1 ? 0 : -Math.PI;
 
-    const endId = endPoints[0].id;
+
+    const pointX = endPoints[endPointIndex].x;
+    const pointY = endPoints[endPointIndex].y;
+
+    const newPointX = Math.cos(angle + endPointDir) * fromStackToCachePoint + pointX;
+    const newPointY = Math.sin(angle + endPointDir) * fromStackToCachePoint + pointY;
+
+    mooeDoc?.mLaneMarks.push(roadPoint("", pointIdsBuffer[0], newPointX, newPointY, angle));
+
+    const endId = endPoints[endPointIndex].id;
 
     mooeDoc?.mRoads.push(
         road(
-            lastPointId,
+            pointIdsBuffer[0],
             endId,
-            { x: newPointX, y: newPointY, id: lastPointId },
-            endPoints[0],
-            300,
-            300,
-            formValues?.angle ?? 0,
+            { x: newPointX, y: newPointY, id: pointIdsBuffer[0] },
+            endPoints[endPointIndex],
+            roadIdsBuffer[0],
+            laneIdsBuffer[0],
+            angle,
             2
         )
     );

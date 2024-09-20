@@ -7,7 +7,7 @@ import { getPointIdsBuffer } from "./getPointIdsBuffer";
 export const addPallets = (mooeDoc: MooeDoc, newPoints: Coords[], isInnerColumn?: boolean) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, rowOrder },
+        store: { formValues, zoneType, lastStreamNum, lastFlowNum, namingOrder },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -21,12 +21,14 @@ export const addPallets = (mooeDoc: MooeDoc, newPoints: Coords[], isInnerColumn?
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
-        const rowName = rowOrder === 1 ? String(newPoints.length - index) : String(index + 1);
+        const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
+
+        const cellName = zoneType === 1 ? lastStreamNum : lastFlowNum;
 
         mooeDoc?.mLaneMarks.push(
             pallet(
-                lastStreamNum,
+                cellName,
                 pointIdsBuffer[index],
                 targetColumnName,
                 targetRowName,
@@ -36,7 +38,7 @@ export const addPallets = (mooeDoc: MooeDoc, newPoints: Coords[], isInnerColumn?
                 zoneName
             ));
 
-        const name = `${zoneName}${lastStreamNum}col${targetColumnName}row${targetRowName}`
+        const name = `${zoneName}${cellName}col${targetColumnName}row${targetRowName}`
 
         return name;
 

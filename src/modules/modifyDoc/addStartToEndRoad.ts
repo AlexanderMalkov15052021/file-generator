@@ -1,14 +1,9 @@
-import { GeneratorStor } from "@/entities";
 import { road } from "@/helpers/points/road";
 import { Coords, MooeDoc } from "@/types";
 import { getLaneIdsBuffer } from "./getLaneIdsBuffer";
 import { getRoadIdsBuffer } from "./getRoadIdsBuffer";
 
 export const addStartToEndRoad = (mooeDoc: MooeDoc, startPoints: Coords[], endPoints: Coords[]) => {
-
-    const {
-        store: { formValues },
-    } = GeneratorStor;
 
     const roadIdsBuffer = getRoadIdsBuffer(mooeDoc);
     const laneIdsBuffer = getLaneIdsBuffer(mooeDoc);
@@ -19,7 +14,7 @@ export const addStartToEndRoad = (mooeDoc: MooeDoc, startPoints: Coords[], endPo
         const endId = endPoints[i].id;
 
         mooeDoc?.mRoads.push(
-            road(startId, endId, startPoints[i], endPoints[i], roadIdsBuffer[i], laneIdsBuffer[i], formValues?.angle ?? 0, 1)
+            road(startId, endId, startPoints[i], endPoints[i], roadIdsBuffer[i], laneIdsBuffer[i], 0, 1)
         );
     }
 

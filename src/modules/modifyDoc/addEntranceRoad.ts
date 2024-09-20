@@ -14,7 +14,7 @@ export const addEntranceRoad = (
 ) => {
 
     const {
-        store: { formValues, dirRoad },
+        store: { dirRoad },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -39,7 +39,7 @@ export const addEntranceRoad = (
     const newPointX = Math.cos(angle + oppositeDirEndPoint) * fromStackToCachePoint + pointX;
     const newPointY = Math.sin(angle + oppositeDirEndPoint) * fromStackToCachePoint + pointY;
 
-    mooeDoc?.mLaneMarks.push(roadPoint("", pointIdsBuffer[0], newPointX, newPointY, formValues?.angle ?? 0));
+    mooeDoc?.mLaneMarks.push(roadPoint("", pointIdsBuffer[0], newPointX, newPointY, 0));
 
     const endId = endPoints[isInnerColumn ? endPointsCountDown : endPointsCountUp].id;
 
@@ -51,7 +51,7 @@ export const addEntranceRoad = (
             endPoints[isInnerColumn ? 0 : endPointsCount],
             roadIdsBuffer[0],
             laneIdsBuffer[0],
-            formValues?.angle ?? 0,
+            0,
             2
         )
     );
