@@ -21,3 +21,22 @@ export const getAtan2 = (x1: number, y1: number, x2: number, y2: number) => {
 
     return res;
 }
+
+// новое положение координат при развороте на определённый угол
+export const getNewCoords = (x: number, y: number, angle: number) => {
+    const newX = Math.cos(angle) * x - Math.sin(angle) * y;
+    const newY = Math.sin(angle) * x + Math.cos(angle) * y;
+
+    return { x: newX, y: newY }
+}
+
+// новое положение координат при перемещении на определённый угол под определённым углом
+export const getNewPointPos = (xPos: number, yPos: number, angleRad: number, dist: number) => {
+    // const newAngleRad = newAngle * (Math.PI / 180)  // to radians
+
+    const new_x = xPos + dist * Math.cos(angleRad);
+    const new_y = yPos + dist * Math.sin(angleRad);
+
+    return { x: new_x, y: new_y }
+
+}

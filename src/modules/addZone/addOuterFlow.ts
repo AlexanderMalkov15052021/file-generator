@@ -7,6 +7,8 @@ import { addFlowPalletPoints } from "../modifyDoc/addFlowPalletPoints";
 import { addFlowCachePoints } from "../modifyDoc/addFlowCachePoints";
 import { addFlowTargetPoints } from "../modifyDoc/addFlowTargetPoints";
 import { addEntranceRoadFlow } from "../modifyDoc/addEntranceRoadFlow";
+import { addPrePoint } from "../modifyDoc/addPrePoint";
+import { addPrePointRoad } from "../modifyDoc/addPrePointRoad";
 
 export const addOuterFlow = (mooeDoc: MooeDoc, innerFlow?: boolean) => {
 
@@ -28,7 +30,9 @@ export const addOuterFlow = (mooeDoc: MooeDoc, innerFlow?: boolean) => {
 
     addEntranceRoadFlow(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], firstRowPoints);
 
-    
+    addPrePoint(mooeDoc, firstRowPoints, outerSide, innerFlow);
+
+    addPrePointRoad(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], firstRowPoints)
 
     return mooeDoc;
 }

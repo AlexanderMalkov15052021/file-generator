@@ -27,7 +27,7 @@ export const addRowTargetPoints = (
         const pointY = Math.sin(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointY;
 
         const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
-        const columnName = isInnerColumn ? "02" : "01";
+        const columnName = isInnerColumn ? "01" : "02";
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
