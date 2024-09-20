@@ -16,7 +16,7 @@ const LoadingBlock = observer(() => {
                 <span style={{ color: "rgba(0, 0, 0, 0.88)" }}>{loadingTime && loadingTime[1]}</span>
                 <span> - сек.</span>
             </div> */}
-            <Spin />
+            <Spin size="large" style={{ position: "absolute", top: "32%" }} />
         </>
     );
 });

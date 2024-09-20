@@ -11,7 +11,7 @@ export const addRowTargetPoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder, columnCount },
+        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder, lastFlowNum },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -26,18 +26,28 @@ export const addRowTargetPoints = (
         const pointX = Math.cos(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointX;
         const pointY = Math.sin(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointY;
 
-        const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
-        
-        const countUp = columnCount === 1 ? "02" : "01";
-        const countDown = columnCount === 1 ? "01" : "02";
 
-        const columnName = isInnerColumn ? countUp : countDown;
+        const innerColumnNumStr = String(formValues?.numInnerColumn);
+        const outerColumnNumStr = String(formValues?.numOuterColumn);
 
-        const targetColumnName = formValues?.columnNum ? columnNum : columnName;
+        const outerColumnNum = outerColumnNumStr.length === 1 ? `0${outerColumnNumStr}` : outerColumnNumStr;
+        const innerColumnNum = innerColumnNumStr.length === 1 ? `0${innerColumnNumStr}` : innerColumnNumStr;
+
+        const targetColumnName = isInnerColumn ? innerColumnNum : outerColumnNum;
+
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
         const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
+
+
+        const cellName = zoneType === 1 ? lastStreamNum : lastFlowNum;
+
+        const innerCellName = formValues?.numInnerAlley ? formValues?.numInnerAlley : cellName;
+        const outerCellName = formValues?.numOuterAlley ? formValues?.numOuterAlley : cellName;
+
+        const targetCellName = isInnerColumn ? innerCellName : outerCellName;
+
 
         mooeDoc?.mLaneMarks.push(
             targetPoint(
@@ -45,7 +55,7 @@ export const addRowTargetPoints = (
                 pointX,
                 pointY,
                 angle + (dirRoad === 1 ? 0 : Math.PI),
-                lastStreamNum,
+                targetCellName,
                 targetColumnName,
                 targetRowName,
                 "前置点",

@@ -15,8 +15,8 @@ const MapPartData = observer(() => {
 
     const {
         store: {
-            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder, columnCount,
-            setNumColumn, setFormValues, setColumnCount,
+            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder,
+            setNumColumn, setFormValues,
             setZoneType, setCellSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
             changeShowSecondPointMessage, setNamingOrder, setLastFlowNum
         },
@@ -43,9 +43,6 @@ const MapPartData = observer(() => {
     const onChangeDirRoad = (evt: RadioChangeEvent) => {
         setDirRoad(evt.target.value);
     };
-    const onChangeColumnCount = (evt: RadioChangeEvent) => {
-        setColumnCount(evt.target.value);
-    };
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         setFormValues(values);
@@ -69,17 +66,28 @@ const MapPartData = observer(() => {
     const showSecondPointMessage = () => {
         changeShowSecondPointMessage(true);
     }
-    const onChangeX1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x1', evt.currentTarget.value)
-    const onChangeY1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y1', evt.currentTarget.value)
-    const onChangeX2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x2', evt.currentTarget.value)
-    const onChangeY2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y2', evt.currentTarget.value)
 
+    const onChangeX1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x1', evt.currentTarget.value);
+    const onChangeY1 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y1', evt.currentTarget.value);
+    const onChangeX2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x2', evt.currentTarget.value);
+    const onChangeY2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y2', evt.currentTarget.value);
+
+    const onChangeNumOuterAlley = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numOuterAlley', evt.currentTarget.value);
+    const onChangeNumInnerAlley = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerAlley', evt.currentTarget.value);
+    const onChangeNumOuterColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numOuterColumn', evt.currentTarget.value);
+    const onChangeNumInnerColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerColumn', evt.currentTarget.value);
 
     return (<>
-        <div style={{ fontSize: "20px" }}>
-            {zoneType === 1
-                ? <div><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></div>
-                : <div><span>Крайний номер ручья: </span><span>{lastFlowNum}</span></div>}
+        <div style={{ position: "absolute", left: 0, top: "50px", margin: "40px" }}>
+            <div className={styles["form-item"]}>
+                <Title className={styles["item-title"]} level={4}>Данные по аллеям и ручьям</Title>
+                <div className={styles["form-item-block"]}>
+
+                    <p><span>Крайний номер аллеи: </span><span>{lastStreamNum}</span></p>
+                    <p><span>Крайний номер ручья: </span><span>{lastFlowNum}</span></p>
+
+                </div>
+            </div>
         </div>
         <Form
             form={form}
@@ -175,8 +183,8 @@ const MapPartData = observer(() => {
                             </Form.Item>
                         </div>}
 
-                        <div>
-                            <Title level={5}>{zoneType === 1 ? "Крайний номер аллеи:" : "Крайний номер ручья"}</Title>
+                        {zoneType === 2 && <div>
+                            <Title level={5}>Крайний номер ручья</Title>
 
                             <Form.Item<FieldType>
                                 label={<EditTwoTone style={{ fontSize: '32px' }} />}
@@ -184,12 +192,34 @@ const MapPartData = observer(() => {
                                 rules={
                                     [{
                                         required: true,
-                                        message: `Пожалуйста, введите крайний номер ${zoneType === 1 ? "аллеи" : "ручья"}!`
+                                        message: `Пожалуйста, введите крайний номер ручья!`
                                     }]
                                 }
                                 className={styles["input-wrapper"]}
                             >
                                 <Input onChange={onChangeCellNum} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+                        <div>
+                            <Title level={5}>Название файла:</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="fileName"
+                                initialValue={"example"}
+                                rules={[
+                                    {
+                                        required: true,
+                                        pattern: new RegExp(
+                                            /[a-zA-Z]/g
+                                        ),
+                                        message: 'Пожалуйста, введите название файла!'
+                                    }
+                                ]}
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input autoComplete="on" />
                             </Form.Item>
                         </div>
 
@@ -243,27 +273,90 @@ const MapPartData = observer(() => {
                             </Tooltip>
                         </Form.Item>
 
-                        <div>
-                            <Title level={5}>Название файла:</Title>
+
+
+
+
+
+
+                        {zoneType === 1 && numColumn === 1 && cellSide === 1 && <div>
+                            <Title level={5}>Номер внешней аллеи</Title>
 
                             <Form.Item<FieldType>
                                 label={<EditTwoTone style={{ fontSize: '32px' }} />}
-                                name="fileName"
-                                initialValue={"example"}
-                                rules={[
-                                    {
+                                name="numOuterAlley"
+                                rules={
+                                    [{
                                         required: true,
-                                        pattern: new RegExp(
-                                            /[a-zA-Z]/g
-                                        ),
-                                        message: 'Пожалуйста, введите название файла!'
-                                    }
-                                ]}
+                                        message: `Пожалуйста, введите номер внешней аллеи!`
+                                    }]
+                                }
                                 className={styles["input-wrapper"]}
                             >
-                                <Input autoComplete="on" />
+                                <Input min={0} onChange={onChangeNumOuterAlley} type="number" autoComplete="on" />
                             </Form.Item>
-                        </div>
+                        </div>}
+
+
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Номер внешней аллеи</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numOuterAlley"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внешней аллеи!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumOuterAlley} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+
+                        {zoneType === 1 && numColumn === 1 && cellSide === 1 && <div>
+                            <Title level={5}>Номер внешней колонны</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numOuterColumn"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внешней колонны!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumOuterColumn} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Номер внешней колонны</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numOuterColumn"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внешней колонны!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumOuterColumn} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+
+
+
+
 
                     </div>
                 </div>
@@ -315,6 +408,92 @@ const MapPartData = observer(() => {
                             </Tooltip>
                         </Form.Item>
 
+
+
+
+
+                        {zoneType === 1 && numColumn === 1 && cellSide === 2 && <div>
+                            <Title level={5}>Номер внутренней аллеи</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numInnerAlley"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внутренней алле!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumInnerAlley} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Номер внутренней аллеи</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numInnerAlley"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внутренней аллеи!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumInnerAlley} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+
+
+
+
+                        {zoneType === 1 && numColumn === 1 && cellSide === 2 && <div>
+                            <Title level={5}>Номер внутренней колонны</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numInnerColumn"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внутренней колонны!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumInnerColumn} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+
+
+                        {zoneType === 1 && numColumn === 2 && <div>
+                            <Title level={5}>Номер внутренней колонны</Title>
+
+                            <Form.Item<FieldType>
+                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
+                                name="numInnerColumn"
+                                rules={
+                                    [{
+                                        required: true,
+                                        message: `Пожалуйста, введите номер внутренней колонны!`
+                                    }]
+                                }
+                                className={styles["input-wrapper"]}
+                            >
+                                <Input min={0} onChange={onChangeNumInnerColumn} type="number" autoComplete="on" />
+                            </Form.Item>
+                        </div>}
+
+
+
+
+
                     </div>
                 </div>
 
@@ -350,31 +529,6 @@ const MapPartData = observer(() => {
                             >
                                 <Input autoComplete="on" />
                             </Form.Item>
-                        </div>}
-
-                        {zoneType === 1 && numColumn === 1 && <div>
-                            <Title level={5}>Номер колонны:</Title>
-
-                            <Form.Item<FieldType>
-                                label={<EditTwoTone style={{ fontSize: '32px' }} />}
-                                name="columnNum"
-                                rules={[{ required: true, message: 'Пожалуйста, введите номер колонны!' }]}
-                                className={styles["input-wrapper"]}
-                                initialValue={1}
-                            >
-                                <Input min={1} type="number" autoComplete="on" />
-                            </Form.Item>
-                        </div>}
-
-                        {zoneType === 1 && numColumn === 2 && <div
-                            style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}
-                        >
-                            <Title level={5}>Нумерация колонн:</Title>
-
-                            <Radio.Group onChange={onChangeColumnCount} value={columnCount} className={styles["common-radio-group"]}>
-                                <Radio value={1}>Прямая</Radio>
-                                <Radio value={2}>Обратная</Radio>
-                            </Radio.Group>
                         </div>}
 
                     </div>

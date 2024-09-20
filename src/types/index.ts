@@ -115,10 +115,13 @@ export type FieldType = {
     y2: number;
     numRow: number;
     columnsInterval: number;
-    alleySymbol: string;
     cellNum: number;
-    columnNum: number;
+    numOuterAlley: number;
+    numInnerAlley: number;
+    numOuterColumn: number;
+    numInnerColumn: number;
     fileName: string;
+    alleySymbol: string;
 };
 
 export type Coords = {

@@ -10,7 +10,7 @@ export const addCachePoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, namingOrder, columnCount },
+        store: { formValues, zoneType, namingOrder, lastStreamNum, lastFlowNum },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -22,18 +22,28 @@ export const addCachePoints = (
         const targetPointX = Math.cos(angle + sideAngle) * fromStackToCachePoint + points.x;
         const targetPointY = Math.sin(angle + sideAngle) * fromStackToCachePoint + points.y;
 
-        const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
 
-        const countUp = columnCount === 1 ? "02" : "01";
-        const countDown = columnCount === 1 ? "01" : "02";
+        const innerColumnNumStr = String(formValues?.numInnerColumn);
+        const outerColumnNumStr = String(formValues?.numOuterColumn);
 
-        const columnName = isInnerColumn ? countUp : countDown;
+        const outerColumnNum = outerColumnNumStr.length === 1 ? `0${outerColumnNumStr}` : outerColumnNumStr;
+        const innerColumnNum = innerColumnNumStr.length === 1 ? `0${innerColumnNumStr}` : innerColumnNumStr;
 
-        const targetColumnName = formValues?.columnNum ? columnNum : columnName;
+        const targetColumnName = isInnerColumn ? innerColumnNum : outerColumnNum;
+
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
         const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
         const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
+
+
+        const cellName = zoneType === 1 ? lastStreamNum : lastFlowNum;
+
+        const innerCellName = formValues?.numInnerAlley ? formValues?.numInnerAlley : cellName;
+        const outerCellName = formValues?.numOuterAlley ? formValues?.numOuterAlley : cellName;
+
+        const targetCellName = isInnerColumn ? innerCellName : outerCellName;
+
 
         mooeDoc?.mLaneMarks.push(
             cachePoint(
@@ -41,7 +51,7 @@ export const addCachePoints = (
                 targetPointX,
                 targetPointY,
                 angle + (isInnerColumn ? -Math.PI / 2 : Math.PI / 2),
-                lastStreamNum,
+                targetCellName,
                 targetColumnName,
                 targetRowName,
                 "识别",

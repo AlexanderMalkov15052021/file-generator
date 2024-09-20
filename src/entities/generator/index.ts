@@ -13,7 +13,6 @@ class GeneratorStor {
     namingOrder: number = 1;
     dirRoad: number = 1;
     cellSide: number = 1;
-    columnCount: number = 1;
 
     href: string = "";
     refFileName: string | null = null;
@@ -98,10 +97,6 @@ class GeneratorStor {
 
     setCellSide = (val: number) => {
         this.cellSide = val;
-    }
-
-    setColumnCount = (val: number) => {
-        this.columnCount = val;
     }
 
     setIsModalOpen = (val: boolean) => {
