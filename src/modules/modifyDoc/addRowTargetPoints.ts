@@ -11,7 +11,7 @@ export const addRowTargetPoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder },
+        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder, columnCount },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -27,7 +27,12 @@ export const addRowTargetPoints = (
         const pointY = Math.sin(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointY;
 
         const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
-        const columnName = isInnerColumn ? "01" : "02";
+        
+        const countUp = columnCount === 1 ? "02" : "01";
+        const countDown = columnCount === 1 ? "01" : "02";
+
+        const columnName = isInnerColumn ? countUp : countDown;
+
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";

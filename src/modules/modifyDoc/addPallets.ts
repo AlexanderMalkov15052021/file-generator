@@ -7,7 +7,7 @@ import { getPointIdsBuffer } from "./getPointIdsBuffer";
 export const addPallets = (mooeDoc: MooeDoc, newPoints: Coords[], isInnerColumn?: boolean) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, lastFlowNum, namingOrder },
+        store: { formValues, zoneType, lastStreamNum, lastFlowNum, namingOrder, columnCount },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -17,7 +17,12 @@ export const addPallets = (mooeDoc: MooeDoc, newPoints: Coords[], isInnerColumn?
     const palletsNames = newPoints.map((coords: Coords, index: number) => {
 
         const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
-        const columnName = isInnerColumn ? "01" : "02";
+
+        const countUp = columnCount === 1 ? "02" : "01";
+        const countDown = columnCount === 1 ? "01" : "02";
+
+        const columnName = isInnerColumn ? countUp : countDown;
+
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";

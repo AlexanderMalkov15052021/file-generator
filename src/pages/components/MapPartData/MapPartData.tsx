@@ -15,7 +15,8 @@ const MapPartData = observer(() => {
 
     const {
         store: {
-            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder, setNumColumn, setFormValues,
+            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder, columnCount,
+            setNumColumn, setFormValues, setColumnCount,
             setZoneType, setCellSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
             changeShowSecondPointMessage, setNamingOrder, setLastFlowNum
         },
@@ -41,6 +42,9 @@ const MapPartData = observer(() => {
     };
     const onChangeDirRoad = (evt: RadioChangeEvent) => {
         setDirRoad(evt.target.value);
+    };
+    const onChangeColumnCount = (evt: RadioChangeEvent) => {
+        setColumnCount(evt.target.value);
     };
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
@@ -360,6 +364,17 @@ const MapPartData = observer(() => {
                             >
                                 <Input min={1} type="number" autoComplete="on" />
                             </Form.Item>
+                        </div>}
+
+                        {zoneType === 1 && numColumn === 2 && <div
+                            style={{ display: "flex", alignItems: "flex-start", flexDirection: "column" }}
+                        >
+                            <Title level={5}>Нумерация колонн:</Title>
+
+                            <Radio.Group onChange={onChangeColumnCount} value={columnCount} className={styles["common-radio-group"]}>
+                                <Radio value={1}>Прямая</Radio>
+                                <Radio value={2}>Обратная</Radio>
+                            </Radio.Group>
                         </div>}
 
                     </div>

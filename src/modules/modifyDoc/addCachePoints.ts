@@ -10,7 +10,7 @@ export const addCachePoints = (
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, namingOrder },
+        store: { formValues, zoneType, lastStreamNum, namingOrder, columnCount },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -23,7 +23,12 @@ export const addCachePoints = (
         const targetPointY = Math.sin(angle + sideAngle) * fromStackToCachePoint + points.y;
 
         const columnNum = String(formValues?.columnNum).length === 1 ? `0${formValues?.columnNum}` : String(formValues?.columnNum);
-        const columnName = isInnerColumn ? "01" : "02";
+
+        const countUp = columnCount === 1 ? "02" : "01";
+        const countDown = columnCount === 1 ? "01" : "02";
+
+        const columnName = isInnerColumn ? countUp : countDown;
+
         const targetColumnName = formValues?.columnNum ? columnNum : columnName;
 
         const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";

@@ -13,6 +13,8 @@ class GeneratorStor {
     namingOrder: number = 1;
     dirRoad: number = 1;
     cellSide: number = 1;
+    columnCount: number = 1;
+
     href: string = "";
     refFileName: string | null = null;
     loadingTime: number[] = [0, 0];
@@ -24,6 +26,8 @@ class GeneratorStor {
     isLoading: boolean = false;
     isMessageShow: boolean = false;
     isOpenDrawer: boolean = false;
+
+    
 
     history: MooeDoc[] = [];
 
@@ -96,6 +100,10 @@ class GeneratorStor {
         this.cellSide = val;
     }
 
+    setColumnCount = (val: number) => {
+        this.columnCount = val;
+    }
+
     setIsModalOpen = (val: boolean) => {
         this.isModalOpen = val;
     }
@@ -103,7 +111,7 @@ class GeneratorStor {
     setIsLoadingDocChangen = (val: boolean) => {
         this.isLoadingDocChange = val;
     }
-
+    
     setHref = (doc: MooeDoc) => {
         const newDock = JSON.stringify(doc);
 

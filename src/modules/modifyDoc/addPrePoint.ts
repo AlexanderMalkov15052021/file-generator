@@ -28,7 +28,7 @@ export const addPrePoint = (mooeDoc: MooeDoc, newPoints: Coords[], sideAngle: nu
     const targetPointX = Math.cos(angle + cellSide === 1 ? Math.PI : Math.PI * 3 / 2)
         * (roadsDist[roadsDist.length - 1] - fromStackToEnd) + pointX;
     
-    const targetPointY = Math.sin(angle + cellSide === 1 ? Math.PI / 2 : Math.PI * 3 / 2)
+    const targetPointY = Math.sin(angle + cellSide === 1 ? Math.PI : Math.PI * 3 / 2)
         * (roadsDist[roadsDist.length - 1] - fromStackToEnd) + pointY;
 
     const name = `GT${lastFlowNum}entrance`;
