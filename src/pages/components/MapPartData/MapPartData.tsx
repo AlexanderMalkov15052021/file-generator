@@ -78,7 +78,7 @@ const MapPartData = observer(() => {
     const onChangeNumInnerColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerColumn', evt.currentTarget.value);
 
     return (<>
-        <div style={{ position: "absolute", left: 0, top: "50px", margin: "40px" }}>
+        <div style={{ position: "absolute", left: 0, top: "50px", margin: "20px", marginTop: "30px" }}>
             <div className={styles["form-item"]}>
                 <Title className={styles["item-title"]} level={4}>Данные по аллеям и ручьям</Title>
                 <div className={styles["form-item-block"]}>
