@@ -45,10 +45,10 @@ export const addEntranceRoad = (
 
     mooeDoc?.mRoads.push(
         road(
-            dirRoad === 1 ? endId : pointIdsBuffer[0],
-            dirRoad === 1 ? pointIdsBuffer[0] : endId,
-            dirRoad === 1 ? endPoints[isInnerColumn ? 0 : endPointsCount] : { x: newPointX, y: newPointY, id: pointIdsBuffer[0] },
-            dirRoad === 1 ? { x: newPointX, y: newPointY, id: pointIdsBuffer[0] } : endPoints[isInnerColumn ? 0 : endPointsCount],
+            endId,
+            pointIdsBuffer[0],
+            endPoints[isInnerColumn ? 0 : endPointsCount],
+            { x: newPointX, y: newPointY, id: pointIdsBuffer[0] },
             roadIdsBuffer[0],
             laneIdsBuffer[0],
             0,
