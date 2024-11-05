@@ -177,6 +177,7 @@ const MapPartData = observer(() => {
                                 label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
                                 name="columnsInterval"
                                 rules={[{ required: true, message: 'Пожалуйста, введите расстояние между аллеями!' }]}
+                                
                                 className={styles["input-wrapper"]}
                             >
                                 <Input type="number" autoComplete="on" />
