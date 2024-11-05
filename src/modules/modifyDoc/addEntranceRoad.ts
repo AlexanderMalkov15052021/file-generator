@@ -52,7 +52,8 @@ export const addEntranceRoad = (
             roadIdsBuffer[0],
             laneIdsBuffer[0],
             0,
-            1
+            1,
+            0
         )
     );
 

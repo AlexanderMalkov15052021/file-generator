@@ -23,6 +23,7 @@ export const addRowRoadsFlow = (mooeDoc: MooeDoc, rowPoints: Coords[][]) => {
                     roadIdsBuffer[i + rowPoints[a].length * a],
                     laneIdsBuffer[i + rowPoints[a].length * a],
                     0,
+                    1,
                     1
                 )
             );

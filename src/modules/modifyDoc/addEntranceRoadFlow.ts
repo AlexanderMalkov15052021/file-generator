@@ -47,7 +47,8 @@ export const addEntranceRoadFlow = (
             roadIdsBuffer[0],
             laneIdsBuffer[0],
             angle,
-            2
+            2,
+            0
         )
     );
 

@@ -38,7 +38,8 @@ export const addRowRoads = (mooeDoc: MooeDoc, endPoints: Coords[], isInnerColumn
                 roadIdsBuffer[i],
                 laneIdsBuffer[i],
                 0,
-                1
+                1,
+                0
                 // isInnerColumn ? reverseDir : dirRoad
             )
         );

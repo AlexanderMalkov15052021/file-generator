@@ -47,7 +47,8 @@ export const addPrePointRoad = (
             roadIdsBuffer[0],
             laneIdsBuffer[0],
             angle,
-            1
+            1,
+            0
         )
     );
 
