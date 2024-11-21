@@ -18,4 +18,7 @@ export const cachePointDist = [
     10.8 + distBetweenStackAndCachePoint,
     12.3
 ];  // длинна до cachePoint в ручьях
-
+export const valuesRange = 100000;
+export const firstPointId = 600000;
+export const firstLaneId = 700000;
+export const firstRoadId = 800000;
