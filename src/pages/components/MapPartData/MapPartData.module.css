@@ -55,6 +55,8 @@
 }
 
 .warningMessage {
+    position: absolute;
+    margin-left: calc(50% - 150px - 5px);
     margin-top: 25%;
 }
 
