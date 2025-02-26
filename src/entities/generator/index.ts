@@ -26,7 +26,8 @@ class GeneratorStor {
     isMessageShow: boolean = false;
     isOpenDrawer: boolean = false;
 
-    
+    // данные сообщения номера блока
+    blockNumMessageData: string[] = [];
 
     history: MooeDoc[] = [];
 
@@ -67,13 +68,17 @@ class GeneratorStor {
         this.setLastFlowNum(getLastFlowNum(doc));
     }
 
+    setBlockNumMessageData = (val: string[]) => {
+        this.blockNumMessageData = val;
+    }
+
     setLastStreamNum = (val: number) => {
         this.lastStreamNum = val;
     }
 
     setLastFlowNum = (val: number) => {
         this.lastFlowNum = val;
-    }   
+    }
 
     setNumColumn = (val: number) => {
         this.numColumn = val;
@@ -106,7 +111,7 @@ class GeneratorStor {
     setIsLoadingDocChangen = (val: boolean) => {
         this.isLoadingDocChange = val;
     }
-    
+
     setHref = (doc: MooeDoc) => {
         const newDock = JSON.stringify(doc);
 
@@ -131,7 +136,7 @@ class GeneratorStor {
         const doc = modifyDoc(this.mooeDoc);
 
         this.setMooeDoc(doc);
-        
+
     }
 
 }
