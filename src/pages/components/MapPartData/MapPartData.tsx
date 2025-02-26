@@ -72,6 +72,12 @@ const MapPartData = observer(() => {
     const onChangeCellNum = (evt: any) => {
         zoneType === 1 && setLastStreamNum(evt.target.value);
         zoneType === 2 && setLastFlowNum(evt.target.value);
+
+        const blockNames = getBlockNames(mooeDoc);
+
+        if (blockNames[evt.currentTarget.value]) {
+            setBlockNumMessageData(blockNames[evt.currentTarget.value]);
+        }
     }
 
     const showFirstPointMessage = () => {
@@ -97,7 +103,15 @@ const MapPartData = observer(() => {
         }
 
     }
-    const onChangeNumInnerAlley = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerAlley', evt.currentTarget.value);
+    const onChangeNumInnerAlley = (evt: FormEvent<HTMLInputElement>) => {
+        form.setFieldValue('numInnerAlley', evt.currentTarget.value)
+
+        const blockNames = getBlockNames(mooeDoc);
+
+        if (blockNames[evt.currentTarget.value]) {
+            setBlockNumMessageData(blockNames[evt.currentTarget.value]);
+        }
+    };
     const onChangeNumOuterColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numOuterColumn', evt.currentTarget.value);
     const onChangeNumInnerColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerColumn', evt.currentTarget.value);
 
