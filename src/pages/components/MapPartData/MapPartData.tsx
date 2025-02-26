@@ -1,5 +1,5 @@
 import type { FormProps } from 'antd/lib';
-import { Button, Form, Input, Radio, Tooltip } from 'antd/lib';
+import { Button, Form, Input, message, Radio, Tooltip } from 'antd/lib';
 import Title from 'antd/lib/typography/Title';
 
 import styles from "./MapPartData.module.css";
@@ -10,17 +10,28 @@ import { FieldType } from "@/types";
 import { GeneratorStor } from "@/entities";
 import { observer } from "mobx-react-lite";
 import { FormEvent, useEffect } from 'react';
+import { getBlockNames } from '@/helpers';
 
 const MapPartData = observer(() => {
 
     const {
         store: {
-            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder,
-            setNumColumn, setFormValues,
+            mooeDoc, numColumn, zoneType, cellSide, dirRoad, lastStreamNum, lastFlowNum, namingOrder, blockNumMessageData,
+            setNumColumn, setFormValues, setBlockNumMessageData,
             setZoneType, setCellSide, setIsModalOpen, setDirRoad, setLastStreamNum, changeShowFirstPointMessage,
             changeShowSecondPointMessage, setNamingOrder, setLastFlowNum
         },
     } = GeneratorStor;
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const warning = () => {
+        messageApi.open({
+            type: 'warning',
+            content: blockNumMessageData.reduce((accum, str) => `${accum} ${str}... `, ""),
+            className: styles.warningMessage
+        });
+    };
 
     const [form] = Form.useForm();
 
@@ -28,6 +39,10 @@ const MapPartData = observer(() => {
         zoneType === 1 && form.setFieldsValue({ cellNum: lastStreamNum });
         zoneType === 2 && form.setFieldsValue({ cellNum: lastFlowNum });
     }, [lastStreamNum, lastFlowNum]);
+
+    useEffect(() => {
+        blockNumMessageData.length && warning();
+    }, [blockNumMessageData]);
 
     const onChangeNumColumn = (evt: RadioChangeEvent) => setNumColumn(evt.target.value);
 
@@ -72,12 +87,22 @@ const MapPartData = observer(() => {
     const onChangeX2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('x2', evt.currentTarget.value);
     const onChangeY2 = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('y2', evt.currentTarget.value);
 
-    const onChangeNumOuterAlley = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numOuterAlley', evt.currentTarget.value);
+    const onChangeNumOuterAlley = (evt: FormEvent<HTMLInputElement>) => {
+        form.setFieldValue('numOuterAlley', evt.currentTarget.value);
+
+        const blockNames = getBlockNames(mooeDoc);
+
+        if (blockNames[evt.currentTarget.value]) {
+            setBlockNumMessageData(blockNames[evt.currentTarget.value]);
+        }
+
+    }
     const onChangeNumInnerAlley = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerAlley', evt.currentTarget.value);
     const onChangeNumOuterColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numOuterColumn', evt.currentTarget.value);
     const onChangeNumInnerColumn = (evt: FormEvent<HTMLInputElement>) => form.setFieldValue('numInnerColumn', evt.currentTarget.value);
 
     return (<>
+        {contextHolder}
         <div style={{ position: "absolute", left: 0, top: "50px", margin: "20px", marginTop: "30px" }}>
             <div className={styles["form-item"]}>
                 <Title className={styles["item-title"]} level={4}>Данные по аллеям и ручьям</Title>
@@ -177,7 +202,7 @@ const MapPartData = observer(() => {
                                 label={<BoxPlotTwoTone style={{ fontSize: '32px' }} />}
                                 name="columnsInterval"
                                 rules={[{ required: true, message: 'Пожалуйста, введите расстояние между аллеями!' }]}
-                                
+
                                 className={styles["input-wrapper"]}
                             >
                                 <Input type="number" autoComplete="on" />

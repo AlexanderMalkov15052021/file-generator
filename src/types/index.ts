@@ -1,29 +1,31 @@
+export type MLaneMarks = {
+    mAvoidPointID?: null;
+    mBindRoadGroups?: never[];
+    mID?: null;
+    mIsJockeyEndpoint: boolean;
+    mLaneMarkDescript: string;
+    mLaneMarkEnName: string;
+    mLaneMarkID: number;
+    mLaneMarkName: string;
+    mLaneMarkSize?: { height: number; length: number; width: number; } |
+    { height: number; length: number; width: number; } |
+    { height: number; length: number; width: number; };
+    mLaneMarkType: number;
+    mLaneMarkWidth: number;
+    mLaneMarkXYZW: { w: number; x: any; y: any; z: number; } |
+    { w: number; x: any; y: any; z: number; } |
+    { w: number; x: any; y: any; z: number; } |
+    { w: number; x: any; y: any; z: number; } |
+    { w: number; x: any; y: any; z: number; } |
+    { w: number; x: any; y: any; z: number; };
+    mMapName?: string;
+    mPrepointID?: null;
+    mTaskListName?: string;
+    neighborsID: never[];
+}
+
 export type MooeDoc = {
-    mLaneMarks: {
-        mAvoidPointID?: null;
-        mBindRoadGroups?: never[];
-        mID?: null;
-        mIsJockeyEndpoint: boolean;
-        mLaneMarkDescript: string;
-        mLaneMarkEnName: string;
-        mLaneMarkID: number;
-        mLaneMarkName: string;
-        mLaneMarkSize?: { height: number; length: number; width: number; } |
-        { height: number; length: number; width: number; } |
-        { height: number; length: number; width: number; };
-        mLaneMarkType: number;
-        mLaneMarkWidth: number;
-        mLaneMarkXYZW: { w: number; x: any; y: any; z: number; } |
-        { w: number; x: any; y: any; z: number; } |
-        { w: number; x: any; y: any; z: number; } |
-        { w: number; x: any; y: any; z: number; } |
-        { w: number; x: any; y: any; z: number; } |
-        { w: number; x: any; y: any; z: number; };
-        mMapName?: string;
-        mPrepointID?: null;
-        mTaskListName?: string;
-        neighborsID: never[];
-    }[];
+    mLaneMarks: MLaneMarks[];
     mRoads: {
         mBelongJunctionID: number;
         mEndPosition: { x: any; y: any; z: number; } |
@@ -125,5 +127,5 @@ export type FieldType = {
 };
 
 export type Coords = {
-    id: number; x: number; y: number 
+    id: number; x: number; y: number
 };
