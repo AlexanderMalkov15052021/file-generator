@@ -7,11 +7,11 @@ import { getPointIdsBuffer } from "./getPointIdsBuffer";
 
 export const addRowTargetPoints = (
     mooeDoc: MooeDoc, newPoints: Coords[], sideAngle: number,
-    dirPoint: number, dirRot: number, isInnerColumn?: boolean
+    dirPoint: number, dirRot: number, names: string[]
 ) => {
 
     const {
-        store: { formValues, zoneType, lastStreamNum, dirRoad, namingOrder, lastFlowNum },
+        store: { dirRoad },
     } = GeneratorStor;
 
     const pointIdsBuffer = getPointIdsBuffer(mooeDoc);
@@ -26,41 +26,15 @@ export const addRowTargetPoints = (
         const pointX = Math.cos(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointX;
         const pointY = Math.sin(angle) * ((fromStackToCachePoint * (dirRoad === 1 ? 1 : -1)) / 2 * dirPoint) + targetPointY;
 
-
-        const innerColumnNumStr = String(formValues?.numInnerColumn);
-        const outerColumnNumStr = String(formValues?.numOuterColumn);
-
-        const outerColumnNum = outerColumnNumStr.length === 1 ? `0${outerColumnNumStr}` : outerColumnNumStr;
-        const innerColumnNum = innerColumnNumStr.length === 1 ? `0${innerColumnNumStr}` : innerColumnNumStr;
-
-        const targetColumnName = isInnerColumn ? innerColumnNum : outerColumnNum;
-
-
-        const zoneName = zoneType === 1 ? formValues?.alleySymbol ?? "A" : "GT";
-        const rowName = namingOrder === 1 ? String(newPoints.length - index) : String(index + 1);
-        const targetRowName = rowName.length === 1 ? `0${rowName}` : rowName;
-
-
-        const cellName = zoneType === 1 ? lastStreamNum : lastFlowNum;
-
-        const innerCellName = formValues?.numInnerAlley ? formValues?.numInnerAlley : cellName;
-        const outerCellName = formValues?.numOuterAlley ? formValues?.numOuterAlley : cellName;
-
-        const targetCellName = isInnerColumn ? innerCellName : outerCellName;
-
-
         mooeDoc?.mLaneMarks.push(
             targetPoint(
                 pointIdsBuffer[index],
                 pointX,
                 pointY,
                 angle + (dirRoad === 1 ? 0 : Math.PI),
-                targetCellName,
-                targetColumnName,
-                targetRowName,
+                names[index],
                 "前置点",
-                dirRot,
-                zoneName
+                dirRot
             )
         );
     });

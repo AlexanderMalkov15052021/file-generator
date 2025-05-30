@@ -29,9 +29,9 @@ export const addInnerStream = (mooeDoc: MooeDoc, isInnerColumn?: boolean) => {
         firstRowPoints.length - 1, Math.PI, isInnerColumn
     );
 
-    addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI * 3 / 2, -1, Math.PI / 2, isInnerColumn);
+    addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI * 3 / 2, -1, Math.PI / 2, palletsNames);
 
-    addTargetPoints(mooeDoc, firstRowPoints, Math.PI * 3 / 2, true);
+    addTargetPoints(mooeDoc, firstRowPoints, Math.PI * 3 / 2, palletsNames, true);
 
     addCachePoints(mooeDoc, firstRowPoints, Math.PI * 3 / 2, true);
 
