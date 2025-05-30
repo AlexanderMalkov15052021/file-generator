@@ -1,7 +1,7 @@
 const distBetweenStackAndCachePoint = 0.15;
 
 export const fromStackToCachePoint = 1.5;  // от палеты до края
-export const fromStackToEnd = 0.16;  // от палеты до края
+export const fromStackToEnd = 0.2;  // от палеты до края
 export const distSmallRoad = 2.16;  // длинна маленткой дороги
 export const fromStackToTargetPoint = 0.6;  // от палеты до точки заезда
 export const roadsDist = [0, 1.35, 2.7, 4.05, 5.4, 6.75, 8.1, 9.45, 10.8, 13.86];  // длинна малых дорог в ручьях

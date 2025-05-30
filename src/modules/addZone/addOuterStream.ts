@@ -29,9 +29,9 @@ export const addOuterStream = (mooeDoc: MooeDoc) => {
         firstRowPoints.length - 1, 0
     );
 
-    addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2, 1, 0);
+    addRowTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2, 1, 0, palletsNames);
 
-    addTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2);
+    addTargetPoints(mooeDoc, firstRowPoints, Math.PI / 2, palletsNames);
 
     addCachePoints(mooeDoc, firstRowPoints, Math.PI / 2);
 

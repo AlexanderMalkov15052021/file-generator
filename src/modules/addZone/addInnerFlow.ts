@@ -4,10 +4,10 @@ import { addFlowRoadsPoints } from "../modifyDoc/addFlowRoadsPoints";
 import { addRowRoadsFlow } from "../modifyDoc/addRowRoadsFlow";
 import { addRowRoads } from "../modifyDoc/addRowRoads";
 import { addFlowPalletPoints } from "../modifyDoc/addFlowPalletPoints";
-import { addFlowCachePoints } from "../modifyDoc/addFlowCachePoints";
 import { addFlowTargetPoints } from "../modifyDoc/addFlowTargetPoints";
 import { addEntranceRoadFlow } from "../modifyDoc/addEntranceRoadFlow";
 
+// Внутренний ручей
 export const addOuterFlow = (mooeDoc: MooeDoc, innerFlow?: boolean) => {
 
     const outerSide = innerFlow ? Math.PI * 3 / 2 : Math.PI / 2;
@@ -22,13 +22,12 @@ export const addOuterFlow = (mooeDoc: MooeDoc, innerFlow?: boolean) => {
 
     addRowRoads(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1]);
 
-    addFlowCachePoints(mooeDoc, firstRowPoints, outerSide);
-
-    addFlowTargetPoints(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], outerSide, innerFlow);
+    // Добавление таргет поинтов
+    addFlowTargetPoints(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], outerSide, palletsNames, innerFlow);
 
     addEntranceRoadFlow(mooeDoc, flowRoadsPoints[flowRoadsPoints.length - 1], firstRowPoints);
 
-    
+
 
     return mooeDoc;
 }
